@@ -1,0 +1,1001 @@
+threat_id,latitude,longitude,village_id,threat_type,severity,date,description,image_filename,resolved
+ENV0001,19.805058,74.455889,VLG049,Plastic Waste,High,2021-03-28,Identified during river patrol,ENV0001.jpg,True
+ENV0002,19.85418,74.435003,VLG015,Encroachment,Critical,2025-08-15,Flagged via citizen report app,ENV0002.jpg,False
+ENV0003,19.905034,74.451371,VLG047,Pesticide Runoff,Moderate,2018-04-30,Noted by forest officer,ENV0003.jpg,False
+ENV0004,19.853333,74.3604,VLG024,Sand Mining,Moderate,2025-01-19,Reported by local resident,ENV0004.jpg,True
+ENV0005,19.931257,74.416142,VLG062,Encroachment,Low,2024-01-23,Observed during field survey,ENV0005.jpg,True
+ENV0006,19.927456,74.351267,VLG098,Plastic Waste,High,2020-04-05,Identified during river patrol,ENV0006.jpg,True
+ENV0007,19.903673,74.498952,VLG018,Soil Erosion,Critical,2021-09-20,Noted by forest officer,ENV0007.jpg,False
+ENV0008,19.863184,74.367264,VLG037,Pesticide Runoff,Moderate,2018-06-14,Observed during field survey,ENV0008.jpg,True
+ENV0009,19.843593,74.408304,VLG042,Sewage Discharge,Low,2024-04-14,Identified during river patrol,ENV0009.jpg,True
+ENV0010,19.814813,74.57369,VLG075,Invasive Species,High,2024-11-08,Flagged via citizen report app,ENV0010.jpg,True
+ENV0011,19.83563,74.405567,VLG014,Sand Mining,High,2026-01-27,Identified during river patrol,ENV0011.jpg,True
+ENV0012,19.830874,74.431194,VLG022,Plastic Waste,Low,2021-10-13,Noted by forest officer,ENV0012.jpg,False
+ENV0013,19.884041,74.515135,VLG094,Pesticide Runoff,Critical,2019-03-21,Observed during field survey,ENV0013.jpg,False
+ENV0014,19.896133,74.47497,VLG096,Invasive Species,High,2021-10-13,Flagged via citizen report app,ENV0014.jpg,False
+ENV0015,19.930683,74.46416,VLG084,Illegal Tree Cutting,High,2024-04-29,Reported by local resident,ENV0015.jpg,False
+ENV0016,19.911831,74.593562,VLG093,Plastic Waste,Moderate,2025-09-28,Reported by local resident,ENV0016.jpg,False
+ENV0017,19.883063,74.468244,VLG031,Sewage Discharge,Critical,2016-12-29,Observed during field survey,ENV0017.jpg,False
+ENV0018,19.89394,74.483737,VLG089,Pesticide Runoff,Low,2026-03-02,Reported by local resident,ENV0018.jpg,False
+ENV0019,19.929978,74.539385,VLG052,Plastic Waste,High,2026-01-28,Flagged via citizen report app,ENV0019.jpg,True
+ENV0020,19.873571,74.556059,VLG043,Sand Mining,Moderate,2020-04-08,Flagged via citizen report app,ENV0020.jpg,False
+ENV0021,19.945836,74.529104,VLG097,Water Pollution,High,2025-01-01,Identified during river patrol,ENV0021.jpg,True
+ENV0022,19.936094,74.596936,VLG067,Sewage Discharge,Critical,2017-01-25,Observed during field survey,ENV0022.jpg,True
+ENV0023,19.827483,74.509457,VLG091,Soil Erosion,Low,2022-04-09,Noted by forest officer,ENV0023.jpg,True
+ENV0024,19.896583,74.552313,VLG017,Water Pollution,Moderate,2020-10-08,Observed during field survey,ENV0024.jpg,False
+ENV0025,19.840735,74.374019,VLG039,Water Pollution,Low,2019-08-01,Reported by local resident,ENV0025.jpg,True
+ENV0026,19.80042,74.498363,VLG014,Plastic Waste,High,2021-01-03,Flagged via citizen report app,ENV0026.jpg,False
+ENV0027,19.928456,74.463768,VLG064,Sand Mining,High,2018-06-16,Noted by forest officer,ENV0027.jpg,False
+ENV0028,19.88209,74.403816,VLG012,Illegal Tree Cutting,Low,2018-02-21,Noted by forest officer,ENV0028.jpg,False
+ENV0029,19.877865,74.542043,VLG089,Pesticide Runoff,Moderate,2016-11-04,Reported by local resident,ENV0029.jpg,False
+ENV0030,19.862914,74.383184,VLG062,Pesticide Runoff,Low,2024-12-09,Flagged via citizen report app,ENV0030.jpg,True
+ENV0031,19.913407,74.406615,VLG045,Sewage Discharge,Low,2022-05-25,Flagged via citizen report app,ENV0031.jpg,True
+ENV0032,19.919083,74.559576,VLG041,Plastic Waste,Critical,2022-07-21,Identified during river patrol,ENV0032.jpg,False
+ENV0033,19.910659,74.453436,VLG087,Illegal Tree Cutting,High,2022-12-28,Noted by forest officer,ENV0033.jpg,True
+ENV0034,19.860107,74.587068,VLG097,Sand Mining,Low,2024-03-13,Flagged via citizen report app,ENV0034.jpg,True
+ENV0035,19.826444,74.456145,VLG010,Invasive Species,Low,2025-02-03,Identified during river patrol,ENV0035.jpg,False
+ENV0036,19.866886,74.471208,VLG036,Plastic Waste,Critical,2018-06-15,Observed during field survey,ENV0036.jpg,True
+ENV0037,19.907448,74.524169,VLG052,Sewage Discharge,Low,2018-08-21,Observed during field survey,ENV0037.jpg,False
+ENV0038,19.908171,74.380137,VLG046,Plastic Waste,High,2025-04-13,Identified during river patrol,ENV0038.jpg,False
+ENV0039,19.863444,74.547371,VLG062,Sand Mining,High,2024-03-28,Flagged via citizen report app,ENV0039.jpg,False
+ENV0040,19.85458,74.37652,VLG014,Pesticide Runoff,Critical,2018-08-31,Identified during river patrol,ENV0040.jpg,True
+ENV0041,19.917932,74.481254,VLG012,Sewage Discharge,High,2024-12-31,Flagged via citizen report app,ENV0041.jpg,False
+ENV0042,19.896864,74.351053,VLG046,Pesticide Runoff,Critical,2025-06-27,Observed during field survey,ENV0042.jpg,True
+ENV0043,19.946399,74.49016,VLG071,Soil Erosion,Moderate,2019-03-23,Observed during field survey,ENV0043.jpg,False
+ENV0044,19.863331,74.439196,VLG035,Sewage Discharge,Moderate,2025-04-11,Noted by forest officer,ENV0044.jpg,False
+ENV0045,19.858885,74.504272,VLG048,Soil Erosion,Low,2018-11-17,Observed during field survey,ENV0045.jpg,False
+ENV0046,19.82607,74.408759,VLG062,Sand Mining,Low,2022-02-16,Identified during river patrol,ENV0046.jpg,True
+ENV0047,19.909557,74.536071,VLG072,Water Pollution,High,2024-06-11,Observed during field survey,ENV0047.jpg,False
+ENV0048,19.882314,74.592353,VLG098,Fire,High,2018-03-26,Reported by local resident,ENV0048.jpg,True
+ENV0049,19.911403,74.353976,VLG031,Encroachment,Low,2022-08-01,Reported by local resident,ENV0049.jpg,False
+ENV0050,19.827417,74.37598,VLG044,Sand Mining,Low,2017-06-04,Noted by forest officer,ENV0050.jpg,True
+ENV0051,19.83773,74.579238,VLG083,Water Pollution,Critical,2017-11-20,Flagged via citizen report app,ENV0051.jpg,False
+ENV0052,19.82759,74.584535,VLG013,Illegal Tree Cutting,High,2016-10-05,Identified during river patrol,ENV0052.jpg,False
+ENV0053,19.921175,74.44409,VLG052,Water Pollution,Low,2017-08-27,Reported by local resident,ENV0053.jpg,True
+ENV0054,19.934271,74.573075,VLG051,Invasive Species,Critical,2023-06-30,Identified during river patrol,ENV0054.jpg,False
+ENV0055,19.892928,74.469463,VLG073,Pesticide Runoff,High,2025-10-23,Noted by forest officer,ENV0055.jpg,False
+ENV0056,19.887792,74.357895,VLG073,Water Pollution,Critical,2018-12-13,Reported by local resident,ENV0056.jpg,False
+ENV0057,19.836276,74.556115,VLG085,Pesticide Runoff,Moderate,2023-12-05,Identified during river patrol,ENV0057.jpg,True
+ENV0058,19.805464,74.49749,VLG024,Sewage Discharge,High,2024-06-07,Identified during river patrol,ENV0058.jpg,True
+ENV0059,19.826752,74.589697,VLG012,Illegal Tree Cutting,Moderate,2024-08-02,Noted by forest officer,ENV0059.jpg,True
+ENV0060,19.857747,74.583551,VLG082,Encroachment,Moderate,2020-11-24,Observed during field survey,ENV0060.jpg,False
+ENV0061,19.863354,74.500538,VLG076,Fire,Critical,2018-06-16,Flagged via citizen report app,ENV0061.jpg,False
+ENV0062,19.945936,74.420842,VLG031,Sand Mining,Critical,2022-10-11,Observed during field survey,ENV0062.jpg,True
+ENV0063,19.834309,74.426242,VLG067,Invasive Species,Moderate,2021-01-24,Noted by forest officer,ENV0063.jpg,False
+ENV0064,19.851003,74.432698,VLG045,Invasive Species,Low,2021-12-30,Noted by forest officer,ENV0064.jpg,True
+ENV0065,19.841701,74.542888,VLG060,Illegal Tree Cutting,Moderate,2021-01-21,Identified during river patrol,ENV0065.jpg,False
+ENV0066,19.867085,74.478486,VLG014,Soil Erosion,High,2020-06-02,Noted by forest officer,ENV0066.jpg,False
+ENV0067,19.909325,74.579157,VLG055,Water Pollution,High,2023-10-10,Observed during field survey,ENV0067.jpg,True
+ENV0068,19.912286,74.488772,VLG080,Invasive Species,Critical,2021-05-04,Observed during field survey,ENV0068.jpg,False
+ENV0069,19.930447,74.412049,VLG009,Sewage Discharge,Critical,2017-09-18,Flagged via citizen report app,ENV0069.jpg,True
+ENV0070,19.812754,74.457882,VLG014,Encroachment,Moderate,2020-03-06,Noted by forest officer,ENV0070.jpg,False
+ENV0071,19.864774,74.573471,VLG007,Plastic Waste,Moderate,2019-12-16,Identified during river patrol,ENV0071.jpg,False
+ENV0072,19.941395,74.383407,VLG037,Sewage Discharge,High,2022-05-03,Noted by forest officer,ENV0072.jpg,False
+ENV0073,19.889304,74.461282,VLG009,Fire,Low,2018-04-08,Flagged via citizen report app,ENV0073.jpg,True
+ENV0074,19.830862,74.479507,VLG087,Invasive Species,Critical,2020-05-28,Reported by local resident,ENV0074.jpg,False
+ENV0075,19.813393,74.37775,VLG018,Invasive Species,High,2024-02-23,Observed during field survey,ENV0075.jpg,False
+ENV0076,19.91539,74.520644,VLG002,Invasive Species,High,2017-01-02,Identified during river patrol,ENV0076.jpg,True
+ENV0077,19.874809,74.571501,VLG068,Sand Mining,Moderate,2024-08-20,Noted by forest officer,ENV0077.jpg,True
+ENV0078,19.903629,74.528265,VLG091,Water Pollution,Low,2019-02-27,Reported by local resident,ENV0078.jpg,True
+ENV0079,19.91604,74.424892,VLG076,Invasive Species,Critical,2020-10-07,Observed during field survey,ENV0079.jpg,True
+ENV0080,19.924583,74.43545,VLG086,Illegal Tree Cutting,Critical,2020-10-18,Reported by local resident,ENV0080.jpg,True
+ENV0081,19.93539,74.557183,VLG081,Fire,Moderate,2019-09-03,Reported by local resident,ENV0081.jpg,False
+ENV0082,19.84664,74.430446,VLG022,Pesticide Runoff,High,2018-05-09,Reported by local resident,ENV0082.jpg,False
+ENV0083,19.816196,74.436039,VLG045,Pesticide Runoff,Critical,2025-09-26,Flagged via citizen report app,ENV0083.jpg,False
+ENV0084,19.861202,74.371435,VLG034,Pesticide Runoff,Moderate,2025-11-26,Observed during field survey,ENV0084.jpg,False
+ENV0085,19.860784,74.424241,VLG061,Sewage Discharge,Moderate,2022-03-03,Noted by forest officer,ENV0085.jpg,False
+ENV0086,19.871868,74.433884,VLG088,Encroachment,Critical,2019-06-15,Identified during river patrol,ENV0086.jpg,True
+ENV0087,19.803377,74.503954,VLG029,Fire,Low,2019-04-02,Noted by forest officer,ENV0087.jpg,True
+ENV0088,19.884962,74.495571,VLG100,Pesticide Runoff,Low,2018-05-26,Flagged via citizen report app,ENV0088.jpg,True
+ENV0089,19.890952,74.455361,VLG100,Sand Mining,Moderate,2020-04-03,Reported by local resident,ENV0089.jpg,False
+ENV0090,19.869051,74.41165,VLG065,Plastic Waste,Moderate,2016-10-02,Observed during field survey,ENV0090.jpg,True
+ENV0091,19.808505,74.49761,VLG038,Pesticide Runoff,Critical,2025-03-02,Noted by forest officer,ENV0091.jpg,False
+ENV0092,19.946705,74.447858,VLG030,Fire,High,2023-07-09,Reported by local resident,ENV0092.jpg,True
+ENV0093,19.831883,74.540866,VLG024,Encroachment,Low,2017-11-06,Reported by local resident,ENV0093.jpg,False
+ENV0094,19.914783,74.501423,VLG030,Illegal Tree Cutting,Moderate,2024-02-25,Noted by forest officer,ENV0094.jpg,False
+ENV0095,19.86408,74.51391,VLG057,Illegal Tree Cutting,Moderate,2020-05-02,Flagged via citizen report app,ENV0095.jpg,True
+ENV0096,19.839832,74.451115,VLG068,Plastic Waste,Low,2024-01-11,Identified during river patrol,ENV0096.jpg,True
+ENV0097,19.844029,74.439482,VLG013,Encroachment,Critical,2024-07-15,Noted by forest officer,ENV0097.jpg,True
+ENV0098,19.800473,74.499326,VLG083,Soil Erosion,Low,2020-04-14,Observed during field survey,ENV0098.jpg,False
+ENV0099,19.947874,74.460971,VLG088,Water Pollution,Low,2021-04-22,Observed during field survey,ENV0099.jpg,False
+ENV0100,19.83826,74.356541,VLG067,Pesticide Runoff,Low,2018-11-17,Identified during river patrol,ENV0100.jpg,True
+ENV0101,19.852843,74.457387,VLG015,Fire,High,2025-04-25,Noted by forest officer,ENV0101.jpg,True
+ENV0102,19.885027,74.527216,VLG033,Invasive Species,Critical,2019-08-08,Identified during river patrol,ENV0102.jpg,False
+ENV0103,19.935275,74.540086,VLG059,Fire,High,2025-04-13,Identified during river patrol,ENV0103.jpg,True
+ENV0104,19.820476,74.40128,VLG043,Illegal Tree Cutting,Critical,2025-06-23,Noted by forest officer,ENV0104.jpg,True
+ENV0105,19.912645,74.36927,VLG061,Illegal Tree Cutting,Low,2017-08-08,Observed during field survey,ENV0105.jpg,True
+ENV0106,19.894535,74.371433,VLG076,Illegal Tree Cutting,Moderate,2025-06-25,Identified during river patrol,ENV0106.jpg,True
+ENV0107,19.879007,74.364738,VLG091,Plastic Waste,Critical,2025-08-10,Noted by forest officer,ENV0107.jpg,False
+ENV0108,19.941776,74.38697,VLG076,Plastic Waste,Low,2024-10-28,Observed during field survey,ENV0108.jpg,True
+ENV0109,19.882784,74.510975,VLG034,Fire,High,2023-07-05,Observed during field survey,ENV0109.jpg,False
+ENV0110,19.922112,74.432901,VLG060,Sewage Discharge,Moderate,2026-02-08,Observed during field survey,ENV0110.jpg,False
+ENV0111,19.885911,74.516199,VLG053,Pesticide Runoff,Moderate,2017-02-27,Flagged via citizen report app,ENV0111.jpg,True
+ENV0112,19.948784,74.380125,VLG083,Sand Mining,Critical,2019-11-27,Flagged via citizen report app,ENV0112.jpg,False
+ENV0113,19.86066,74.416897,VLG033,Encroachment,High,2018-01-27,Identified during river patrol,ENV0113.jpg,False
+ENV0114,19.874275,74.534491,VLG080,Fire,Moderate,2017-08-03,Noted by forest officer,ENV0114.jpg,False
+ENV0115,19.80693,74.493325,VLG022,Sewage Discharge,Moderate,2025-05-01,Flagged via citizen report app,ENV0115.jpg,True
+ENV0116,19.82125,74.44182,VLG031,Sewage Discharge,Critical,2025-06-08,Flagged via citizen report app,ENV0116.jpg,False
+ENV0117,19.895344,74.572062,VLG006,Encroachment,High,2017-09-22,Identified during river patrol,ENV0117.jpg,True
+ENV0118,19.803214,74.586605,VLG057,Plastic Waste,High,2020-01-30,Reported by local resident,ENV0118.jpg,False
+ENV0119,19.822556,74.420549,VLG032,Sewage Discharge,High,2020-07-28,Reported by local resident,ENV0119.jpg,False
+ENV0120,19.871277,74.438582,VLG018,Fire,High,2020-08-14,Reported by local resident,ENV0120.jpg,False
+ENV0121,19.832721,74.522399,VLG037,Pesticide Runoff,High,2019-06-03,Observed during field survey,ENV0121.jpg,False
+ENV0122,19.949109,74.499664,VLG083,Fire,Low,2023-02-12,Observed during field survey,ENV0122.jpg,False
+ENV0123,19.932036,74.473369,VLG080,Pesticide Runoff,Critical,2021-06-05,Noted by forest officer,ENV0123.jpg,True
+ENV0124,19.947777,74.360505,VLG079,Encroachment,Moderate,2024-10-25,Observed during field survey,ENV0124.jpg,True
+ENV0125,19.929894,74.484603,VLG068,Sewage Discharge,Moderate,2021-04-11,Observed during field survey,ENV0125.jpg,True
+ENV0126,19.801313,74.386269,VLG058,Soil Erosion,Critical,2020-11-24,Flagged via citizen report app,ENV0126.jpg,False
+ENV0127,19.811842,74.534226,VLG079,Pesticide Runoff,Moderate,2023-01-13,Identified during river patrol,ENV0127.jpg,False
+ENV0128,19.907985,74.356024,VLG027,Illegal Tree Cutting,High,2023-01-12,Observed during field survey,ENV0128.jpg,False
+ENV0129,19.824671,74.494993,VLG085,Plastic Waste,Low,2022-12-23,Noted by forest officer,ENV0129.jpg,False
+ENV0130,19.837353,74.534655,VLG076,Fire,Low,2026-07-07,Identified during river patrol,ENV0130.jpg,False
+ENV0131,19.92271,74.565589,VLG009,Plastic Waste,Moderate,2023-10-14,Observed during field survey,ENV0131.jpg,False
+ENV0132,19.854174,74.560673,VLG020,Illegal Tree Cutting,Critical,2018-04-22,Reported by local resident,ENV0132.jpg,False
+ENV0133,19.937765,74.543571,VLG086,Plastic Waste,High,2026-06-30,Observed during field survey,ENV0133.jpg,False
+ENV0134,19.83853,74.360727,VLG062,Sand Mining,Moderate,2020-09-12,Identified during river patrol,ENV0134.jpg,True
+ENV0135,19.874326,74.387887,VLG036,Fire,High,2017-11-03,Observed during field survey,ENV0135.jpg,True
+ENV0136,19.882436,74.599279,VLG063,Soil Erosion,Low,2021-01-01,Observed during field survey,ENV0136.jpg,False
+ENV0137,19.833962,74.481974,VLG025,Water Pollution,Moderate,2024-06-27,Identified during river patrol,ENV0137.jpg,False
+ENV0138,19.823627,74.554395,VLG083,Invasive Species,Low,2025-05-17,Reported by local resident,ENV0138.jpg,True
+ENV0139,19.904876,74.594427,VLG044,Soil Erosion,Low,2026-04-20,Observed during field survey,ENV0139.jpg,True
+ENV0140,19.815189,74.455976,VLG089,Water Pollution,Critical,2025-10-14,Observed during field survey,ENV0140.jpg,True
+ENV0141,19.924094,74.570637,VLG058,Illegal Tree Cutting,Moderate,2024-03-22,Noted by forest officer,ENV0141.jpg,False
+ENV0142,19.865446,74.563571,VLG019,Water Pollution,High,2019-08-20,Identified during river patrol,ENV0142.jpg,True
+ENV0143,19.949341,74.521606,VLG036,Pesticide Runoff,Critical,2019-11-16,Reported by local resident,ENV0143.jpg,False
+ENV0144,19.935707,74.541863,VLG005,Sewage Discharge,Low,2021-06-19,Observed during field survey,ENV0144.jpg,True
+ENV0145,19.881378,74.59503,VLG096,Sewage Discharge,Moderate,2019-05-29,Observed during field survey,ENV0145.jpg,False
+ENV0146,19.827585,74.449722,VLG047,Illegal Tree Cutting,High,2019-12-14,Reported by local resident,ENV0146.jpg,False
+ENV0147,19.936167,74.51828,VLG087,Soil Erosion,Critical,2025-01-18,Reported by local resident,ENV0147.jpg,True
+ENV0148,19.807528,74.476372,VLG034,Invasive Species,Low,2018-06-14,Identified during river patrol,ENV0148.jpg,False
+ENV0149,19.84293,74.361229,VLG022,Pesticide Runoff,High,2019-09-20,Identified during river patrol,ENV0149.jpg,False
+ENV0150,19.87498,74.539555,VLG082,Invasive Species,High,2018-11-18,Identified during river patrol,ENV0150.jpg,False
+ENV0151,19.869251,74.375058,VLG070,Pesticide Runoff,Moderate,2016-10-23,Observed during field survey,ENV0151.jpg,False
+ENV0152,19.89537,74.585864,VLG072,Encroachment,High,2018-02-07,Reported by local resident,ENV0152.jpg,True
+ENV0153,19.891119,74.587252,VLG041,Pesticide Runoff,High,2020-08-14,Identified during river patrol,ENV0153.jpg,False
+ENV0154,19.905446,74.411217,VLG025,Illegal Tree Cutting,Moderate,2018-06-24,Identified during river patrol,ENV0154.jpg,True
+ENV0155,19.815047,74.488072,VLG031,Plastic Waste,High,2024-04-12,Noted by forest officer,ENV0155.jpg,True
+ENV0156,19.910003,74.441398,VLG019,Encroachment,Low,2024-03-28,Observed during field survey,ENV0156.jpg,True
+ENV0157,19.94133,74.421696,VLG031,Invasive Species,High,2019-07-02,Observed during field survey,ENV0157.jpg,False
+ENV0158,19.842681,74.555638,VLG037,Pesticide Runoff,Moderate,2020-06-19,Noted by forest officer,ENV0158.jpg,False
+ENV0159,19.806111,74.360561,VLG035,Water Pollution,Critical,2023-02-15,Observed during field survey,ENV0159.jpg,True
+ENV0160,19.814501,74.355509,VLG014,Pesticide Runoff,Moderate,2017-09-18,Identified during river patrol,ENV0160.jpg,False
+ENV0161,19.932288,74.40421,VLG094,Invasive Species,Moderate,2025-09-18,Identified during river patrol,ENV0161.jpg,True
+ENV0162,19.835227,74.492771,VLG095,Sand Mining,Critical,2022-10-18,Reported by local resident,ENV0162.jpg,True
+ENV0163,19.80552,74.490962,VLG031,Plastic Waste,Low,2025-06-07,Reported by local resident,ENV0163.jpg,False
+ENV0164,19.800803,74.355374,VLG088,Water Pollution,Moderate,2024-11-09,Flagged via citizen report app,ENV0164.jpg,False
+ENV0165,19.911196,74.463584,VLG046,Water Pollution,Moderate,2018-07-18,Identified during river patrol,ENV0165.jpg,False
+ENV0166,19.819211,74.403742,VLG015,Fire,Low,2020-05-15,Observed during field survey,ENV0166.jpg,True
+ENV0167,19.902669,74.522698,VLG019,Pesticide Runoff,Critical,2024-12-31,Observed during field survey,ENV0167.jpg,True
+ENV0168,19.802397,74.514249,VLG091,Illegal Tree Cutting,Critical,2016-11-29,Reported by local resident,ENV0168.jpg,True
+ENV0169,19.901481,74.439209,VLG009,Encroachment,Low,2024-01-05,Identified during river patrol,ENV0169.jpg,False
+ENV0170,19.93186,74.539961,VLG029,Water Pollution,Low,2025-02-15,Noted by forest officer,ENV0170.jpg,False
+ENV0171,19.816474,74.552516,VLG071,Pesticide Runoff,Low,2020-07-19,Observed during field survey,ENV0171.jpg,False
+ENV0172,19.921812,74.392189,VLG007,Pesticide Runoff,Critical,2022-01-19,Noted by forest officer,ENV0172.jpg,False
+ENV0173,19.89864,74.572453,VLG059,Sewage Discharge,High,2024-08-08,Reported by local resident,ENV0173.jpg,False
+ENV0174,19.903713,74.403941,VLG095,Pesticide Runoff,Critical,2017-07-19,Flagged via citizen report app,ENV0174.jpg,False
+ENV0175,19.881474,74.568124,VLG026,Sand Mining,Moderate,2018-07-15,Identified during river patrol,ENV0175.jpg,True
+ENV0176,19.922523,74.549891,VLG066,Fire,Moderate,2020-09-01,Flagged via citizen report app,ENV0176.jpg,False
+ENV0177,19.948947,74.390639,VLG042,Soil Erosion,Low,2023-01-27,Reported by local resident,ENV0177.jpg,True
+ENV0178,19.89245,74.559348,VLG100,Plastic Waste,Moderate,2025-11-30,Noted by forest officer,ENV0178.jpg,False
+ENV0179,19.896924,74.352667,VLG063,Illegal Tree Cutting,High,2019-04-28,Flagged via citizen report app,ENV0179.jpg,False
+ENV0180,19.878668,74.39124,VLG066,Sewage Discharge,Low,2026-04-08,Observed during field survey,ENV0180.jpg,True
+ENV0181,19.926873,74.409437,VLG060,Water Pollution,Critical,2019-09-16,Reported by local resident,ENV0181.jpg,False
+ENV0182,19.826347,74.439608,VLG068,Plastic Waste,Low,2025-11-11,Observed during field survey,ENV0182.jpg,True
+ENV0183,19.874687,74.486085,VLG072,Water Pollution,Critical,2018-05-14,Flagged via citizen report app,ENV0183.jpg,False
+ENV0184,19.940063,74.50017,VLG072,Sewage Discharge,Critical,2025-06-11,Noted by forest officer,ENV0184.jpg,True
+ENV0185,19.84948,74.352635,VLG043,Illegal Tree Cutting,High,2026-01-07,Reported by local resident,ENV0185.jpg,True
+ENV0186,19.943373,74.593121,VLG065,Invasive Species,High,2022-01-18,Identified during river patrol,ENV0186.jpg,False
+ENV0187,19.943535,74.415184,VLG009,Sand Mining,Low,2021-02-06,Reported by local resident,ENV0187.jpg,True
+ENV0188,19.834362,74.404789,VLG082,Plastic Waste,Critical,2017-02-28,Identified during river patrol,ENV0188.jpg,False
+ENV0189,19.892475,74.579622,VLG054,Sand Mining,Low,2019-04-30,Noted by forest officer,ENV0189.jpg,True
+ENV0190,19.811718,74.574511,VLG070,Sewage Discharge,Low,2021-03-10,Reported by local resident,ENV0190.jpg,True
+ENV0191,19.942375,74.400443,VLG010,Pesticide Runoff,High,2023-03-24,Flagged via citizen report app,ENV0191.jpg,True
+ENV0192,19.883956,74.443542,VLG002,Pesticide Runoff,Moderate,2016-10-14,Observed during field survey,ENV0192.jpg,True
+ENV0193,19.838739,74.54199,VLG046,Sewage Discharge,Moderate,2023-04-18,Observed during field survey,ENV0193.jpg,True
+ENV0194,19.94342,74.531884,VLG005,Plastic Waste,Critical,2018-05-20,Reported by local resident,ENV0194.jpg,True
+ENV0195,19.841715,74.48822,VLG079,Encroachment,High,2026-03-21,Reported by local resident,ENV0195.jpg,False
+ENV0196,19.806389,74.4979,VLG034,Water Pollution,High,2018-10-12,Flagged via citizen report app,ENV0196.jpg,False
+ENV0197,19.933117,74.512168,VLG047,Invasive Species,Moderate,2019-08-18,Noted by forest officer,ENV0197.jpg,True
+ENV0198,19.849896,74.503378,VLG030,Water Pollution,High,2025-03-26,Reported by local resident,ENV0198.jpg,True
+ENV0199,19.824858,74.412511,VLG049,Illegal Tree Cutting,Low,2024-04-14,Noted by forest officer,ENV0199.jpg,True
+ENV0200,19.847624,74.495496,VLG072,Fire,Moderate,2019-07-22,Observed during field survey,ENV0200.jpg,False
+ENV0201,19.817277,74.577805,VLG033,Encroachment,Critical,2022-10-26,Identified during river patrol,ENV0201.jpg,True
+ENV0202,19.867948,74.481553,VLG061,Water Pollution,Critical,2016-08-14,Observed during field survey,ENV0202.jpg,False
+ENV0203,19.860376,74.521377,VLG039,Pesticide Runoff,Moderate,2025-03-26,Observed during field survey,ENV0203.jpg,False
+ENV0204,19.915033,74.459771,VLG086,Pesticide Runoff,Moderate,2018-03-28,Noted by forest officer,ENV0204.jpg,False
+ENV0205,19.901826,74.541086,VLG053,Encroachment,Moderate,2020-09-06,Identified during river patrol,ENV0205.jpg,False
+ENV0206,19.831323,74.52985,VLG024,Plastic Waste,Critical,2018-12-22,Flagged via citizen report app,ENV0206.jpg,True
+ENV0207,19.838772,74.534319,VLG038,Soil Erosion,Critical,2019-05-13,Noted by forest officer,ENV0207.jpg,False
+ENV0208,19.947135,74.544707,VLG020,Pesticide Runoff,Moderate,2018-06-24,Noted by forest officer,ENV0208.jpg,False
+ENV0209,19.803904,74.359654,VLG005,Plastic Waste,Moderate,2020-11-06,Noted by forest officer,ENV0209.jpg,True
+ENV0210,19.811182,74.445579,VLG037,Water Pollution,Low,2025-07-13,Noted by forest officer,ENV0210.jpg,False
+ENV0211,19.914741,74.504093,VLG063,Fire,Low,2023-07-13,Reported by local resident,ENV0211.jpg,True
+ENV0212,19.876548,74.459714,VLG005,Soil Erosion,Low,2022-12-16,Noted by forest officer,ENV0212.jpg,False
+ENV0213,19.896075,74.393625,VLG029,Invasive Species,Moderate,2024-07-31,Observed during field survey,ENV0213.jpg,True
+ENV0214,19.94933,74.516257,VLG014,Invasive Species,Critical,2016-08-10,Identified during river patrol,ENV0214.jpg,False
+ENV0215,19.857587,74.519727,VLG068,Illegal Tree Cutting,High,2021-08-25,Reported by local resident,ENV0215.jpg,False
+ENV0216,19.916343,74.519491,VLG045,Illegal Tree Cutting,Critical,2025-11-12,Observed during field survey,ENV0216.jpg,True
+ENV0217,19.87014,74.371323,VLG051,Fire,Critical,2019-11-06,Observed during field survey,ENV0217.jpg,True
+ENV0218,19.849139,74.376588,VLG100,Soil Erosion,Moderate,2023-04-06,Noted by forest officer,ENV0218.jpg,False
+ENV0219,19.9149,74.521819,VLG038,Encroachment,Moderate,2023-05-04,Flagged via citizen report app,ENV0219.jpg,False
+ENV0220,19.81961,74.405844,VLG003,Illegal Tree Cutting,Critical,2019-10-27,Identified during river patrol,ENV0220.jpg,False
+ENV0221,19.806466,74.553542,VLG060,Encroachment,High,2017-05-11,Reported by local resident,ENV0221.jpg,False
+ENV0222,19.842643,74.530048,VLG034,Water Pollution,Critical,2025-11-06,Flagged via citizen report app,ENV0222.jpg,False
+ENV0223,19.891652,74.599712,VLG069,Water Pollution,Moderate,2023-04-14,Identified during river patrol,ENV0223.jpg,False
+ENV0224,19.922861,74.497633,VLG098,Pesticide Runoff,Low,2024-02-22,Reported by local resident,ENV0224.jpg,False
+ENV0225,19.905656,74.575599,VLG031,Sewage Discharge,High,2018-08-10,Observed during field survey,ENV0225.jpg,True
+ENV0226,19.822803,74.519119,VLG098,Pesticide Runoff,Moderate,2025-01-18,Identified during river patrol,ENV0226.jpg,True
+ENV0227,19.884465,74.587864,VLG031,Soil Erosion,Moderate,2020-06-06,Flagged via citizen report app,ENV0227.jpg,True
+ENV0228,19.943222,74.43847,VLG026,Fire,High,2021-01-26,Noted by forest officer,ENV0228.jpg,False
+ENV0229,19.915706,74.464666,VLG099,Invasive Species,Critical,2021-04-26,Flagged via citizen report app,ENV0229.jpg,False
+ENV0230,19.869709,74.390303,VLG087,Fire,High,2020-08-22,Identified during river patrol,ENV0230.jpg,False
+ENV0231,19.923198,74.361343,VLG037,Invasive Species,High,2022-11-03,Flagged via citizen report app,ENV0231.jpg,False
+ENV0232,19.861579,74.518571,VLG018,Water Pollution,Low,2020-08-02,Flagged via citizen report app,ENV0232.jpg,True
+ENV0233,19.858094,74.492631,VLG098,Water Pollution,Moderate,2016-10-23,Flagged via citizen report app,ENV0233.jpg,False
+ENV0234,19.914864,74.412047,VLG043,Invasive Species,High,2024-01-01,Noted by forest officer,ENV0234.jpg,False
+ENV0235,19.914994,74.592034,VLG009,Illegal Tree Cutting,High,2017-08-06,Identified during river patrol,ENV0235.jpg,True
+ENV0236,19.899772,74.524494,VLG048,Fire,Low,2017-12-16,Noted by forest officer,ENV0236.jpg,False
+ENV0237,19.80414,74.395731,VLG088,Encroachment,Low,2022-11-05,Reported by local resident,ENV0237.jpg,False
+ENV0238,19.934866,74.511427,VLG047,Sewage Discharge,High,2026-03-03,Observed during field survey,ENV0238.jpg,True
+ENV0239,19.817652,74.460128,VLG049,Illegal Tree Cutting,Low,2021-09-22,Observed during field survey,ENV0239.jpg,False
+ENV0240,19.814091,74.452868,VLG059,Sand Mining,Low,2023-11-17,Identified during river patrol,ENV0240.jpg,False
+ENV0241,19.819111,74.480863,VLG059,Fire,Critical,2022-12-22,Flagged via citizen report app,ENV0241.jpg,False
+ENV0242,19.804874,74.427259,VLG076,Illegal Tree Cutting,High,2017-05-28,Flagged via citizen report app,ENV0242.jpg,True
+ENV0243,19.812479,74.574423,VLG082,Soil Erosion,Critical,2019-11-26,Flagged via citizen report app,ENV0243.jpg,True
+ENV0244,19.927833,74.355544,VLG020,Fire,Moderate,2021-08-24,Reported by local resident,ENV0244.jpg,True
+ENV0245,19.874081,74.41381,VLG077,Invasive Species,Critical,2021-05-25,Reported by local resident,ENV0245.jpg,False
+ENV0246,19.843065,74.578734,VLG037,Fire,Low,2025-01-08,Observed during field survey,ENV0246.jpg,True
+ENV0247,19.844952,74.476612,VLG014,Water Pollution,Critical,2023-05-05,Noted by forest officer,ENV0247.jpg,False
+ENV0248,19.936426,74.567883,VLG067,Encroachment,Critical,2018-06-25,Noted by forest officer,ENV0248.jpg,True
+ENV0249,19.924523,74.440926,VLG078,Fire,Critical,2024-09-09,Identified during river patrol,ENV0249.jpg,True
+ENV0250,19.849878,74.497809,VLG012,Sewage Discharge,Critical,2024-10-07,Observed during field survey,ENV0250.jpg,False
+ENV0251,19.908486,74.3751,VLG076,Encroachment,High,2024-12-24,Noted by forest officer,ENV0251.jpg,False
+ENV0252,19.922455,74.52434,VLG046,Encroachment,High,2018-06-03,Observed during field survey,ENV0252.jpg,False
+ENV0253,19.826799,74.509002,VLG054,Sewage Discharge,Moderate,2018-01-08,Flagged via citizen report app,ENV0253.jpg,False
+ENV0254,19.878646,74.593863,VLG078,Encroachment,Critical,2017-07-14,Observed during field survey,ENV0254.jpg,False
+ENV0255,19.929562,74.379363,VLG027,Water Pollution,Low,2023-07-22,Observed during field survey,ENV0255.jpg,True
+ENV0256,19.884606,74.398451,VLG012,Soil Erosion,Low,2016-08-16,Identified during river patrol,ENV0256.jpg,False
+ENV0257,19.825557,74.565439,VLG015,Water Pollution,Moderate,2016-10-06,Flagged via citizen report app,ENV0257.jpg,True
+ENV0258,19.823805,74.57592,VLG052,Encroachment,Critical,2025-03-30,Noted by forest officer,ENV0258.jpg,True
+ENV0259,19.871059,74.496226,VLG040,Plastic Waste,Critical,2025-01-05,Noted by forest officer,ENV0259.jpg,True
+ENV0260,19.916473,74.411516,VLG067,Sand Mining,Critical,2022-08-08,Flagged via citizen report app,ENV0260.jpg,False
+ENV0261,19.884126,74.388999,VLG016,Sand Mining,High,2023-11-29,Reported by local resident,ENV0261.jpg,True
+ENV0262,19.82583,74.37053,VLG078,Pesticide Runoff,Moderate,2025-01-16,Reported by local resident,ENV0262.jpg,True
+ENV0263,19.949375,74.430702,VLG004,Encroachment,Critical,2021-10-25,Identified during river patrol,ENV0263.jpg,False
+ENV0264,19.93682,74.583315,VLG002,Water Pollution,Critical,2022-12-21,Observed during field survey,ENV0264.jpg,True
+ENV0265,19.915936,74.419132,VLG016,Pesticide Runoff,High,2024-10-17,Identified during river patrol,ENV0265.jpg,True
+ENV0266,19.863579,74.437916,VLG092,Illegal Tree Cutting,High,2024-05-06,Observed during field survey,ENV0266.jpg,True
+ENV0267,19.86394,74.377695,VLG078,Soil Erosion,Moderate,2021-06-17,Flagged via citizen report app,ENV0267.jpg,False
+ENV0268,19.848712,74.514979,VLG032,Fire,Low,2018-10-24,Flagged via citizen report app,ENV0268.jpg,False
+ENV0269,19.882631,74.558596,VLG017,Fire,Low,2017-05-04,Flagged via citizen report app,ENV0269.jpg,False
+ENV0270,19.911028,74.579081,VLG022,Illegal Tree Cutting,Low,2025-03-11,Reported by local resident,ENV0270.jpg,False
+ENV0271,19.810438,74.524859,VLG090,Sewage Discharge,Critical,2023-11-10,Observed during field survey,ENV0271.jpg,True
+ENV0272,19.917913,74.377399,VLG032,Plastic Waste,Critical,2021-10-13,Identified during river patrol,ENV0272.jpg,True
+ENV0273,19.916869,74.517761,VLG026,Fire,High,2023-10-18,Identified during river patrol,ENV0273.jpg,False
+ENV0274,19.898078,74.488331,VLG076,Sewage Discharge,Critical,2026-04-28,Identified during river patrol,ENV0274.jpg,False
+ENV0275,19.91711,74.393985,VLG087,Pesticide Runoff,High,2018-02-05,Observed during field survey,ENV0275.jpg,True
+ENV0276,19.802751,74.546534,VLG098,Sand Mining,Low,2024-06-27,Identified during river patrol,ENV0276.jpg,False
+ENV0277,19.913073,74.374758,VLG008,Sewage Discharge,Critical,2023-01-11,Noted by forest officer,ENV0277.jpg,True
+ENV0278,19.944763,74.594625,VLG084,Sand Mining,Moderate,2021-11-29,Noted by forest officer,ENV0278.jpg,True
+ENV0279,19.88848,74.378579,VLG046,Pesticide Runoff,High,2022-08-19,Flagged via citizen report app,ENV0279.jpg,True
+ENV0280,19.896454,74.598382,VLG038,Pesticide Runoff,Moderate,2020-11-25,Flagged via citizen report app,ENV0280.jpg,False
+ENV0281,19.865134,74.453085,VLG040,Sewage Discharge,Moderate,2022-08-27,Identified during river patrol,ENV0281.jpg,False
+ENV0282,19.815056,74.352686,VLG074,Pesticide Runoff,Low,2016-09-28,Observed during field survey,ENV0282.jpg,False
+ENV0283,19.854352,74.488974,VLG080,Pesticide Runoff,Low,2017-05-11,Reported by local resident,ENV0283.jpg,True
+ENV0284,19.899858,74.595191,VLG095,Encroachment,Critical,2017-07-11,Identified during river patrol,ENV0284.jpg,True
+ENV0285,19.887359,74.396969,VLG084,Encroachment,Critical,2016-08-10,Identified during river patrol,ENV0285.jpg,False
+ENV0286,19.933736,74.499842,VLG003,Water Pollution,Critical,2018-01-24,Identified during river patrol,ENV0286.jpg,False
+ENV0287,19.810334,74.431763,VLG019,Fire,High,2016-12-23,Observed during field survey,ENV0287.jpg,False
+ENV0288,19.947197,74.447084,VLG042,Sewage Discharge,Critical,2022-05-21,Identified during river patrol,ENV0288.jpg,False
+ENV0289,19.806355,74.57029,VLG035,Invasive Species,Low,2017-06-18,Flagged via citizen report app,ENV0289.jpg,False
+ENV0290,19.830874,74.507853,VLG071,Sand Mining,High,2024-04-11,Flagged via citizen report app,ENV0290.jpg,True
+ENV0291,19.877746,74.434806,VLG094,Water Pollution,Critical,2020-09-01,Identified during river patrol,ENV0291.jpg,False
+ENV0292,19.926153,74.474279,VLG092,Plastic Waste,Moderate,2019-01-03,Flagged via citizen report app,ENV0292.jpg,True
+ENV0293,19.863215,74.387432,VLG060,Pesticide Runoff,Moderate,2024-09-17,Observed during field survey,ENV0293.jpg,False
+ENV0294,19.89696,74.410992,VLG024,Pesticide Runoff,Low,2026-06-15,Flagged via citizen report app,ENV0294.jpg,True
+ENV0295,19.880805,74.446445,VLG095,Plastic Waste,Moderate,2019-02-18,Identified during river patrol,ENV0295.jpg,False
+ENV0296,19.855854,74.592159,VLG080,Pesticide Runoff,Moderate,2025-12-04,Reported by local resident,ENV0296.jpg,False
+ENV0297,19.853758,74.357025,VLG030,Illegal Tree Cutting,High,2018-12-19,Reported by local resident,ENV0297.jpg,True
+ENV0298,19.870172,74.531087,VLG025,Sewage Discharge,Critical,2022-09-27,Identified during river patrol,ENV0298.jpg,False
+ENV0299,19.828996,74.573601,VLG059,Sewage Discharge,Low,2026-05-31,Noted by forest officer,ENV0299.jpg,True
+ENV0300,19.82124,74.58851,VLG023,Plastic Waste,Low,2022-10-21,Noted by forest officer,ENV0300.jpg,True
+ENV0301,19.842258,74.477944,VLG052,Invasive Species,Low,2021-03-18,Noted by forest officer,ENV0301.jpg,True
+ENV0302,19.900147,74.432642,VLG092,Invasive Species,Critical,2020-03-14,Reported by local resident,ENV0302.jpg,False
+ENV0303,19.944476,74.551406,VLG092,Soil Erosion,Moderate,2017-08-21,Observed during field survey,ENV0303.jpg,False
+ENV0304,19.92205,74.558675,VLG093,Plastic Waste,Low,2025-11-13,Noted by forest officer,ENV0304.jpg,False
+ENV0305,19.94334,74.517271,VLG012,Invasive Species,Moderate,2021-05-07,Observed during field survey,ENV0305.jpg,True
+ENV0306,19.81815,74.354952,VLG099,Sand Mining,Critical,2018-01-07,Observed during field survey,ENV0306.jpg,False
+ENV0307,19.921382,74.444625,VLG007,Sand Mining,High,2020-03-19,Identified during river patrol,ENV0307.jpg,True
+ENV0308,19.907422,74.576034,VLG051,Pesticide Runoff,Critical,2017-04-27,Flagged via citizen report app,ENV0308.jpg,True
+ENV0309,19.845038,74.573242,VLG076,Water Pollution,High,2025-11-11,Identified during river patrol,ENV0309.jpg,False
+ENV0310,19.937451,74.385612,VLG030,Plastic Waste,Critical,2022-11-06,Identified during river patrol,ENV0310.jpg,False
+ENV0311,19.845056,74.512334,VLG009,Illegal Tree Cutting,Moderate,2021-10-28,Noted by forest officer,ENV0311.jpg,True
+ENV0312,19.859285,74.565346,VLG067,Water Pollution,High,2018-08-26,Identified during river patrol,ENV0312.jpg,False
+ENV0313,19.887244,74.512379,VLG055,Illegal Tree Cutting,Low,2017-04-24,Flagged via citizen report app,ENV0313.jpg,True
+ENV0314,19.93082,74.592212,VLG050,Illegal Tree Cutting,High,2020-03-10,Identified during river patrol,ENV0314.jpg,False
+ENV0315,19.898303,74.499041,VLG070,Sewage Discharge,Critical,2018-11-02,Flagged via citizen report app,ENV0315.jpg,True
+ENV0316,19.91491,74.461176,VLG063,Water Pollution,Low,2025-02-19,Reported by local resident,ENV0316.jpg,False
+ENV0317,19.904072,74.445314,VLG096,Sand Mining,High,2017-07-31,Noted by forest officer,ENV0317.jpg,False
+ENV0318,19.84098,74.44837,VLG016,Encroachment,Low,2026-04-26,Noted by forest officer,ENV0318.jpg,False
+ENV0319,19.921253,74.494518,VLG099,Pesticide Runoff,Moderate,2020-04-24,Observed during field survey,ENV0319.jpg,True
+ENV0320,19.908185,74.468005,VLG075,Illegal Tree Cutting,Low,2021-12-19,Observed during field survey,ENV0320.jpg,True
+ENV0321,19.912525,74.396763,VLG047,Illegal Tree Cutting,High,2018-03-20,Identified during river patrol,ENV0321.jpg,True
+ENV0322,19.817501,74.383064,VLG047,Illegal Tree Cutting,Low,2026-03-14,Observed during field survey,ENV0322.jpg,True
+ENV0323,19.829464,74.369376,VLG053,Plastic Waste,Critical,2023-05-28,Noted by forest officer,ENV0323.jpg,True
+ENV0324,19.904023,74.543677,VLG011,Plastic Waste,Critical,2017-12-25,Flagged via citizen report app,ENV0324.jpg,True
+ENV0325,19.808502,74.416948,VLG059,Illegal Tree Cutting,High,2018-09-22,Identified during river patrol,ENV0325.jpg,False
+ENV0326,19.931991,74.419516,VLG098,Soil Erosion,High,2024-07-30,Observed during field survey,ENV0326.jpg,True
+ENV0327,19.898842,74.449812,VLG005,Pesticide Runoff,Low,2023-03-27,Observed during field survey,ENV0327.jpg,False
+ENV0328,19.933925,74.501949,VLG082,Soil Erosion,Moderate,2017-05-12,Observed during field survey,ENV0328.jpg,False
+ENV0329,19.804819,74.500097,VLG003,Fire,High,2024-02-16,Identified during river patrol,ENV0329.jpg,False
+ENV0330,19.879463,74.507669,VLG034,Sewage Discharge,High,2025-03-31,Noted by forest officer,ENV0330.jpg,False
+ENV0331,19.862469,74.436083,VLG092,Water Pollution,Moderate,2020-02-25,Observed during field survey,ENV0331.jpg,True
+ENV0332,19.922068,74.359311,VLG069,Soil Erosion,Critical,2017-02-07,Noted by forest officer,ENV0332.jpg,True
+ENV0333,19.908575,74.461187,VLG092,Sewage Discharge,Critical,2018-08-02,Identified during river patrol,ENV0333.jpg,True
+ENV0334,19.880569,74.427627,VLG001,Plastic Waste,High,2026-04-23,Flagged via citizen report app,ENV0334.jpg,False
+ENV0335,19.89544,74.505197,VLG036,Water Pollution,Moderate,2025-03-05,Identified during river patrol,ENV0335.jpg,True
+ENV0336,19.895489,74.576968,VLG053,Illegal Tree Cutting,Moderate,2018-06-02,Identified during river patrol,ENV0336.jpg,True
+ENV0337,19.937582,74.439437,VLG033,Sand Mining,Moderate,2018-07-19,Flagged via citizen report app,ENV0337.jpg,False
+ENV0338,19.872663,74.475501,VLG084,Sand Mining,Low,2025-11-20,Observed during field survey,ENV0338.jpg,True
+ENV0339,19.886737,74.533844,VLG100,Soil Erosion,Critical,2022-09-03,Reported by local resident,ENV0339.jpg,True
+ENV0340,19.92947,74.440375,VLG036,Pesticide Runoff,Critical,2025-04-25,Reported by local resident,ENV0340.jpg,False
+ENV0341,19.853062,74.44241,VLG042,Illegal Tree Cutting,Critical,2023-07-27,Flagged via citizen report app,ENV0341.jpg,False
+ENV0342,19.885006,74.473181,VLG017,Pesticide Runoff,Critical,2022-11-07,Noted by forest officer,ENV0342.jpg,True
+ENV0343,19.937001,74.552097,VLG033,Sewage Discharge,Moderate,2016-08-27,Identified during river patrol,ENV0343.jpg,True
+ENV0344,19.829624,74.425881,VLG055,Invasive Species,Moderate,2019-01-22,Observed during field survey,ENV0344.jpg,True
+ENV0345,19.901835,74.443724,VLG074,Plastic Waste,High,2021-09-02,Reported by local resident,ENV0345.jpg,True
+ENV0346,19.828783,74.37225,VLG016,Encroachment,Low,2023-12-10,Identified during river patrol,ENV0346.jpg,False
+ENV0347,19.89793,74.562562,VLG088,Fire,High,2020-11-18,Flagged via citizen report app,ENV0347.jpg,False
+ENV0348,19.84854,74.383686,VLG068,Sand Mining,Moderate,2020-05-01,Flagged via citizen report app,ENV0348.jpg,False
+ENV0349,19.936998,74.513408,VLG066,Pesticide Runoff,Critical,2016-08-28,Identified during river patrol,ENV0349.jpg,False
+ENV0350,19.931211,74.354128,VLG077,Fire,Low,2021-02-17,Reported by local resident,ENV0350.jpg,False
+ENV0351,19.92739,74.537384,VLG011,Soil Erosion,Moderate,2016-11-09,Identified during river patrol,ENV0351.jpg,True
+ENV0352,19.908508,74.52591,VLG066,Encroachment,Low,2017-07-04,Reported by local resident,ENV0352.jpg,True
+ENV0353,19.871732,74.545416,VLG038,Encroachment,High,2022-07-08,Reported by local resident,ENV0353.jpg,False
+ENV0354,19.842214,74.505957,VLG039,Invasive Species,High,2021-11-15,Noted by forest officer,ENV0354.jpg,False
+ENV0355,19.85149,74.370287,VLG045,Encroachment,Low,2021-05-04,Noted by forest officer,ENV0355.jpg,True
+ENV0356,19.826557,74.532697,VLG065,Invasive Species,Moderate,2019-12-01,Reported by local resident,ENV0356.jpg,False
+ENV0357,19.940949,74.382099,VLG041,Encroachment,Low,2023-09-02,Observed during field survey,ENV0357.jpg,False
+ENV0358,19.908628,74.588753,VLG065,Invasive Species,Moderate,2016-12-22,Observed during field survey,ENV0358.jpg,False
+ENV0359,19.899987,74.476673,VLG054,Plastic Waste,Low,2025-09-10,Observed during field survey,ENV0359.jpg,False
+ENV0360,19.894471,74.567905,VLG074,Fire,Low,2020-09-22,Identified during river patrol,ENV0360.jpg,False
+ENV0361,19.909925,74.35568,VLG054,Encroachment,Low,2020-11-26,Observed during field survey,ENV0361.jpg,True
+ENV0362,19.933594,74.591607,VLG001,Illegal Tree Cutting,High,2024-05-28,Flagged via citizen report app,ENV0362.jpg,False
+ENV0363,19.810696,74.356981,VLG036,Pesticide Runoff,Moderate,2017-04-04,Identified during river patrol,ENV0363.jpg,True
+ENV0364,19.942757,74.364444,VLG032,Sewage Discharge,High,2025-06-05,Identified during river patrol,ENV0364.jpg,False
+ENV0365,19.825063,74.471254,VLG062,Pesticide Runoff,Critical,2021-08-10,Identified during river patrol,ENV0365.jpg,True
+ENV0366,19.934546,74.576913,VLG048,Sand Mining,Moderate,2021-07-06,Identified during river patrol,ENV0366.jpg,True
+ENV0367,19.850273,74.373764,VLG005,Water Pollution,Moderate,2017-06-14,Observed during field survey,ENV0367.jpg,False
+ENV0368,19.882849,74.397712,VLG026,Illegal Tree Cutting,Critical,2020-06-24,Noted by forest officer,ENV0368.jpg,False
+ENV0369,19.859503,74.58443,VLG008,Soil Erosion,High,2025-11-03,Flagged via citizen report app,ENV0369.jpg,False
+ENV0370,19.819535,74.355449,VLG025,Water Pollution,Critical,2017-05-14,Observed during field survey,ENV0370.jpg,True
+ENV0371,19.882078,74.522082,VLG050,Soil Erosion,Moderate,2023-03-21,Noted by forest officer,ENV0371.jpg,True
+ENV0372,19.83106,74.389402,VLG061,Sewage Discharge,Critical,2018-09-01,Noted by forest officer,ENV0372.jpg,False
+ENV0373,19.883625,74.41855,VLG077,Sand Mining,Critical,2018-06-28,Reported by local resident,ENV0373.jpg,True
+ENV0374,19.909179,74.441153,VLG005,Water Pollution,Low,2017-03-14,Identified during river patrol,ENV0374.jpg,False
+ENV0375,19.834461,74.507438,VLG100,Invasive Species,Low,2021-06-30,Identified during river patrol,ENV0375.jpg,True
+ENV0376,19.801139,74.453982,VLG074,Fire,Critical,2018-04-13,Observed during field survey,ENV0376.jpg,True
+ENV0377,19.941855,74.499905,VLG058,Water Pollution,Low,2025-03-11,Observed during field survey,ENV0377.jpg,True
+ENV0378,19.93135,74.508275,VLG095,Sewage Discharge,High,2026-01-15,Flagged via citizen report app,ENV0378.jpg,False
+ENV0379,19.868916,74.595024,VLG075,Pesticide Runoff,Low,2020-06-16,Flagged via citizen report app,ENV0379.jpg,False
+ENV0380,19.840666,74.595799,VLG058,Sewage Discharge,High,2022-08-25,Observed during field survey,ENV0380.jpg,False
+ENV0381,19.915278,74.575188,VLG041,Sand Mining,High,2024-09-01,Noted by forest officer,ENV0381.jpg,False
+ENV0382,19.909932,74.512331,VLG058,Soil Erosion,Low,2019-07-01,Flagged via citizen report app,ENV0382.jpg,True
+ENV0383,19.831419,74.572584,VLG007,Invasive Species,Low,2018-12-17,Observed during field survey,ENV0383.jpg,False
+ENV0384,19.845607,74.376287,VLG042,Illegal Tree Cutting,Moderate,2019-02-20,Identified during river patrol,ENV0384.jpg,True
+ENV0385,19.847592,74.507267,VLG030,Water Pollution,Critical,2026-01-09,Noted by forest officer,ENV0385.jpg,True
+ENV0386,19.826339,74.424304,VLG087,Water Pollution,Critical,2023-10-02,Flagged via citizen report app,ENV0386.jpg,True
+ENV0387,19.937052,74.599198,VLG027,Fire,Critical,2024-10-08,Noted by forest officer,ENV0387.jpg,False
+ENV0388,19.898084,74.492913,VLG022,Water Pollution,Low,2023-07-15,Reported by local resident,ENV0388.jpg,False
+ENV0389,19.843888,74.378414,VLG060,Encroachment,High,2024-05-15,Reported by local resident,ENV0389.jpg,True
+ENV0390,19.948309,74.597462,VLG044,Sand Mining,Moderate,2020-11-03,Observed during field survey,ENV0390.jpg,False
+ENV0391,19.90325,74.415132,VLG040,Sewage Discharge,Low,2018-05-02,Noted by forest officer,ENV0391.jpg,True
+ENV0392,19.827159,74.50235,VLG029,Illegal Tree Cutting,Critical,2018-05-08,Flagged via citizen report app,ENV0392.jpg,True
+ENV0393,19.907318,74.430422,VLG070,Sewage Discharge,High,2020-04-21,Identified during river patrol,ENV0393.jpg,False
+ENV0394,19.913805,74.566803,VLG039,Soil Erosion,High,2019-04-02,Observed during field survey,ENV0394.jpg,False
+ENV0395,19.872751,74.415206,VLG029,Encroachment,Moderate,2023-05-24,Reported by local resident,ENV0395.jpg,True
+ENV0396,19.850252,74.383075,VLG012,Invasive Species,Low,2023-10-19,Identified during river patrol,ENV0396.jpg,False
+ENV0397,19.942499,74.449836,VLG014,Soil Erosion,Moderate,2019-01-29,Identified during river patrol,ENV0397.jpg,False
+ENV0398,19.926301,74.363831,VLG043,Illegal Tree Cutting,Critical,2023-06-03,Flagged via citizen report app,ENV0398.jpg,True
+ENV0399,19.881403,74.59791,VLG003,Invasive Species,Critical,2024-06-22,Observed during field survey,ENV0399.jpg,True
+ENV0400,19.91054,74.590323,VLG065,Plastic Waste,Moderate,2016-09-15,Reported by local resident,ENV0400.jpg,False
+ENV0401,19.850373,74.517522,VLG005,Encroachment,Moderate,2021-10-24,Identified during river patrol,ENV0401.jpg,False
+ENV0402,19.808304,74.523528,VLG037,Sewage Discharge,Low,2020-02-05,Identified during river patrol,ENV0402.jpg,True
+ENV0403,19.86117,74.499173,VLG066,Illegal Tree Cutting,High,2016-12-25,Reported by local resident,ENV0403.jpg,False
+ENV0404,19.89808,74.524031,VLG003,Encroachment,Low,2018-06-16,Identified during river patrol,ENV0404.jpg,True
+ENV0405,19.885511,74.390568,VLG009,Illegal Tree Cutting,Critical,2022-08-18,Observed during field survey,ENV0405.jpg,False
+ENV0406,19.86309,74.586401,VLG090,Sewage Discharge,Moderate,2020-02-28,Observed during field survey,ENV0406.jpg,False
+ENV0407,19.837732,74.449722,VLG007,Soil Erosion,Low,2018-08-04,Identified during river patrol,ENV0407.jpg,True
+ENV0408,19.815283,74.473718,VLG023,Pesticide Runoff,Critical,2021-07-23,Flagged via citizen report app,ENV0408.jpg,True
+ENV0409,19.808231,74.448356,VLG082,Illegal Tree Cutting,High,2025-08-20,Reported by local resident,ENV0409.jpg,True
+ENV0410,19.836373,74.480975,VLG002,Invasive Species,Low,2022-01-06,Reported by local resident,ENV0410.jpg,False
+ENV0411,19.888017,74.438171,VLG067,Sand Mining,High,2024-12-06,Observed during field survey,ENV0411.jpg,True
+ENV0412,19.823099,74.557883,VLG041,Invasive Species,High,2025-09-27,Identified during river patrol,ENV0412.jpg,True
+ENV0413,19.829561,74.453046,VLG039,Plastic Waste,Moderate,2023-05-18,Noted by forest officer,ENV0413.jpg,False
+ENV0414,19.81394,74.382801,VLG025,Soil Erosion,Low,2019-08-03,Observed during field survey,ENV0414.jpg,False
+ENV0415,19.856489,74.591089,VLG012,Soil Erosion,Low,2022-03-31,Noted by forest officer,ENV0415.jpg,False
+ENV0416,19.890559,74.366179,VLG095,Soil Erosion,Critical,2026-07-10,Observed during field survey,ENV0416.jpg,True
+ENV0417,19.945403,74.471904,VLG064,Plastic Waste,Critical,2019-12-19,Noted by forest officer,ENV0417.jpg,True
+ENV0418,19.860712,74.457669,VLG028,Illegal Tree Cutting,Moderate,2021-01-27,Noted by forest officer,ENV0418.jpg,False
+ENV0419,19.836736,74.506991,VLG083,Illegal Tree Cutting,Critical,2021-10-24,Flagged via citizen report app,ENV0419.jpg,True
+ENV0420,19.824629,74.512022,VLG076,Pesticide Runoff,Moderate,2025-11-07,Identified during river patrol,ENV0420.jpg,False
+ENV0421,19.903948,74.535756,VLG054,Sand Mining,High,2018-01-25,Observed during field survey,ENV0421.jpg,True
+ENV0422,19.947047,74.357999,VLG009,Pesticide Runoff,Moderate,2024-02-06,Observed during field survey,ENV0422.jpg,False
+ENV0423,19.893682,74.427132,VLG091,Fire,Critical,2020-11-19,Noted by forest officer,ENV0423.jpg,False
+ENV0424,19.901873,74.540338,VLG004,Invasive Species,Critical,2017-08-30,Observed during field survey,ENV0424.jpg,False
+ENV0425,19.841995,74.562017,VLG032,Sand Mining,Moderate,2022-03-27,Flagged via citizen report app,ENV0425.jpg,False
+ENV0426,19.93797,74.548034,VLG020,Invasive Species,Moderate,2025-07-28,Reported by local resident,ENV0426.jpg,True
+ENV0427,19.941069,74.518235,VLG041,Encroachment,Moderate,2025-07-07,Observed during field survey,ENV0427.jpg,False
+ENV0428,19.801745,74.568652,VLG058,Pesticide Runoff,Low,2021-03-29,Observed during field survey,ENV0428.jpg,False
+ENV0429,19.829593,74.55779,VLG051,Sewage Discharge,Low,2022-08-29,Observed during field survey,ENV0429.jpg,False
+ENV0430,19.946187,74.486754,VLG038,Water Pollution,Low,2023-01-16,Observed during field survey,ENV0430.jpg,True
+ENV0431,19.873085,74.533287,VLG082,Illegal Tree Cutting,Moderate,2021-05-07,Flagged via citizen report app,ENV0431.jpg,True
+ENV0432,19.813533,74.413121,VLG074,Pesticide Runoff,Moderate,2022-06-28,Reported by local resident,ENV0432.jpg,True
+ENV0433,19.910638,74.377155,VLG097,Sand Mining,Critical,2025-03-14,Observed during field survey,ENV0433.jpg,False
+ENV0434,19.912558,74.556644,VLG056,Plastic Waste,Moderate,2020-10-03,Observed during field survey,ENV0434.jpg,False
+ENV0435,19.826624,74.525027,VLG010,Soil Erosion,Low,2021-06-14,Flagged via citizen report app,ENV0435.jpg,True
+ENV0436,19.924221,74.443627,VLG084,Soil Erosion,High,2018-11-10,Reported by local resident,ENV0436.jpg,True
+ENV0437,19.82332,74.5845,VLG018,Plastic Waste,High,2020-05-29,Noted by forest officer,ENV0437.jpg,False
+ENV0438,19.853298,74.367666,VLG041,Plastic Waste,High,2017-03-06,Observed during field survey,ENV0438.jpg,False
+ENV0439,19.919576,74.5567,VLG053,Water Pollution,Moderate,2021-06-02,Flagged via citizen report app,ENV0439.jpg,True
+ENV0440,19.887555,74.408573,VLG001,Encroachment,High,2019-07-09,Noted by forest officer,ENV0440.jpg,False
+ENV0441,19.914933,74.460796,VLG009,Water Pollution,Low,2025-06-11,Flagged via citizen report app,ENV0441.jpg,True
+ENV0442,19.88304,74.459854,VLG053,Plastic Waste,Moderate,2017-02-09,Noted by forest officer,ENV0442.jpg,False
+ENV0443,19.805355,74.418421,VLG096,Fire,High,2024-04-24,Flagged via citizen report app,ENV0443.jpg,False
+ENV0444,19.814091,74.580446,VLG005,Illegal Tree Cutting,High,2025-12-15,Flagged via citizen report app,ENV0444.jpg,False
+ENV0445,19.923914,74.419114,VLG097,Pesticide Runoff,Critical,2018-07-24,Reported by local resident,ENV0445.jpg,True
+ENV0446,19.889263,74.506677,VLG064,Soil Erosion,Critical,2020-11-10,Flagged via citizen report app,ENV0446.jpg,False
+ENV0447,19.838865,74.526556,VLG030,Pesticide Runoff,High,2025-11-02,Identified during river patrol,ENV0447.jpg,False
+ENV0448,19.911819,74.589638,VLG052,Water Pollution,Low,2019-06-01,Flagged via citizen report app,ENV0448.jpg,True
+ENV0449,19.828216,74.418266,VLG028,Sewage Discharge,Moderate,2021-04-29,Identified during river patrol,ENV0449.jpg,True
+ENV0450,19.901433,74.381192,VLG028,Soil Erosion,Moderate,2020-04-27,Flagged via citizen report app,ENV0450.jpg,False
+ENV0451,19.864347,74.453749,VLG033,Fire,Moderate,2021-11-27,Identified during river patrol,ENV0451.jpg,False
+ENV0452,19.85394,74.58495,VLG085,Illegal Tree Cutting,Moderate,2023-03-29,Noted by forest officer,ENV0452.jpg,True
+ENV0453,19.932876,74.37588,VLG066,Illegal Tree Cutting,High,2022-09-24,Identified during river patrol,ENV0453.jpg,True
+ENV0454,19.945678,74.39968,VLG063,Soil Erosion,Critical,2025-10-05,Identified during river patrol,ENV0454.jpg,True
+ENV0455,19.840687,74.578933,VLG093,Soil Erosion,High,2020-03-13,Identified during river patrol,ENV0455.jpg,False
+ENV0456,19.948566,74.476198,VLG099,Plastic Waste,Low,2023-08-22,Noted by forest officer,ENV0456.jpg,False
+ENV0457,19.846636,74.597608,VLG069,Sewage Discharge,Low,2018-07-02,Observed during field survey,ENV0457.jpg,False
+ENV0458,19.816856,74.570871,VLG006,Pesticide Runoff,Low,2019-12-04,Flagged via citizen report app,ENV0458.jpg,True
+ENV0459,19.865915,74.573673,VLG038,Fire,Low,2025-12-20,Flagged via citizen report app,ENV0459.jpg,True
+ENV0460,19.903375,74.367734,VLG054,Pesticide Runoff,Low,2024-03-15,Observed during field survey,ENV0460.jpg,True
+ENV0461,19.834269,74.430089,VLG020,Soil Erosion,Low,2022-03-10,Flagged via citizen report app,ENV0461.jpg,True
+ENV0462,19.87311,74.365636,VLG023,Plastic Waste,Critical,2017-01-28,Reported by local resident,ENV0462.jpg,True
+ENV0463,19.891624,74.588065,VLG011,Invasive Species,Critical,2023-11-25,Identified during river patrol,ENV0463.jpg,False
+ENV0464,19.884306,74.351839,VLG004,Water Pollution,Critical,2018-06-05,Noted by forest officer,ENV0464.jpg,True
+ENV0465,19.801007,74.383188,VLG093,Sand Mining,Critical,2021-02-17,Observed during field survey,ENV0465.jpg,False
+ENV0466,19.870958,74.434663,VLG095,Invasive Species,Low,2017-10-19,Reported by local resident,ENV0466.jpg,False
+ENV0467,19.834168,74.511517,VLG079,Fire,High,2023-01-28,Reported by local resident,ENV0467.jpg,False
+ENV0468,19.896973,74.399839,VLG014,Pesticide Runoff,High,2017-09-29,Noted by forest officer,ENV0468.jpg,False
+ENV0469,19.805826,74.590184,VLG089,Invasive Species,Low,2026-06-06,Noted by forest officer,ENV0469.jpg,True
+ENV0470,19.919805,74.578083,VLG051,Fire,Critical,2024-01-14,Reported by local resident,ENV0470.jpg,False
+ENV0471,19.912319,74.527944,VLG046,Invasive Species,High,2022-10-09,Reported by local resident,ENV0471.jpg,False
+ENV0472,19.935899,74.359398,VLG020,Sewage Discharge,Low,2024-01-26,Identified during river patrol,ENV0472.jpg,True
+ENV0473,19.816698,74.402638,VLG066,Soil Erosion,Moderate,2023-04-22,Noted by forest officer,ENV0473.jpg,True
+ENV0474,19.829563,74.469574,VLG085,Fire,High,2025-05-26,Reported by local resident,ENV0474.jpg,True
+ENV0475,19.909812,74.453465,VLG013,Sand Mining,Low,2017-01-17,Reported by local resident,ENV0475.jpg,True
+ENV0476,19.852718,74.413017,VLG044,Encroachment,High,2023-08-03,Observed during field survey,ENV0476.jpg,False
+ENV0477,19.817835,74.534803,VLG064,Pesticide Runoff,Low,2018-08-15,Flagged via citizen report app,ENV0477.jpg,True
+ENV0478,19.90804,74.446563,VLG058,Encroachment,Moderate,2021-02-13,Identified during river patrol,ENV0478.jpg,False
+ENV0479,19.872389,74.466,VLG088,Sand Mining,Critical,2025-10-13,Reported by local resident,ENV0479.jpg,True
+ENV0480,19.882993,74.570534,VLG087,Pesticide Runoff,High,2021-12-28,Observed during field survey,ENV0480.jpg,False
+ENV0481,19.877029,74.490666,VLG090,Sewage Discharge,Moderate,2019-03-18,Observed during field survey,ENV0481.jpg,True
+ENV0482,19.885036,74.3547,VLG004,Pesticide Runoff,Critical,2018-03-03,Flagged via citizen report app,ENV0482.jpg,False
+ENV0483,19.884166,74.526293,VLG010,Pesticide Runoff,Critical,2016-10-27,Observed during field survey,ENV0483.jpg,True
+ENV0484,19.896547,74.441598,VLG082,Sewage Discharge,Moderate,2025-03-11,Observed during field survey,ENV0484.jpg,True
+ENV0485,19.928467,74.507978,VLG090,Water Pollution,High,2022-05-05,Identified during river patrol,ENV0485.jpg,True
+ENV0486,19.839793,74.463026,VLG066,Illegal Tree Cutting,Low,2017-04-10,Identified during river patrol,ENV0486.jpg,True
+ENV0487,19.804076,74.583772,VLG048,Plastic Waste,Moderate,2026-02-19,Identified during river patrol,ENV0487.jpg,False
+ENV0488,19.945741,74.456761,VLG045,Sewage Discharge,High,2023-02-28,Noted by forest officer,ENV0488.jpg,False
+ENV0489,19.943715,74.394624,VLG045,Pesticide Runoff,Critical,2022-11-21,Reported by local resident,ENV0489.jpg,True
+ENV0490,19.829169,74.5138,VLG100,Encroachment,High,2020-02-14,Flagged via citizen report app,ENV0490.jpg,True
+ENV0491,19.906202,74.40127,VLG061,Illegal Tree Cutting,Moderate,2020-09-24,Flagged via citizen report app,ENV0491.jpg,False
+ENV0492,19.883687,74.477571,VLG003,Invasive Species,High,2026-07-09,Noted by forest officer,ENV0492.jpg,True
+ENV0493,19.876254,74.405134,VLG082,Soil Erosion,Moderate,2025-07-23,Noted by forest officer,ENV0493.jpg,False
+ENV0494,19.876032,74.358449,VLG073,Water Pollution,Low,2025-02-21,Noted by forest officer,ENV0494.jpg,False
+ENV0495,19.898212,74.499074,VLG079,Encroachment,Moderate,2025-05-19,Observed during field survey,ENV0495.jpg,False
+ENV0496,19.859192,74.519201,VLG062,Invasive Species,Low,2016-09-25,Observed during field survey,ENV0496.jpg,True
+ENV0497,19.903584,74.533098,VLG098,Water Pollution,High,2023-08-16,Reported by local resident,ENV0497.jpg,True
+ENV0498,19.88175,74.446337,VLG085,Illegal Tree Cutting,High,2021-04-19,Observed during field survey,ENV0498.jpg,False
+ENV0499,19.942146,74.578165,VLG036,Invasive Species,High,2020-12-11,Reported by local resident,ENV0499.jpg,True
+ENV0500,19.81959,74.385801,VLG058,Water Pollution,High,2017-09-08,Noted by forest officer,ENV0500.jpg,False
+ENV0501,19.828472,74.370463,VLG071,Sewage Discharge,Low,2026-03-11,Identified during river patrol,ENV0501.jpg,True
+ENV0502,19.904617,74.593164,VLG042,Water Pollution,Low,2020-02-04,Reported by local resident,ENV0502.jpg,False
+ENV0503,19.917242,74.419589,VLG065,Illegal Tree Cutting,Critical,2022-01-21,Noted by forest officer,ENV0503.jpg,True
+ENV0504,19.874103,74.557957,VLG005,Illegal Tree Cutting,High,2022-06-18,Flagged via citizen report app,ENV0504.jpg,False
+ENV0505,19.815307,74.361178,VLG009,Encroachment,Critical,2026-04-21,Flagged via citizen report app,ENV0505.jpg,True
+ENV0506,19.840115,74.363326,VLG022,Sewage Discharge,Moderate,2023-02-01,Flagged via citizen report app,ENV0506.jpg,True
+ENV0507,19.80495,74.557166,VLG079,Soil Erosion,Low,2023-07-17,Flagged via citizen report app,ENV0507.jpg,True
+ENV0508,19.929108,74.41132,VLG068,Sewage Discharge,Critical,2021-07-23,Identified during river patrol,ENV0508.jpg,False
+ENV0509,19.88956,74.577967,VLG071,Illegal Tree Cutting,Moderate,2019-09-03,Observed during field survey,ENV0509.jpg,False
+ENV0510,19.809045,74.523036,VLG011,Pesticide Runoff,Critical,2022-08-12,Reported by local resident,ENV0510.jpg,True
+ENV0511,19.917784,74.417971,VLG024,Soil Erosion,Moderate,2021-05-12,Flagged via citizen report app,ENV0511.jpg,True
+ENV0512,19.838853,74.521998,VLG054,Sewage Discharge,Moderate,2026-01-30,Observed during field survey,ENV0512.jpg,False
+ENV0513,19.819137,74.492814,VLG070,Encroachment,Moderate,2021-07-21,Reported by local resident,ENV0513.jpg,False
+ENV0514,19.829946,74.495288,VLG007,Water Pollution,High,2026-08-07,Noted by forest officer,ENV0514.jpg,False
+ENV0515,19.94551,74.390283,VLG003,Soil Erosion,Critical,2017-12-30,Observed during field survey,ENV0515.jpg,True
+ENV0516,19.821781,74.427766,VLG058,Sand Mining,High,2026-06-26,Flagged via citizen report app,ENV0516.jpg,True
+ENV0517,19.933221,74.388529,VLG085,Fire,Moderate,2017-06-04,Noted by forest officer,ENV0517.jpg,True
+ENV0518,19.871474,74.45893,VLG079,Illegal Tree Cutting,Moderate,2025-11-15,Flagged via citizen report app,ENV0518.jpg,False
+ENV0519,19.88084,74.580518,VLG031,Plastic Waste,Low,2026-04-21,Noted by forest officer,ENV0519.jpg,False
+ENV0520,19.883215,74.465034,VLG007,Plastic Waste,Low,2018-02-24,Reported by local resident,ENV0520.jpg,False
+ENV0521,19.829274,74.408164,VLG020,Sewage Discharge,Low,2026-06-14,Observed during field survey,ENV0521.jpg,False
+ENV0522,19.87254,74.466664,VLG039,Illegal Tree Cutting,Moderate,2026-04-22,Identified during river patrol,ENV0522.jpg,False
+ENV0523,19.844115,74.528574,VLG031,Sewage Discharge,Critical,2024-02-02,Flagged via citizen report app,ENV0523.jpg,True
+ENV0524,19.948165,74.565853,VLG074,Invasive Species,Moderate,2018-11-15,Identified during river patrol,ENV0524.jpg,False
+ENV0525,19.847486,74.369857,VLG002,Soil Erosion,Moderate,2018-07-02,Identified during river patrol,ENV0525.jpg,False
+ENV0526,19.908614,74.593495,VLG036,Water Pollution,High,2024-06-25,Flagged via citizen report app,ENV0526.jpg,False
+ENV0527,19.93927,74.584177,VLG071,Soil Erosion,Moderate,2023-08-15,Observed during field survey,ENV0527.jpg,True
+ENV0528,19.861775,74.511019,VLG009,Illegal Tree Cutting,Low,2019-08-07,Noted by forest officer,ENV0528.jpg,False
+ENV0529,19.824847,74.520292,VLG065,Sand Mining,Critical,2017-07-20,Identified during river patrol,ENV0529.jpg,False
+ENV0530,19.8958,74.39775,VLG018,Fire,Low,2016-10-17,Observed during field survey,ENV0530.jpg,True
+ENV0531,19.933052,74.482544,VLG014,Sewage Discharge,Critical,2018-04-02,Noted by forest officer,ENV0531.jpg,True
+ENV0532,19.846083,74.467607,VLG017,Pesticide Runoff,Moderate,2024-05-27,Reported by local resident,ENV0532.jpg,True
+ENV0533,19.925192,74.528555,VLG034,Soil Erosion,High,2020-08-24,Reported by local resident,ENV0533.jpg,False
+ENV0534,19.803765,74.488661,VLG059,Sewage Discharge,High,2019-04-27,Noted by forest officer,ENV0534.jpg,True
+ENV0535,19.825495,74.354763,VLG017,Water Pollution,Critical,2020-12-02,Flagged via citizen report app,ENV0535.jpg,True
+ENV0536,19.847717,74.385804,VLG041,Illegal Tree Cutting,Low,2021-08-15,Reported by local resident,ENV0536.jpg,False
+ENV0537,19.881871,74.502445,VLG087,Soil Erosion,Moderate,2022-03-28,Flagged via citizen report app,ENV0537.jpg,False
+ENV0538,19.859629,74.527804,VLG065,Invasive Species,Critical,2023-07-23,Identified during river patrol,ENV0538.jpg,False
+ENV0539,19.891404,74.393061,VLG099,Illegal Tree Cutting,Critical,2023-08-04,Observed during field survey,ENV0539.jpg,False
+ENV0540,19.853852,74.355827,VLG094,Plastic Waste,Moderate,2022-05-24,Identified during river patrol,ENV0540.jpg,True
+ENV0541,19.887808,74.594455,VLG061,Water Pollution,Moderate,2022-10-09,Observed during field survey,ENV0541.jpg,False
+ENV0542,19.892017,74.594526,VLG042,Illegal Tree Cutting,Critical,2023-04-13,Flagged via citizen report app,ENV0542.jpg,False
+ENV0543,19.800694,74.402046,VLG071,Fire,Moderate,2023-09-30,Identified during river patrol,ENV0543.jpg,True
+ENV0544,19.809544,74.593545,VLG013,Plastic Waste,Moderate,2016-11-11,Identified during river patrol,ENV0544.jpg,True
+ENV0545,19.853462,74.373878,VLG100,Sewage Discharge,Moderate,2017-01-21,Reported by local resident,ENV0545.jpg,False
+ENV0546,19.934894,74.412106,VLG044,Sewage Discharge,Moderate,2020-05-29,Reported by local resident,ENV0546.jpg,False
+ENV0547,19.856123,74.529689,VLG028,Encroachment,Critical,2019-08-22,Noted by forest officer,ENV0547.jpg,True
+ENV0548,19.926901,74.391032,VLG064,Fire,High,2026-06-22,Observed during field survey,ENV0548.jpg,False
+ENV0549,19.843527,74.533417,VLG056,Fire,Low,2020-01-20,Reported by local resident,ENV0549.jpg,True
+ENV0550,19.872106,74.466999,VLG028,Water Pollution,Low,2026-02-15,Reported by local resident,ENV0550.jpg,True
+ENV0551,19.864898,74.536935,VLG064,Invasive Species,Low,2023-03-04,Observed during field survey,ENV0551.jpg,True
+ENV0552,19.943686,74.566655,VLG020,Soil Erosion,Low,2023-07-11,Noted by forest officer,ENV0552.jpg,False
+ENV0553,19.815541,74.445666,VLG063,Illegal Tree Cutting,Moderate,2022-08-25,Flagged via citizen report app,ENV0553.jpg,False
+ENV0554,19.853923,74.368593,VLG016,Sewage Discharge,Low,2020-10-12,Reported by local resident,ENV0554.jpg,False
+ENV0555,19.874386,74.550189,VLG071,Illegal Tree Cutting,Low,2024-11-22,Reported by local resident,ENV0555.jpg,True
+ENV0556,19.932876,74.485736,VLG006,Water Pollution,Critical,2019-06-28,Noted by forest officer,ENV0556.jpg,False
+ENV0557,19.903222,74.496518,VLG012,Sand Mining,Moderate,2023-12-31,Noted by forest officer,ENV0557.jpg,True
+ENV0558,19.940348,74.491398,VLG011,Invasive Species,High,2022-11-27,Flagged via citizen report app,ENV0558.jpg,True
+ENV0559,19.848552,74.355205,VLG040,Illegal Tree Cutting,High,2018-12-30,Identified during river patrol,ENV0559.jpg,False
+ENV0560,19.829701,74.38247,VLG058,Encroachment,High,2018-11-26,Identified during river patrol,ENV0560.jpg,False
+ENV0561,19.837754,74.42152,VLG009,Invasive Species,Low,2017-01-09,Identified during river patrol,ENV0561.jpg,True
+ENV0562,19.913806,74.421689,VLG051,Sand Mining,Moderate,2024-12-15,Reported by local resident,ENV0562.jpg,False
+ENV0563,19.947164,74.514588,VLG003,Illegal Tree Cutting,Low,2023-10-08,Flagged via citizen report app,ENV0563.jpg,False
+ENV0564,19.917913,74.470267,VLG087,Invasive Species,Critical,2026-01-02,Flagged via citizen report app,ENV0564.jpg,True
+ENV0565,19.861337,74.463617,VLG011,Soil Erosion,Low,2021-01-24,Observed during field survey,ENV0565.jpg,True
+ENV0566,19.938786,74.546466,VLG026,Sewage Discharge,High,2022-12-30,Flagged via citizen report app,ENV0566.jpg,True
+ENV0567,19.833791,74.58572,VLG083,Invasive Species,Critical,2025-04-01,Noted by forest officer,ENV0567.jpg,False
+ENV0568,19.824154,74.590536,VLG100,Soil Erosion,High,2024-04-18,Identified during river patrol,ENV0568.jpg,False
+ENV0569,19.899891,74.567363,VLG098,Plastic Waste,Critical,2019-07-15,Reported by local resident,ENV0569.jpg,True
+ENV0570,19.840443,74.574298,VLG070,Water Pollution,Critical,2024-03-16,Noted by forest officer,ENV0570.jpg,False
+ENV0571,19.838573,74.503391,VLG046,Sewage Discharge,Critical,2022-07-23,Observed during field survey,ENV0571.jpg,False
+ENV0572,19.82574,74.481672,VLG082,Sand Mining,Low,2026-03-15,Reported by local resident,ENV0572.jpg,False
+ENV0573,19.927101,74.540816,VLG048,Soil Erosion,Low,2023-04-02,Observed during field survey,ENV0573.jpg,True
+ENV0574,19.937215,74.517482,VLG073,Sewage Discharge,Moderate,2021-11-11,Noted by forest officer,ENV0574.jpg,True
+ENV0575,19.861762,74.513589,VLG082,Plastic Waste,Low,2026-04-29,Flagged via citizen report app,ENV0575.jpg,False
+ENV0576,19.919412,74.490747,VLG079,Pesticide Runoff,High,2022-06-06,Flagged via citizen report app,ENV0576.jpg,False
+ENV0577,19.882482,74.435658,VLG025,Water Pollution,Critical,2016-08-17,Identified during river patrol,ENV0577.jpg,False
+ENV0578,19.914314,74.430195,VLG019,Fire,High,2017-03-29,Noted by forest officer,ENV0578.jpg,False
+ENV0579,19.91471,74.488826,VLG057,Fire,Moderate,2023-06-22,Reported by local resident,ENV0579.jpg,True
+ENV0580,19.884855,74.36302,VLG067,Sand Mining,High,2020-12-20,Observed during field survey,ENV0580.jpg,False
+ENV0581,19.892783,74.564828,VLG041,Sewage Discharge,Moderate,2019-05-15,Noted by forest officer,ENV0581.jpg,False
+ENV0582,19.8532,74.495225,VLG052,Sand Mining,High,2026-04-11,Flagged via citizen report app,ENV0582.jpg,False
+ENV0583,19.850871,74.37724,VLG053,Illegal Tree Cutting,Low,2023-06-28,Noted by forest officer,ENV0583.jpg,True
+ENV0584,19.936185,74.465906,VLG056,Plastic Waste,Critical,2021-03-25,Observed during field survey,ENV0584.jpg,True
+ENV0585,19.835913,74.475628,VLG086,Water Pollution,Critical,2019-12-12,Reported by local resident,ENV0585.jpg,False
+ENV0586,19.889936,74.470213,VLG061,Invasive Species,High,2024-03-29,Flagged via citizen report app,ENV0586.jpg,False
+ENV0587,19.826854,74.410374,VLG086,Plastic Waste,Low,2023-01-13,Noted by forest officer,ENV0587.jpg,True
+ENV0588,19.880001,74.383609,VLG062,Illegal Tree Cutting,High,2018-12-20,Reported by local resident,ENV0588.jpg,True
+ENV0589,19.809815,74.573278,VLG083,Illegal Tree Cutting,Moderate,2021-04-23,Flagged via citizen report app,ENV0589.jpg,True
+ENV0590,19.812066,74.565707,VLG083,Illegal Tree Cutting,High,2021-07-28,Reported by local resident,ENV0590.jpg,True
+ENV0591,19.893786,74.389879,VLG031,Pesticide Runoff,Moderate,2022-10-15,Observed during field survey,ENV0591.jpg,False
+ENV0592,19.918623,74.589326,VLG069,Sewage Discharge,Moderate,2025-07-27,Flagged via citizen report app,ENV0592.jpg,True
+ENV0593,19.927473,74.446149,VLG085,Plastic Waste,Low,2025-12-13,Flagged via citizen report app,ENV0593.jpg,False
+ENV0594,19.852841,74.524463,VLG016,Illegal Tree Cutting,Moderate,2025-01-29,Observed during field survey,ENV0594.jpg,False
+ENV0595,19.868465,74.527711,VLG069,Soil Erosion,Low,2018-06-16,Reported by local resident,ENV0595.jpg,False
+ENV0596,19.878336,74.436853,VLG090,Sand Mining,Moderate,2026-05-04,Observed during field survey,ENV0596.jpg,True
+ENV0597,19.922558,74.449941,VLG072,Pesticide Runoff,Moderate,2020-04-14,Flagged via citizen report app,ENV0597.jpg,False
+ENV0598,19.833906,74.473719,VLG059,Soil Erosion,Low,2021-05-27,Noted by forest officer,ENV0598.jpg,False
+ENV0599,19.802118,74.529988,VLG031,Fire,High,2021-11-17,Flagged via citizen report app,ENV0599.jpg,True
+ENV0600,19.899175,74.369724,VLG010,Encroachment,Low,2022-07-20,Identified during river patrol,ENV0600.jpg,True
+ENV0601,19.937093,74.59577,VLG100,Water Pollution,Moderate,2018-07-31,Identified during river patrol,ENV0601.jpg,True
+ENV0602,19.819252,74.550234,VLG041,Soil Erosion,High,2023-12-04,Noted by forest officer,ENV0602.jpg,False
+ENV0603,19.904389,74.3555,VLG035,Plastic Waste,Moderate,2021-11-22,Noted by forest officer,ENV0603.jpg,True
+ENV0604,19.812892,74.544403,VLG076,Pesticide Runoff,Critical,2024-12-02,Identified during river patrol,ENV0604.jpg,False
+ENV0605,19.811766,74.468394,VLG067,Encroachment,Moderate,2017-08-27,Observed during field survey,ENV0605.jpg,True
+ENV0606,19.827423,74.432543,VLG020,Plastic Waste,Moderate,2021-12-02,Reported by local resident,ENV0606.jpg,False
+ENV0607,19.843572,74.368052,VLG040,Soil Erosion,Critical,2021-04-27,Reported by local resident,ENV0607.jpg,False
+ENV0608,19.882152,74.417698,VLG096,Sand Mining,High,2020-04-27,Reported by local resident,ENV0608.jpg,True
+ENV0609,19.927264,74.520589,VLG016,Sewage Discharge,Critical,2017-05-21,Reported by local resident,ENV0609.jpg,False
+ENV0610,19.913517,74.516975,VLG031,Sand Mining,Critical,2018-09-02,Flagged via citizen report app,ENV0610.jpg,True
+ENV0611,19.901098,74.423531,VLG074,Sewage Discharge,Critical,2023-02-10,Identified during river patrol,ENV0611.jpg,True
+ENV0612,19.866197,74.562634,VLG099,Illegal Tree Cutting,Critical,2019-12-05,Identified during river patrol,ENV0612.jpg,False
+ENV0613,19.847721,74.51966,VLG086,Pesticide Runoff,Moderate,2018-12-20,Reported by local resident,ENV0613.jpg,True
+ENV0614,19.82888,74.404924,VLG058,Sand Mining,Moderate,2023-09-17,Reported by local resident,ENV0614.jpg,True
+ENV0615,19.823705,74.559609,VLG058,Encroachment,Moderate,2025-08-01,Flagged via citizen report app,ENV0615.jpg,True
+ENV0616,19.948887,74.364399,VLG082,Plastic Waste,Moderate,2017-06-15,Noted by forest officer,ENV0616.jpg,False
+ENV0617,19.930928,74.428405,VLG034,Water Pollution,Critical,2022-05-02,Flagged via citizen report app,ENV0617.jpg,True
+ENV0618,19.893931,74.443534,VLG012,Soil Erosion,High,2017-07-15,Noted by forest officer,ENV0618.jpg,False
+ENV0619,19.933559,74.585796,VLG062,Pesticide Runoff,Critical,2016-10-18,Identified during river patrol,ENV0619.jpg,True
+ENV0620,19.822653,74.570995,VLG023,Plastic Waste,Critical,2023-03-06,Reported by local resident,ENV0620.jpg,True
+ENV0621,19.880383,74.504479,VLG028,Water Pollution,Low,2024-10-20,Noted by forest officer,ENV0621.jpg,False
+ENV0622,19.919612,74.423244,VLG086,Soil Erosion,Critical,2026-06-22,Identified during river patrol,ENV0622.jpg,False
+ENV0623,19.849201,74.434536,VLG014,Fire,Critical,2021-05-31,Flagged via citizen report app,ENV0623.jpg,True
+ENV0624,19.906188,74.510132,VLG077,Pesticide Runoff,Critical,2026-03-08,Noted by forest officer,ENV0624.jpg,True
+ENV0625,19.830744,74.570834,VLG069,Water Pollution,Low,2022-02-17,Noted by forest officer,ENV0625.jpg,False
+ENV0626,19.854638,74.504006,VLG056,Water Pollution,Low,2021-05-02,Observed during field survey,ENV0626.jpg,False
+ENV0627,19.827294,74.512904,VLG077,Encroachment,Critical,2023-03-26,Noted by forest officer,ENV0627.jpg,False
+ENV0628,19.836302,74.421291,VLG034,Illegal Tree Cutting,Moderate,2026-01-30,Noted by forest officer,ENV0628.jpg,True
+ENV0629,19.915515,74.434137,VLG063,Sand Mining,Critical,2025-11-02,Reported by local resident,ENV0629.jpg,False
+ENV0630,19.860262,74.531464,VLG029,Pesticide Runoff,Moderate,2018-08-24,Flagged via citizen report app,ENV0630.jpg,False
+ENV0631,19.841609,74.517382,VLG068,Fire,Critical,2024-12-15,Flagged via citizen report app,ENV0631.jpg,True
+ENV0632,19.864476,74.539145,VLG044,Encroachment,Low,2016-11-15,Flagged via citizen report app,ENV0632.jpg,True
+ENV0633,19.860172,74.42668,VLG044,Fire,Moderate,2021-04-12,Identified during river patrol,ENV0633.jpg,True
+ENV0634,19.91105,74.397481,VLG069,Invasive Species,Low,2018-01-29,Observed during field survey,ENV0634.jpg,True
+ENV0635,19.940998,74.596333,VLG093,Fire,High,2024-01-01,Noted by forest officer,ENV0635.jpg,True
+ENV0636,19.908987,74.495478,VLG030,Soil Erosion,Moderate,2025-08-03,Noted by forest officer,ENV0636.jpg,True
+ENV0637,19.867108,74.532836,VLG033,Illegal Tree Cutting,Low,2021-07-19,Flagged via citizen report app,ENV0637.jpg,False
+ENV0638,19.82652,74.361652,VLG045,Sand Mining,Low,2021-09-09,Noted by forest officer,ENV0638.jpg,True
+ENV0639,19.813843,74.494434,VLG001,Illegal Tree Cutting,Critical,2017-12-01,Observed during field survey,ENV0639.jpg,True
+ENV0640,19.936228,74.449764,VLG083,Invasive Species,Low,2022-04-23,Identified during river patrol,ENV0640.jpg,True
+ENV0641,19.824959,74.478513,VLG096,Water Pollution,Moderate,2021-02-02,Flagged via citizen report app,ENV0641.jpg,True
+ENV0642,19.855012,74.485281,VLG003,Sand Mining,Critical,2025-10-23,Reported by local resident,ENV0642.jpg,True
+ENV0643,19.897642,74.357968,VLG035,Water Pollution,Moderate,2019-07-19,Flagged via citizen report app,ENV0643.jpg,False
+ENV0644,19.947082,74.508949,VLG052,Fire,Low,2021-05-16,Noted by forest officer,ENV0644.jpg,True
+ENV0645,19.946062,74.426435,VLG070,Invasive Species,Low,2021-10-24,Flagged via citizen report app,ENV0645.jpg,True
+ENV0646,19.810453,74.359446,VLG089,Fire,Critical,2019-11-11,Noted by forest officer,ENV0646.jpg,False
+ENV0647,19.84876,74.39712,VLG083,Encroachment,Critical,2023-07-29,Observed during field survey,ENV0647.jpg,True
+ENV0648,19.929151,74.530628,VLG026,Invasive Species,High,2017-05-11,Noted by forest officer,ENV0648.jpg,False
+ENV0649,19.805441,74.550305,VLG003,Invasive Species,High,2025-09-11,Observed during field survey,ENV0649.jpg,True
+ENV0650,19.842507,74.36653,VLG062,Soil Erosion,Critical,2017-07-31,Flagged via citizen report app,ENV0650.jpg,False
+ENV0651,19.853092,74.485588,VLG020,Invasive Species,High,2025-10-21,Reported by local resident,ENV0651.jpg,True
+ENV0652,19.897142,74.500283,VLG019,Water Pollution,High,2017-03-11,Noted by forest officer,ENV0652.jpg,False
+ENV0653,19.940973,74.439634,VLG062,Water Pollution,Moderate,2021-07-15,Flagged via citizen report app,ENV0653.jpg,False
+ENV0654,19.828559,74.376896,VLG001,Fire,High,2024-10-04,Noted by forest officer,ENV0654.jpg,False
+ENV0655,19.839631,74.417623,VLG047,Plastic Waste,Moderate,2023-11-29,Identified during river patrol,ENV0655.jpg,False
+ENV0656,19.918059,74.493889,VLG078,Sewage Discharge,Critical,2017-03-07,Observed during field survey,ENV0656.jpg,True
+ENV0657,19.838885,74.394792,VLG001,Water Pollution,Moderate,2025-04-25,Identified during river patrol,ENV0657.jpg,False
+ENV0658,19.844728,74.373047,VLG080,Pesticide Runoff,Moderate,2020-10-08,Observed during field survey,ENV0658.jpg,True
+ENV0659,19.875706,74.489765,VLG031,Fire,High,2019-07-12,Observed during field survey,ENV0659.jpg,False
+ENV0660,19.810582,74.573129,VLG030,Sewage Discharge,High,2023-07-16,Noted by forest officer,ENV0660.jpg,True
+ENV0661,19.883164,74.453594,VLG025,Fire,Low,2020-01-12,Identified during river patrol,ENV0661.jpg,True
+ENV0662,19.865846,74.528063,VLG088,Soil Erosion,High,2025-05-20,Noted by forest officer,ENV0662.jpg,False
+ENV0663,19.852029,74.360965,VLG007,Plastic Waste,High,2025-08-16,Identified during river patrol,ENV0663.jpg,False
+ENV0664,19.809151,74.482203,VLG063,Encroachment,High,2020-04-29,Reported by local resident,ENV0664.jpg,False
+ENV0665,19.857938,74.464092,VLG056,Water Pollution,Low,2018-04-02,Identified during river patrol,ENV0665.jpg,True
+ENV0666,19.859413,74.405233,VLG096,Water Pollution,High,2020-12-26,Observed during field survey,ENV0666.jpg,False
+ENV0667,19.914044,74.49474,VLG011,Fire,Critical,2017-01-22,Noted by forest officer,ENV0667.jpg,True
+ENV0668,19.82552,74.47842,VLG069,Sewage Discharge,High,2021-09-30,Observed during field survey,ENV0668.jpg,True
+ENV0669,19.805886,74.479928,VLG024,Plastic Waste,Moderate,2023-02-13,Identified during river patrol,ENV0669.jpg,True
+ENV0670,19.92699,74.559551,VLG007,Sewage Discharge,Critical,2016-11-13,Reported by local resident,ENV0670.jpg,False
+ENV0671,19.834826,74.483028,VLG007,Soil Erosion,Critical,2024-10-20,Observed during field survey,ENV0671.jpg,False
+ENV0672,19.817799,74.439279,VLG079,Water Pollution,High,2019-01-07,Identified during river patrol,ENV0672.jpg,True
+ENV0673,19.910801,74.461447,VLG047,Sand Mining,Low,2021-04-26,Noted by forest officer,ENV0673.jpg,True
+ENV0674,19.878368,74.433458,VLG044,Sand Mining,High,2022-12-30,Observed during field survey,ENV0674.jpg,True
+ENV0675,19.94119,74.592879,VLG021,Plastic Waste,Low,2021-12-23,Noted by forest officer,ENV0675.jpg,False
+ENV0676,19.921996,74.446294,VLG018,Pesticide Runoff,High,2018-11-01,Flagged via citizen report app,ENV0676.jpg,False
+ENV0677,19.919933,74.581264,VLG094,Sand Mining,High,2018-09-09,Observed during field survey,ENV0677.jpg,True
+ENV0678,19.940709,74.404833,VLG025,Water Pollution,Low,2018-03-15,Reported by local resident,ENV0678.jpg,False
+ENV0679,19.814837,74.448468,VLG035,Sand Mining,High,2022-10-22,Identified during river patrol,ENV0679.jpg,False
+ENV0680,19.849949,74.356041,VLG048,Plastic Waste,Moderate,2018-05-14,Observed during field survey,ENV0680.jpg,True
+ENV0681,19.817128,74.552353,VLG065,Soil Erosion,Low,2018-06-11,Identified during river patrol,ENV0681.jpg,True
+ENV0682,19.867543,74.581291,VLG088,Illegal Tree Cutting,Low,2019-11-29,Observed during field survey,ENV0682.jpg,True
+ENV0683,19.808472,74.47446,VLG039,Invasive Species,Critical,2025-03-18,Identified during river patrol,ENV0683.jpg,True
+ENV0684,19.940313,74.488448,VLG037,Illegal Tree Cutting,Critical,2022-03-11,Observed during field survey,ENV0684.jpg,False
+ENV0685,19.812284,74.56276,VLG072,Sand Mining,High,2025-05-08,Noted by forest officer,ENV0685.jpg,False
+ENV0686,19.913089,74.423017,VLG001,Plastic Waste,Low,2024-10-24,Identified during river patrol,ENV0686.jpg,False
+ENV0687,19.816268,74.560452,VLG007,Sewage Discharge,Low,2017-01-15,Observed during field survey,ENV0687.jpg,False
+ENV0688,19.875721,74.497922,VLG061,Fire,Low,2025-04-26,Noted by forest officer,ENV0688.jpg,True
+ENV0689,19.861083,74.526575,VLG066,Soil Erosion,Low,2026-04-06,Noted by forest officer,ENV0689.jpg,True
+ENV0690,19.804131,74.574962,VLG073,Invasive Species,High,2025-12-26,Reported by local resident,ENV0690.jpg,False
+ENV0691,19.849016,74.489134,VLG003,Illegal Tree Cutting,Critical,2024-02-02,Flagged via citizen report app,ENV0691.jpg,False
+ENV0692,19.825701,74.566181,VLG073,Pesticide Runoff,Moderate,2024-09-11,Reported by local resident,ENV0692.jpg,False
+ENV0693,19.839535,74.460513,VLG070,Illegal Tree Cutting,High,2019-02-19,Reported by local resident,ENV0693.jpg,False
+ENV0694,19.880426,74.392644,VLG093,Fire,Low,2023-02-10,Identified during river patrol,ENV0694.jpg,True
+ENV0695,19.809784,74.571807,VLG022,Encroachment,High,2024-01-24,Noted by forest officer,ENV0695.jpg,False
+ENV0696,19.946459,74.457563,VLG030,Soil Erosion,Critical,2017-12-28,Reported by local resident,ENV0696.jpg,True
+ENV0697,19.888561,74.492624,VLG093,Illegal Tree Cutting,Low,2025-02-19,Noted by forest officer,ENV0697.jpg,False
+ENV0698,19.888411,74.548304,VLG069,Sewage Discharge,Low,2026-04-11,Reported by local resident,ENV0698.jpg,False
+ENV0699,19.848503,74.35804,VLG065,Illegal Tree Cutting,Moderate,2019-07-14,Flagged via citizen report app,ENV0699.jpg,True
+ENV0700,19.923207,74.564006,VLG064,Soil Erosion,Moderate,2024-07-11,Reported by local resident,ENV0700.jpg,True
+ENV0701,19.921588,74.475326,VLG006,Pesticide Runoff,Moderate,2026-05-09,Observed during field survey,ENV0701.jpg,True
+ENV0702,19.815015,74.479132,VLG086,Illegal Tree Cutting,Low,2023-12-26,Reported by local resident,ENV0702.jpg,False
+ENV0703,19.890712,74.565832,VLG031,Pesticide Runoff,Low,2023-06-05,Observed during field survey,ENV0703.jpg,False
+ENV0704,19.895494,74.367401,VLG087,Sand Mining,Moderate,2016-08-30,Flagged via citizen report app,ENV0704.jpg,False
+ENV0705,19.907875,74.415313,VLG082,Invasive Species,High,2017-10-16,Flagged via citizen report app,ENV0705.jpg,True
+ENV0706,19.887613,74.353526,VLG033,Sand Mining,High,2025-02-25,Noted by forest officer,ENV0706.jpg,True
+ENV0707,19.817615,74.433827,VLG034,Encroachment,High,2018-01-23,Observed during field survey,ENV0707.jpg,True
+ENV0708,19.856277,74.374122,VLG050,Encroachment,High,2018-09-21,Observed during field survey,ENV0708.jpg,False
+ENV0709,19.831191,74.562436,VLG088,Sand Mining,High,2019-06-27,Flagged via citizen report app,ENV0709.jpg,True
+ENV0710,19.943892,74.40027,VLG097,Sand Mining,Moderate,2019-06-06,Reported by local resident,ENV0710.jpg,True
+ENV0711,19.893277,74.516794,VLG019,Invasive Species,Low,2017-07-26,Noted by forest officer,ENV0711.jpg,False
+ENV0712,19.868811,74.484883,VLG024,Plastic Waste,High,2017-02-02,Flagged via citizen report app,ENV0712.jpg,True
+ENV0713,19.922818,74.44203,VLG069,Illegal Tree Cutting,Low,2020-10-14,Flagged via citizen report app,ENV0713.jpg,False
+ENV0714,19.821334,74.414913,VLG060,Soil Erosion,Moderate,2018-09-01,Reported by local resident,ENV0714.jpg,False
+ENV0715,19.819241,74.544468,VLG004,Invasive Species,Critical,2019-05-02,Observed during field survey,ENV0715.jpg,True
+ENV0716,19.911175,74.532852,VLG069,Sewage Discharge,High,2019-07-03,Reported by local resident,ENV0716.jpg,True
+ENV0717,19.85175,74.479171,VLG026,Sewage Discharge,High,2025-07-13,Identified during river patrol,ENV0717.jpg,False
+ENV0718,19.855457,74.415807,VLG086,Illegal Tree Cutting,Low,2022-10-18,Reported by local resident,ENV0718.jpg,False
+ENV0719,19.914678,74.385993,VLG069,Plastic Waste,Moderate,2024-09-29,Identified during river patrol,ENV0719.jpg,False
+ENV0720,19.859146,74.365303,VLG018,Invasive Species,Moderate,2023-08-17,Noted by forest officer,ENV0720.jpg,False
+ENV0721,19.818347,74.469122,VLG074,Encroachment,Moderate,2021-02-13,Noted by forest officer,ENV0721.jpg,False
+ENV0722,19.834608,74.566644,VLG063,Pesticide Runoff,High,2017-07-22,Observed during field survey,ENV0722.jpg,True
+ENV0723,19.849988,74.477583,VLG054,Encroachment,High,2023-01-21,Reported by local resident,ENV0723.jpg,False
+ENV0724,19.808625,74.407197,VLG047,Invasive Species,Moderate,2024-05-16,Noted by forest officer,ENV0724.jpg,False
+ENV0725,19.849002,74.573134,VLG056,Invasive Species,Moderate,2017-11-03,Identified during river patrol,ENV0725.jpg,False
+ENV0726,19.858934,74.560457,VLG039,Sewage Discharge,Critical,2026-04-06,Flagged via citizen report app,ENV0726.jpg,True
+ENV0727,19.887745,74.544132,VLG028,Plastic Waste,High,2017-07-07,Reported by local resident,ENV0727.jpg,False
+ENV0728,19.90363,74.396782,VLG100,Sand Mining,High,2021-04-24,Observed during field survey,ENV0728.jpg,False
+ENV0729,19.900784,74.513478,VLG048,Water Pollution,Critical,2017-10-26,Identified during river patrol,ENV0729.jpg,True
+ENV0730,19.827432,74.518331,VLG009,Water Pollution,Low,2020-04-21,Flagged via citizen report app,ENV0730.jpg,True
+ENV0731,19.9452,74.460428,VLG006,Fire,Low,2019-04-12,Identified during river patrol,ENV0731.jpg,True
+ENV0732,19.812797,74.368186,VLG020,Water Pollution,High,2022-06-18,Identified during river patrol,ENV0732.jpg,False
+ENV0733,19.923168,74.599182,VLG021,Plastic Waste,Moderate,2025-05-31,Noted by forest officer,ENV0733.jpg,True
+ENV0734,19.900685,74.481433,VLG083,Pesticide Runoff,Low,2025-04-07,Observed during field survey,ENV0734.jpg,True
+ENV0735,19.851516,74.452044,VLG063,Encroachment,Moderate,2017-04-12,Noted by forest officer,ENV0735.jpg,True
+ENV0736,19.916469,74.55358,VLG049,Water Pollution,Critical,2017-02-05,Observed during field survey,ENV0736.jpg,True
+ENV0737,19.91748,74.529226,VLG090,Water Pollution,Critical,2022-03-23,Flagged via citizen report app,ENV0737.jpg,False
+ENV0738,19.845721,74.477165,VLG070,Plastic Waste,Low,2018-08-17,Observed during field survey,ENV0738.jpg,False
+ENV0739,19.858557,74.533577,VLG081,Sand Mining,Low,2020-06-21,Identified during river patrol,ENV0739.jpg,True
+ENV0740,19.843139,74.350795,VLG061,Sand Mining,Moderate,2018-08-19,Identified during river patrol,ENV0740.jpg,False
+ENV0741,19.880599,74.451581,VLG025,Fire,High,2018-02-11,Observed during field survey,ENV0741.jpg,True
+ENV0742,19.881807,74.416109,VLG015,Plastic Waste,Low,2020-07-02,Noted by forest officer,ENV0742.jpg,False
+ENV0743,19.805508,74.512963,VLG035,Illegal Tree Cutting,High,2017-01-27,Noted by forest officer,ENV0743.jpg,False
+ENV0744,19.861442,74.474953,VLG011,Encroachment,Moderate,2022-11-12,Reported by local resident,ENV0744.jpg,False
+ENV0745,19.931279,74.370366,VLG029,Sewage Discharge,Moderate,2025-01-17,Reported by local resident,ENV0745.jpg,False
+ENV0746,19.943983,74.573233,VLG007,Illegal Tree Cutting,Moderate,2019-05-05,Reported by local resident,ENV0746.jpg,True
+ENV0747,19.810665,74.36054,VLG038,Fire,Moderate,2017-11-10,Flagged via citizen report app,ENV0747.jpg,False
+ENV0748,19.888866,74.385184,VLG082,Water Pollution,Low,2024-08-03,Flagged via citizen report app,ENV0748.jpg,False
+ENV0749,19.883995,74.531519,VLG043,Water Pollution,Critical,2026-05-11,Identified during river patrol,ENV0749.jpg,False
+ENV0750,19.893029,74.425421,VLG051,Illegal Tree Cutting,Moderate,2018-01-13,Reported by local resident,ENV0750.jpg,True
+ENV0751,19.88661,74.36048,VLG025,Soil Erosion,Critical,2025-06-20,Identified during river patrol,ENV0751.jpg,False
+ENV0752,19.821778,74.420353,VLG051,Sewage Discharge,Critical,2017-07-15,Noted by forest officer,ENV0752.jpg,False
+ENV0753,19.903672,74.525219,VLG030,Plastic Waste,Low,2025-12-30,Reported by local resident,ENV0753.jpg,True
+ENV0754,19.851061,74.378255,VLG039,Water Pollution,High,2024-12-28,Noted by forest officer,ENV0754.jpg,False
+ENV0755,19.940932,74.400117,VLG095,Pesticide Runoff,Critical,2016-12-26,Reported by local resident,ENV0755.jpg,True
+ENV0756,19.82006,74.51482,VLG092,Pesticide Runoff,High,2021-11-06,Noted by forest officer,ENV0756.jpg,False
+ENV0757,19.84449,74.534764,VLG084,Sewage Discharge,Low,2018-01-21,Identified during river patrol,ENV0757.jpg,True
+ENV0758,19.921932,74.473772,VLG028,Fire,High,2020-03-03,Observed during field survey,ENV0758.jpg,False
+ENV0759,19.838518,74.573023,VLG025,Illegal Tree Cutting,Low,2024-02-26,Observed during field survey,ENV0759.jpg,False
+ENV0760,19.92698,74.417801,VLG067,Encroachment,Critical,2024-10-07,Reported by local resident,ENV0760.jpg,False
+ENV0761,19.866069,74.469778,VLG029,Invasive Species,Low,2019-09-13,Observed during field survey,ENV0761.jpg,True
+ENV0762,19.934306,74.465791,VLG088,Plastic Waste,Moderate,2024-01-16,Reported by local resident,ENV0762.jpg,True
+ENV0763,19.872206,74.508538,VLG034,Illegal Tree Cutting,High,2020-09-22,Flagged via citizen report app,ENV0763.jpg,True
+ENV0764,19.867824,74.428247,VLG012,Fire,Low,2024-12-23,Observed during field survey,ENV0764.jpg,False
+ENV0765,19.890477,74.557542,VLG080,Sewage Discharge,High,2021-08-20,Flagged via citizen report app,ENV0765.jpg,False
+ENV0766,19.937541,74.499211,VLG099,Invasive Species,Low,2017-08-04,Identified during river patrol,ENV0766.jpg,False
+ENV0767,19.924948,74.363435,VLG008,Sand Mining,Low,2018-06-03,Reported by local resident,ENV0767.jpg,True
+ENV0768,19.919903,74.429146,VLG054,Pesticide Runoff,Critical,2019-03-01,Observed during field survey,ENV0768.jpg,False
+ENV0769,19.817026,74.456542,VLG014,Fire,Critical,2020-09-07,Noted by forest officer,ENV0769.jpg,True
+ENV0770,19.883927,74.418164,VLG047,Water Pollution,Moderate,2017-12-16,Identified during river patrol,ENV0770.jpg,False
+ENV0771,19.874145,74.421594,VLG052,Soil Erosion,High,2023-01-09,Reported by local resident,ENV0771.jpg,True
+ENV0772,19.948084,74.597425,VLG071,Sand Mining,Moderate,2019-07-07,Noted by forest officer,ENV0772.jpg,True
+ENV0773,19.834308,74.406451,VLG017,Pesticide Runoff,Moderate,2022-01-24,Noted by forest officer,ENV0773.jpg,False
+ENV0774,19.906977,74.453926,VLG007,Fire,High,2025-11-01,Observed during field survey,ENV0774.jpg,True
+ENV0775,19.940514,74.401056,VLG092,Sand Mining,High,2024-08-28,Identified during river patrol,ENV0775.jpg,False
+ENV0776,19.875021,74.38787,VLG002,Pesticide Runoff,Low,2025-05-15,Identified during river patrol,ENV0776.jpg,True
+ENV0777,19.910333,74.469458,VLG053,Fire,Critical,2025-11-06,Identified during river patrol,ENV0777.jpg,False
+ENV0778,19.878133,74.523086,VLG024,Sand Mining,High,2023-11-27,Noted by forest officer,ENV0778.jpg,False
+ENV0779,19.891796,74.386333,VLG077,Soil Erosion,High,2022-11-04,Reported by local resident,ENV0779.jpg,True
+ENV0780,19.891166,74.44725,VLG084,Invasive Species,Critical,2024-10-29,Identified during river patrol,ENV0780.jpg,False
+ENV0781,19.933921,74.388098,VLG026,Plastic Waste,High,2021-09-18,Reported by local resident,ENV0781.jpg,True
+ENV0782,19.8404,74.528404,VLG037,Fire,Moderate,2016-12-26,Reported by local resident,ENV0782.jpg,True
+ENV0783,19.82555,74.379562,VLG008,Illegal Tree Cutting,Low,2024-12-12,Reported by local resident,ENV0783.jpg,True
+ENV0784,19.891158,74.554993,VLG075,Illegal Tree Cutting,High,2026-03-12,Reported by local resident,ENV0784.jpg,False
+ENV0785,19.825266,74.490033,VLG094,Water Pollution,Moderate,2020-08-10,Noted by forest officer,ENV0785.jpg,True
+ENV0786,19.841565,74.494114,VLG093,Pesticide Runoff,Critical,2021-02-08,Noted by forest officer,ENV0786.jpg,False
+ENV0787,19.894002,74.414066,VLG067,Plastic Waste,Critical,2020-07-05,Noted by forest officer,ENV0787.jpg,True
+ENV0788,19.893362,74.580919,VLG005,Sand Mining,High,2020-03-16,Observed during field survey,ENV0788.jpg,False
+ENV0789,19.896901,74.386123,VLG099,Plastic Waste,High,2021-09-08,Flagged via citizen report app,ENV0789.jpg,True
+ENV0790,19.810147,74.505017,VLG065,Plastic Waste,Moderate,2026-02-09,Observed during field survey,ENV0790.jpg,False
+ENV0791,19.811308,74.573288,VLG031,Plastic Waste,Critical,2019-08-16,Identified during river patrol,ENV0791.jpg,True
+ENV0792,19.887949,74.541949,VLG079,Fire,Low,2026-05-17,Reported by local resident,ENV0792.jpg,False
+ENV0793,19.923404,74.483945,VLG015,Sand Mining,Low,2018-08-27,Identified during river patrol,ENV0793.jpg,False
+ENV0794,19.880378,74.392119,VLG079,Sewage Discharge,High,2023-03-24,Observed during field survey,ENV0794.jpg,True
+ENV0795,19.921808,74.556855,VLG027,Pesticide Runoff,Critical,2023-05-14,Noted by forest officer,ENV0795.jpg,False
+ENV0796,19.816351,74.561044,VLG076,Fire,Critical,2021-05-31,Observed during field survey,ENV0796.jpg,False
+ENV0797,19.841726,74.529112,VLG068,Invasive Species,Low,2019-04-28,Reported by local resident,ENV0797.jpg,False
+ENV0798,19.827047,74.590272,VLG039,Sand Mining,Critical,2022-03-29,Reported by local resident,ENV0798.jpg,True
+ENV0799,19.850959,74.55253,VLG033,Illegal Tree Cutting,Low,2020-12-28,Identified during river patrol,ENV0799.jpg,True
+ENV0800,19.870268,74.433275,VLG065,Soil Erosion,Moderate,2025-09-01,Identified during river patrol,ENV0800.jpg,True
+ENV0801,19.808848,74.563189,VLG091,Soil Erosion,Moderate,2019-07-05,Identified during river patrol,ENV0801.jpg,True
+ENV0802,19.944399,74.462547,VLG072,Illegal Tree Cutting,Critical,2024-05-02,Noted by forest officer,ENV0802.jpg,True
+ENV0803,19.817575,74.453336,VLG073,Sewage Discharge,Critical,2022-06-14,Noted by forest officer,ENV0803.jpg,False
+ENV0804,19.928166,74.545006,VLG087,Fire,Critical,2016-09-12,Identified during river patrol,ENV0804.jpg,True
+ENV0805,19.843481,74.358687,VLG048,Sand Mining,Critical,2018-04-01,Flagged via citizen report app,ENV0805.jpg,False
+ENV0806,19.8347,74.564902,VLG008,Fire,Moderate,2026-07-13,Noted by forest officer,ENV0806.jpg,False
+ENV0807,19.943393,74.442433,VLG026,Sewage Discharge,Low,2019-05-21,Flagged via citizen report app,ENV0807.jpg,True
+ENV0808,19.880225,74.598258,VLG045,Sewage Discharge,Critical,2018-05-21,Noted by forest officer,ENV0808.jpg,False
+ENV0809,19.938477,74.475262,VLG048,Fire,Critical,2025-06-21,Flagged via citizen report app,ENV0809.jpg,False
+ENV0810,19.802039,74.371501,VLG031,Illegal Tree Cutting,Critical,2021-04-16,Observed during field survey,ENV0810.jpg,False
+ENV0811,19.867355,74.513788,VLG020,Encroachment,High,2019-04-01,Flagged via citizen report app,ENV0811.jpg,True
+ENV0812,19.932506,74.586674,VLG058,Fire,Critical,2019-02-01,Observed during field survey,ENV0812.jpg,False
+ENV0813,19.832316,74.439835,VLG032,Sand Mining,Moderate,2020-09-16,Identified during river patrol,ENV0813.jpg,False
+ENV0814,19.875274,74.519435,VLG015,Invasive Species,Low,2019-06-13,Noted by forest officer,ENV0814.jpg,False
+ENV0815,19.920419,74.452566,VLG076,Sand Mining,Low,2017-01-03,Observed during field survey,ENV0815.jpg,False
+ENV0816,19.910026,74.355002,VLG022,Encroachment,Critical,2025-10-04,Observed during field survey,ENV0816.jpg,True
+ENV0817,19.869262,74.434306,VLG015,Fire,Moderate,2017-06-17,Identified during river patrol,ENV0817.jpg,True
+ENV0818,19.85668,74.497159,VLG086,Encroachment,Critical,2025-03-10,Observed during field survey,ENV0818.jpg,True
+ENV0819,19.93366,74.438097,VLG071,Sewage Discharge,Low,2018-12-06,Observed during field survey,ENV0819.jpg,True
+ENV0820,19.92562,74.52896,VLG042,Encroachment,Moderate,2020-08-14,Flagged via citizen report app,ENV0820.jpg,False
+ENV0821,19.942155,74.482432,VLG018,Invasive Species,Low,2017-10-02,Reported by local resident,ENV0821.jpg,False
+ENV0822,19.901608,74.43171,VLG091,Sewage Discharge,Moderate,2020-05-26,Observed during field survey,ENV0822.jpg,True
+ENV0823,19.856739,74.512606,VLG007,Soil Erosion,Low,2020-02-27,Reported by local resident,ENV0823.jpg,False
+ENV0824,19.842762,74.45525,VLG066,Sand Mining,Low,2020-12-24,Noted by forest officer,ENV0824.jpg,True
+ENV0825,19.819865,74.446532,VLG070,Invasive Species,Low,2017-01-06,Identified during river patrol,ENV0825.jpg,True
+ENV0826,19.905219,74.350734,VLG003,Sewage Discharge,High,2024-03-06,Reported by local resident,ENV0826.jpg,True
+ENV0827,19.901254,74.559888,VLG060,Fire,Low,2025-06-25,Observed during field survey,ENV0827.jpg,True
+ENV0828,19.843448,74.555297,VLG004,Illegal Tree Cutting,Low,2019-10-30,Flagged via citizen report app,ENV0828.jpg,False
+ENV0829,19.893978,74.506605,VLG088,Sewage Discharge,Critical,2021-05-02,Flagged via citizen report app,ENV0829.jpg,True
+ENV0830,19.862415,74.563073,VLG086,Encroachment,Low,2024-04-26,Identified during river patrol,ENV0830.jpg,True
+ENV0831,19.800003,74.350029,VLG074,Illegal Tree Cutting,Critical,2017-12-18,Noted by forest officer,ENV0831.jpg,False
+ENV0832,19.872036,74.351173,VLG032,Invasive Species,Critical,2023-02-04,Flagged via citizen report app,ENV0832.jpg,False
+ENV0833,19.803551,74.569571,VLG066,Fire,High,2020-06-04,Flagged via citizen report app,ENV0833.jpg,False
+ENV0834,19.818295,74.572405,VLG095,Plastic Waste,Critical,2026-03-03,Noted by forest officer,ENV0834.jpg,True
+ENV0835,19.864665,74.584628,VLG099,Sand Mining,Moderate,2022-03-29,Reported by local resident,ENV0835.jpg,False
+ENV0836,19.879022,74.494053,VLG100,Sand Mining,High,2019-04-26,Observed during field survey,ENV0836.jpg,False
+ENV0837,19.931229,74.568869,VLG026,Plastic Waste,High,2016-11-27,Observed during field survey,ENV0837.jpg,True
+ENV0838,19.823511,74.538728,VLG065,Plastic Waste,Low,2018-12-31,Reported by local resident,ENV0838.jpg,True
+ENV0839,19.81483,74.525987,VLG065,Fire,High,2021-05-07,Reported by local resident,ENV0839.jpg,False
+ENV0840,19.866471,74.383375,VLG012,Invasive Species,High,2023-08-30,Identified during river patrol,ENV0840.jpg,False
+ENV0841,19.832147,74.548363,VLG023,Pesticide Runoff,High,2019-12-27,Noted by forest officer,ENV0841.jpg,True
+ENV0842,19.864958,74.501002,VLG075,Illegal Tree Cutting,Critical,2022-12-14,Reported by local resident,ENV0842.jpg,False
+ENV0843,19.803013,74.561789,VLG064,Illegal Tree Cutting,Critical,2016-12-14,Observed during field survey,ENV0843.jpg,False
+ENV0844,19.858968,74.374766,VLG016,Pesticide Runoff,High,2022-12-21,Observed during field survey,ENV0844.jpg,True
+ENV0845,19.826905,74.451301,VLG001,Fire,Critical,2022-12-07,Reported by local resident,ENV0845.jpg,False
+ENV0846,19.811535,74.539061,VLG072,Invasive Species,Moderate,2020-05-19,Noted by forest officer,ENV0846.jpg,False
+ENV0847,19.925526,74.35272,VLG058,Plastic Waste,High,2020-04-21,Noted by forest officer,ENV0847.jpg,True
+ENV0848,19.812961,74.463528,VLG018,Soil Erosion,Moderate,2021-12-17,Flagged via citizen report app,ENV0848.jpg,True
+ENV0849,19.888924,74.38756,VLG036,Illegal Tree Cutting,High,2023-05-23,Reported by local resident,ENV0849.jpg,False
+ENV0850,19.812742,74.582215,VLG004,Fire,Moderate,2018-10-16,Identified during river patrol,ENV0850.jpg,False
+ENV0851,19.901197,74.371816,VLG001,Soil Erosion,Low,2020-05-30,Observed during field survey,ENV0851.jpg,False
+ENV0852,19.874627,74.569756,VLG062,Sewage Discharge,Moderate,2021-07-13,Noted by forest officer,ENV0852.jpg,False
+ENV0853,19.830506,74.350988,VLG040,Illegal Tree Cutting,Moderate,2021-04-15,Observed during field survey,ENV0853.jpg,True
+ENV0854,19.85224,74.562218,VLG044,Illegal Tree Cutting,Critical,2025-05-21,Identified during river patrol,ENV0854.jpg,True
+ENV0855,19.897082,74.58425,VLG036,Plastic Waste,Low,2017-06-20,Noted by forest officer,ENV0855.jpg,False
+ENV0856,19.932741,74.495945,VLG010,Invasive Species,Critical,2025-02-01,Noted by forest officer,ENV0856.jpg,False
+ENV0857,19.920661,74.467919,VLG020,Plastic Waste,Moderate,2017-01-13,Flagged via citizen report app,ENV0857.jpg,True
+ENV0858,19.932128,74.431341,VLG063,Pesticide Runoff,Critical,2019-03-18,Flagged via citizen report app,ENV0858.jpg,False
+ENV0859,19.853205,74.526233,VLG007,Illegal Tree Cutting,Low,2022-12-08,Flagged via citizen report app,ENV0859.jpg,True
+ENV0860,19.831605,74.483573,VLG094,Sand Mining,Moderate,2021-10-08,Flagged via citizen report app,ENV0860.jpg,False
+ENV0861,19.807627,74.497906,VLG022,Sand Mining,Moderate,2019-02-25,Reported by local resident,ENV0861.jpg,True
+ENV0862,19.823593,74.571361,VLG042,Encroachment,Moderate,2016-10-31,Noted by forest officer,ENV0862.jpg,False
+ENV0863,19.935315,74.494815,VLG049,Pesticide Runoff,Low,2017-02-07,Reported by local resident,ENV0863.jpg,False
+ENV0864,19.947575,74.552242,VLG002,Soil Erosion,Low,2022-01-30,Reported by local resident,ENV0864.jpg,True
+ENV0865,19.887944,74.597111,VLG017,Plastic Waste,Moderate,2024-08-16,Observed during field survey,ENV0865.jpg,True
+ENV0866,19.813856,74.540919,VLG006,Pesticide Runoff,High,2021-05-21,Reported by local resident,ENV0866.jpg,False
+ENV0867,19.882462,74.551332,VLG067,Sand Mining,Low,2017-01-18,Noted by forest officer,ENV0867.jpg,False
+ENV0868,19.855913,74.385649,VLG009,Fire,Moderate,2021-01-12,Reported by local resident,ENV0868.jpg,False
+ENV0869,19.942284,74.441058,VLG090,Plastic Waste,High,2020-12-23,Flagged via citizen report app,ENV0869.jpg,False
+ENV0870,19.874913,74.58388,VLG017,Plastic Waste,Low,2024-08-04,Identified during river patrol,ENV0870.jpg,False
+ENV0871,19.886865,74.470587,VLG036,Plastic Waste,Moderate,2025-12-11,Noted by forest officer,ENV0871.jpg,False
+ENV0872,19.8604,74.536817,VLG031,Plastic Waste,Critical,2018-10-14,Reported by local resident,ENV0872.jpg,False
+ENV0873,19.945178,74.462473,VLG046,Encroachment,High,2018-01-18,Observed during field survey,ENV0873.jpg,True
+ENV0874,19.923346,74.486253,VLG088,Illegal Tree Cutting,Moderate,2023-01-24,Flagged via citizen report app,ENV0874.jpg,True
+ENV0875,19.872446,74.487607,VLG001,Sand Mining,Moderate,2025-09-11,Observed during field survey,ENV0875.jpg,False
+ENV0876,19.915962,74.409795,VLG001,Soil Erosion,High,2024-09-29,Identified during river patrol,ENV0876.jpg,True
+ENV0877,19.848016,74.464259,VLG065,Encroachment,Low,2022-08-28,Flagged via citizen report app,ENV0877.jpg,True
+ENV0878,19.889421,74.574258,VLG019,Sewage Discharge,Low,2021-12-25,Flagged via citizen report app,ENV0878.jpg,True
+ENV0879,19.863217,74.525234,VLG044,Pesticide Runoff,Low,2024-01-22,Flagged via citizen report app,ENV0879.jpg,False
+ENV0880,19.811682,74.415669,VLG086,Illegal Tree Cutting,Low,2018-04-25,Flagged via citizen report app,ENV0880.jpg,False
+ENV0881,19.860594,74.369119,VLG083,Water Pollution,Moderate,2026-02-22,Identified during river patrol,ENV0881.jpg,True
+ENV0882,19.913469,74.383938,VLG036,Illegal Tree Cutting,Critical,2018-04-23,Identified during river patrol,ENV0882.jpg,False
+ENV0883,19.905149,74.421296,VLG022,Pesticide Runoff,High,2017-11-05,Noted by forest officer,ENV0883.jpg,True
+ENV0884,19.844446,74.597028,VLG060,Plastic Waste,Critical,2018-09-16,Observed during field survey,ENV0884.jpg,False
+ENV0885,19.909197,74.463448,VLG009,Sewage Discharge,Critical,2026-04-15,Reported by local resident,ENV0885.jpg,False
+ENV0886,19.894681,74.520482,VLG037,Illegal Tree Cutting,Moderate,2026-03-09,Observed during field survey,ENV0886.jpg,True
+ENV0887,19.949381,74.504427,VLG025,Fire,Low,2021-04-21,Observed during field survey,ENV0887.jpg,False
+ENV0888,19.948377,74.541149,VLG018,Soil Erosion,High,2021-09-03,Observed during field survey,ENV0888.jpg,True
+ENV0889,19.885586,74.541228,VLG062,Illegal Tree Cutting,Critical,2025-01-18,Reported by local resident,ENV0889.jpg,False
+ENV0890,19.841748,74.48905,VLG055,Water Pollution,Moderate,2021-05-12,Identified during river patrol,ENV0890.jpg,True
+ENV0891,19.868752,74.55364,VLG090,Plastic Waste,Moderate,2020-02-01,Reported by local resident,ENV0891.jpg,False
+ENV0892,19.910301,74.438199,VLG004,Illegal Tree Cutting,Critical,2019-02-14,Observed during field survey,ENV0892.jpg,True
+ENV0893,19.901944,74.5299,VLG032,Pesticide Runoff,Low,2017-01-03,Reported by local resident,ENV0893.jpg,False
+ENV0894,19.873636,74.39584,VLG040,Sewage Discharge,Critical,2023-04-06,Observed during field survey,ENV0894.jpg,True
+ENV0895,19.919414,74.469467,VLG021,Water Pollution,High,2018-08-02,Noted by forest officer,ENV0895.jpg,True
+ENV0896,19.80202,74.511687,VLG063,Sewage Discharge,Low,2017-11-09,Noted by forest officer,ENV0896.jpg,False
+ENV0897,19.812169,74.506703,VLG023,Sewage Discharge,Moderate,2024-09-14,Observed during field survey,ENV0897.jpg,False
+ENV0898,19.838343,74.370478,VLG038,Encroachment,Moderate,2024-02-01,Observed during field survey,ENV0898.jpg,True
+ENV0899,19.863991,74.453413,VLG043,Encroachment,Critical,2017-07-03,Identified during river patrol,ENV0899.jpg,False
+ENV0900,19.947398,74.376042,VLG045,Fire,High,2023-04-18,Identified during river patrol,ENV0900.jpg,True
+ENV0901,19.913516,74.392831,VLG083,Invasive Species,Moderate,2023-01-29,Identified during river patrol,ENV0901.jpg,False
+ENV0902,19.865581,74.531359,VLG091,Invasive Species,Low,2024-12-21,Noted by forest officer,ENV0902.jpg,True
+ENV0903,19.825845,74.450307,VLG100,Sewage Discharge,Critical,2018-02-12,Identified during river patrol,ENV0903.jpg,False
+ENV0904,19.896798,74.525239,VLG006,Water Pollution,Low,2023-08-02,Observed during field survey,ENV0904.jpg,True
+ENV0905,19.883272,74.476147,VLG072,Sand Mining,Critical,2025-12-10,Flagged via citizen report app,ENV0905.jpg,False
+ENV0906,19.826774,74.591571,VLG026,Pesticide Runoff,Critical,2017-09-10,Identified during river patrol,ENV0906.jpg,True
+ENV0907,19.807655,74.56983,VLG062,Soil Erosion,Low,2022-12-04,Reported by local resident,ENV0907.jpg,False
+ENV0908,19.93259,74.573723,VLG007,Sewage Discharge,High,2022-04-14,Observed during field survey,ENV0908.jpg,False
+ENV0909,19.824641,74.568105,VLG073,Pesticide Runoff,High,2016-12-18,Observed during field survey,ENV0909.jpg,True
+ENV0910,19.867717,74.432964,VLG008,Illegal Tree Cutting,Low,2017-11-13,Noted by forest officer,ENV0910.jpg,True
+ENV0911,19.849818,74.409296,VLG077,Plastic Waste,Critical,2025-02-07,Noted by forest officer,ENV0911.jpg,False
+ENV0912,19.853694,74.599035,VLG008,Water Pollution,Critical,2020-05-26,Identified during river patrol,ENV0912.jpg,True
+ENV0913,19.826286,74.362989,VLG064,Fire,High,2019-10-12,Identified during river patrol,ENV0913.jpg,False
+ENV0914,19.911147,74.457842,VLG062,Encroachment,Moderate,2018-05-05,Flagged via citizen report app,ENV0914.jpg,False
+ENV0915,19.896806,74.508136,VLG029,Water Pollution,Critical,2026-01-12,Noted by forest officer,ENV0915.jpg,False
+ENV0916,19.911822,74.502561,VLG098,Illegal Tree Cutting,Low,2019-10-09,Observed during field survey,ENV0916.jpg,True
+ENV0917,19.806857,74.593211,VLG048,Sewage Discharge,Critical,2025-08-01,Reported by local resident,ENV0917.jpg,True
+ENV0918,19.860799,74.52638,VLG099,Plastic Waste,Moderate,2024-03-25,Identified during river patrol,ENV0918.jpg,False
+ENV0919,19.936292,74.515586,VLG062,Invasive Species,Moderate,2017-10-13,Reported by local resident,ENV0919.jpg,False
+ENV0920,19.849761,74.528167,VLG039,Plastic Waste,Critical,2017-03-05,Identified during river patrol,ENV0920.jpg,True
+ENV0921,19.912469,74.423354,VLG028,Sand Mining,High,2019-01-15,Flagged via citizen report app,ENV0921.jpg,True
+ENV0922,19.852666,74.491208,VLG025,Plastic Waste,High,2017-06-28,Noted by forest officer,ENV0922.jpg,True
+ENV0923,19.858611,74.448178,VLG031,Fire,Critical,2024-07-15,Identified during river patrol,ENV0923.jpg,False
+ENV0924,19.890708,74.542847,VLG053,Pesticide Runoff,Critical,2023-08-08,Identified during river patrol,ENV0924.jpg,True
+ENV0925,19.875954,74.503044,VLG007,Plastic Waste,High,2022-12-28,Observed during field survey,ENV0925.jpg,True
+ENV0926,19.886445,74.354561,VLG013,Sewage Discharge,Critical,2019-06-23,Observed during field survey,ENV0926.jpg,False
+ENV0927,19.817816,74.35152,VLG078,Fire,Critical,2024-02-22,Flagged via citizen report app,ENV0927.jpg,False
+ENV0928,19.926051,74.534259,VLG056,Encroachment,Low,2021-07-29,Reported by local resident,ENV0928.jpg,False
+ENV0929,19.893276,74.504745,VLG030,Invasive Species,Critical,2019-08-03,Noted by forest officer,ENV0929.jpg,False
+ENV0930,19.930826,74.374637,VLG037,Illegal Tree Cutting,Low,2024-11-24,Reported by local resident,ENV0930.jpg,False
+ENV0931,19.880884,74.442015,VLG092,Illegal Tree Cutting,Low,2022-01-22,Observed during field survey,ENV0931.jpg,False
+ENV0932,19.93613,74.371007,VLG041,Pesticide Runoff,Low,2019-08-09,Observed during field survey,ENV0932.jpg,True
+ENV0933,19.949101,74.514193,VLG048,Plastic Waste,High,2018-08-18,Identified during river patrol,ENV0933.jpg,True
+ENV0934,19.827308,74.501712,VLG056,Sewage Discharge,Critical,2018-06-25,Reported by local resident,ENV0934.jpg,False
+ENV0935,19.84803,74.475721,VLG020,Soil Erosion,High,2025-04-10,Flagged via citizen report app,ENV0935.jpg,False
+ENV0936,19.899823,74.482782,VLG029,Sewage Discharge,High,2020-11-09,Flagged via citizen report app,ENV0936.jpg,False
+ENV0937,19.904076,74.569336,VLG053,Soil Erosion,Critical,2023-12-05,Flagged via citizen report app,ENV0937.jpg,True
+ENV0938,19.885208,74.486043,VLG078,Water Pollution,Critical,2022-07-12,Observed during field survey,ENV0938.jpg,False
+ENV0939,19.879199,74.50504,VLG018,Invasive Species,Critical,2023-10-24,Noted by forest officer,ENV0939.jpg,True
+ENV0940,19.911788,74.408689,VLG049,Plastic Waste,High,2024-03-19,Identified during river patrol,ENV0940.jpg,False
+ENV0941,19.918483,74.494821,VLG060,Encroachment,High,2023-11-07,Flagged via citizen report app,ENV0941.jpg,False
+ENV0942,19.847971,74.363138,VLG047,Sand Mining,Low,2025-07-11,Identified during river patrol,ENV0942.jpg,True
+ENV0943,19.946769,74.537816,VLG005,Illegal Tree Cutting,Low,2020-08-27,Flagged via citizen report app,ENV0943.jpg,True
+ENV0944,19.874694,74.469056,VLG090,Encroachment,High,2020-10-21,Noted by forest officer,ENV0944.jpg,True
+ENV0945,19.869338,74.505597,VLG022,Pesticide Runoff,Moderate,2025-07-31,Reported by local resident,ENV0945.jpg,True
+ENV0946,19.82572,74.49824,VLG043,Encroachment,Low,2022-01-27,Flagged via citizen report app,ENV0946.jpg,False
+ENV0947,19.868357,74.520884,VLG042,Soil Erosion,Critical,2021-07-23,Flagged via citizen report app,ENV0947.jpg,True
+ENV0948,19.838241,74.429304,VLG019,Pesticide Runoff,Critical,2022-11-03,Noted by forest officer,ENV0948.jpg,True
+ENV0949,19.935174,74.377751,VLG089,Sand Mining,Moderate,2019-05-15,Noted by forest officer,ENV0949.jpg,False
+ENV0950,19.925298,74.469265,VLG081,Sewage Discharge,Moderate,2022-08-03,Flagged via citizen report app,ENV0950.jpg,False
+ENV0951,19.846488,74.406406,VLG088,Plastic Waste,Critical,2021-07-31,Flagged via citizen report app,ENV0951.jpg,True
+ENV0952,19.948496,74.375381,VLG025,Sand Mining,Critical,2021-05-31,Identified during river patrol,ENV0952.jpg,False
+ENV0953,19.889131,74.364957,VLG085,Invasive Species,Critical,2016-09-05,Observed during field survey,ENV0953.jpg,False
+ENV0954,19.923021,74.571637,VLG007,Pesticide Runoff,Moderate,2021-09-05,Reported by local resident,ENV0954.jpg,False
+ENV0955,19.902994,74.545487,VLG020,Soil Erosion,Critical,2018-07-25,Reported by local resident,ENV0955.jpg,False
+ENV0956,19.920374,74.563649,VLG048,Plastic Waste,High,2025-04-21,Reported by local resident,ENV0956.jpg,True
+ENV0957,19.843131,74.461081,VLG089,Pesticide Runoff,Critical,2023-01-04,Noted by forest officer,ENV0957.jpg,True
+ENV0958,19.936033,74.479893,VLG031,Encroachment,Critical,2025-11-08,Noted by forest officer,ENV0958.jpg,False
+ENV0959,19.915134,74.413074,VLG067,Sand Mining,Low,2020-09-02,Identified during river patrol,ENV0959.jpg,False
+ENV0960,19.921792,74.537587,VLG019,Water Pollution,Low,2022-09-18,Identified during river patrol,ENV0960.jpg,False
+ENV0961,19.878989,74.377317,VLG038,Fire,Critical,2017-01-29,Identified during river patrol,ENV0961.jpg,True
+ENV0962,19.857502,74.534628,VLG058,Pesticide Runoff,Critical,2021-05-25,Noted by forest officer,ENV0962.jpg,False
+ENV0963,19.851779,74.55372,VLG024,Water Pollution,Low,2018-03-25,Observed during field survey,ENV0963.jpg,False
+ENV0964,19.826275,74.50147,VLG014,Water Pollution,High,2024-05-13,Noted by forest officer,ENV0964.jpg,True
+ENV0965,19.933628,74.524044,VLG077,Sand Mining,Low,2023-06-19,Reported by local resident,ENV0965.jpg,False
+ENV0966,19.849981,74.444506,VLG069,Pesticide Runoff,Low,2018-07-02,Reported by local resident,ENV0966.jpg,True
+ENV0967,19.870484,74.575195,VLG099,Fire,Moderate,2025-02-26,Observed during field survey,ENV0967.jpg,False
+ENV0968,19.811905,74.485974,VLG019,Encroachment,Moderate,2021-05-14,Reported by local resident,ENV0968.jpg,False
+ENV0969,19.836291,74.406476,VLG036,Water Pollution,Critical,2016-11-16,Reported by local resident,ENV0969.jpg,False
+ENV0970,19.84244,74.461964,VLG097,Encroachment,Low,2022-03-17,Reported by local resident,ENV0970.jpg,False
+ENV0971,19.878277,74.590871,VLG089,Sewage Discharge,Moderate,2021-01-02,Observed during field survey,ENV0971.jpg,True
+ENV0972,19.84265,74.520108,VLG099,Plastic Waste,High,2020-03-07,Identified during river patrol,ENV0972.jpg,True
+ENV0973,19.823077,74.526809,VLG003,Water Pollution,Moderate,2018-04-06,Flagged via citizen report app,ENV0973.jpg,False
+ENV0974,19.819445,74.597411,VLG067,Encroachment,High,2016-11-27,Flagged via citizen report app,ENV0974.jpg,False
+ENV0975,19.915477,74.393052,VLG007,Pesticide Runoff,Critical,2022-10-01,Noted by forest officer,ENV0975.jpg,False
+ENV0976,19.893052,74.554937,VLG059,Sand Mining,High,2018-10-12,Observed during field survey,ENV0976.jpg,False
+ENV0977,19.863328,74.397252,VLG076,Fire,Moderate,2021-10-03,Reported by local resident,ENV0977.jpg,False
+ENV0978,19.89459,74.597859,VLG014,Plastic Waste,High,2020-04-12,Reported by local resident,ENV0978.jpg,True
+ENV0979,19.931958,74.456255,VLG023,Fire,Moderate,2020-09-27,Noted by forest officer,ENV0979.jpg,True
+ENV0980,19.891562,74.396435,VLG045,Illegal Tree Cutting,Critical,2021-06-06,Noted by forest officer,ENV0980.jpg,False
+ENV0981,19.836072,74.451751,VLG009,Soil Erosion,Low,2016-11-05,Reported by local resident,ENV0981.jpg,False
+ENV0982,19.84152,74.413771,VLG064,Fire,Low,2025-05-16,Noted by forest officer,ENV0982.jpg,False
+ENV0983,19.845676,74.436688,VLG100,Invasive Species,High,2018-03-05,Noted by forest officer,ENV0983.jpg,True
+ENV0984,19.888529,74.526528,VLG020,Soil Erosion,High,2020-11-22,Flagged via citizen report app,ENV0984.jpg,True
+ENV0985,19.919337,74.584659,VLG071,Water Pollution,Moderate,2023-05-22,Flagged via citizen report app,ENV0985.jpg,False
+ENV0986,19.92894,74.588508,VLG034,Fire,Moderate,2025-07-18,Reported by local resident,ENV0986.jpg,False
+ENV0987,19.901709,74.467956,VLG002,Sewage Discharge,Moderate,2025-10-12,Identified during river patrol,ENV0987.jpg,True
+ENV0988,19.886771,74.363064,VLG071,Water Pollution,Low,2026-02-21,Flagged via citizen report app,ENV0988.jpg,False
+ENV0989,19.909923,74.438471,VLG050,Fire,High,2020-10-18,Flagged via citizen report app,ENV0989.jpg,False
+ENV0990,19.921721,74.577108,VLG055,Soil Erosion,Low,2024-07-13,Noted by forest officer,ENV0990.jpg,True
+ENV0991,19.840606,74.382129,VLG065,Sewage Discharge,Moderate,2021-08-12,Reported by local resident,ENV0991.jpg,False
+ENV0992,19.833312,74.571041,VLG053,Pesticide Runoff,Low,2023-03-30,Noted by forest officer,ENV0992.jpg,False
+ENV0993,19.853638,74.58465,VLG076,Encroachment,Critical,2023-12-29,Noted by forest officer,ENV0993.jpg,True
+ENV0994,19.933359,74.511349,VLG080,Plastic Waste,Low,2017-12-23,Reported by local resident,ENV0994.jpg,True
+ENV0995,19.884408,74.53297,VLG044,Invasive Species,Low,2022-12-24,Identified during river patrol,ENV0995.jpg,False
+ENV0996,19.865158,74.388281,VLG041,Invasive Species,Low,2020-12-11,Noted by forest officer,ENV0996.jpg,False
+ENV0997,19.934495,74.593662,VLG014,Pesticide Runoff,Critical,2020-12-31,Noted by forest officer,ENV0997.jpg,True
+ENV0998,19.874621,74.472822,VLG007,Soil Erosion,Critical,2020-03-23,Noted by forest officer,ENV0998.jpg,True
+ENV0999,19.838189,74.507111,VLG009,Water Pollution,High,2023-08-04,Flagged via citizen report app,ENV0999.jpg,False
+ENV1000,19.834064,74.381975,VLG044,Illegal Tree Cutting,High,2024-01-12,Identified during river patrol,ENV1000.jpg,False

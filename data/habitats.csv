@@ -1,0 +1,31 @@
+habitat_id,habitat_name,description,vegetation_type,dominant_species,soil_type,average_rainfall_mm,biodiversity_score
+HAB001,Godavari River,Perennial river,Riparian,"Reeds, Ficus, aquatic grasses",Alluvial,850,8.9
+HAB002,Wetland,Seasonal freshwater wetland,Marshland,"Typha, Ipomoea aquatica",Clayey,900,8.2
+HAB003,Agricultural Field,Cultivated cropland,Cropland,"Sugarcane, Cotton, Jowar",Black cotton soil,700,4.5
+HAB004,Sugarcane Farm,Irrigated sugarcane belt,Monoculture cropland,Saccharum officinarum,Black cotton soil,750,3.8
+HAB005,Grassland,Open grazing grassland,Grassland,"Cynodon dactylon, Themeda",Murrum,600,6.0
+HAB006,Pond,Village pond / percolation tank,Standing water,"Water hyacinth, Nymphaea",Silty clay,800,7.5
+HAB007,Urban Garden,Municipal / residential garden,Ornamental,"Hibiscus, Bougainvillea",Loamy,700,5.0
+HAB008,Temple Grove,Sacred grove around temple,Mixed evergreen patch,"Ficus, Azadirachta",Loamy,700,7.8
+HAB009,Canal,Irrigation canal,Aquatic channel,"Ipomoea, algae",Concrete-lined/Alluvial,750,4.9
+HAB010,Roadside Plantation,Avenue plantation,Linear plantation,"Gulmohar, Neem, Tamarind",Mixed,700,4.2
+HAB011,Reservoir,Irrigation reservoir backwater,Open water body,Submerged macrophytes,Alluvial,850,8.5
+HAB012,Scrubland,Dry deciduous scrub,Thorn scrub,"Acacia, Ziziphus",Murrum/rocky,550,5.5
+HAB013,Rocky Outcrop,Basalt rocky terrain,Sparse xerophytic,"Euphorbia, lichens",Rocky,550,4.8
+HAB014,Wasteland,Fallow / uncultivated land,Ruderal,"Calotropis, Lantana",Degraded,650,3.5
+HAB015,Mango Orchard,Cultivated orchard,Orchard,Mangifera indica,Loamy,700,5.2
+HAB016,Bamboo Grove,Riverine bamboo stand,Bamboo thicket,Bambusa bambos,Alluvial,800,6.5
+HAB017,Marshy Field Edge,Waterlogged field margin,Marsh edge,"Typha, sedges",Clayey,900,6.8
+HAB018,Check Dam Backwater,Small check-dam impoundment,Standing water,Aquatic grasses,Silty,780,7.0
+HAB019,Fallow Land,Seasonal fallow field,Cropland (fallow),"Weeds, grasses",Black cotton soil,700,3.0
+HAB020,Nursery Plot,Forest department nursery,Managed plantation,"Saplings, mixed species",Loamy,700,4.0
+HAB021,Riverbank Sandbar,Seasonal exposed sandbar,Sand/gravel bar,Sparse grasses,Sandy,850,5.8
+HAB022,Village Grove,Community grove,Mixed native trees,"Ficus, Azadirachta, Tamarindus",Loamy,700,7.2
+HAB023,Irrigation Tank,Farm pond / percolation tank,Standing water,Aquatic weeds,Clayey,760,6.9
+HAB024,Railway Corridor Green,Vegetated railway margin,Ruderal/plantation,"Prosopis, grasses",Mixed,700,3.9
+HAB025,School Campus Green,Institutional green space,Ornamental/native mix,"Neem, Hibiscus",Loamy,700,4.6
+HAB026,Dry Deciduous Patch,Remnant dry deciduous forest,Dry deciduous,"Terminalia, Butea",Murrum,600,7.6
+HAB027,Salt-affected Land,Saline/degraded patch,Halophytic scrub,"Suaeda, Salicornia-like",Saline,700,2.8
+HAB028,Poultry Farm Periphery,Farmstead periphery green,Mixed ruderal,"Weeds, shrubs",Loamy,700,3.2
+HAB029,Cotton Field,Cultivated cotton belt,Cropland,Gossypium hirsutum,Black cotton soil,680,3.6
+HAB030,Onion Field,Cultivated onion belt,Cropland,Allium cepa,Black cotton soil,680,3.4

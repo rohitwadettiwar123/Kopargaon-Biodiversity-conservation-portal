@@ -1,0 +1,151 @@
+waterbody_id,name,type,latitude,longitude,village_id,area_sqkm,depth_m,water_quality,biodiversity_score,pollution_level,fish_species_count,aquatic_plants,last_inspection
+WB001,Pathare Percolation Tank,Percolation Tank,19.923063,74.540393,VLG053,11.6359,1.45,Excellent,9.3,Low,11,"Nymphaea, Typha",2025-06-02
+WB002,Bramhangaon Wadi Check Dam,Check Dam,19.815843,74.487605,VLG013,8.9796,11.2,Good,2.13,Low,16,"Water Hyacinth, Lotus",2025-04-13
+WB003,Chandanapuri Check Dam,Check Dam,19.864474,74.352895,VLG097,6.7618,12.03,Good,3.8,Moderate,3,"Duckweed, reeds",2025-09-05
+WB004,Aloli Check Dam,Check Dam,19.86063,74.352957,VLG079,3.2653,4.08,Good,2.22,High,0,"Duckweed, reeds",2025-06-17
+WB005,Chaskaon Check Dam,Check Dam,19.90177,74.414241,VLG015,7.9603,10.02,Excellent,5.27,Moderate,14,"Ipomoea aquatica, algae",2025-03-02
+WB006,Kasabe Canal,Canal,19.876322,74.436082,VLG094,6.3658,7.51,Poor,7.69,Low,13,"Nymphaea, Typha",2025-08-31
+WB007,Godavari River,River,19.839407,74.501925,VLG038,4.3644,12.42,Poor,5.87,Low,10,"Ipomoea aquatica, algae",2025-04-04
+WB008,Musalwadi Percolation Tank,Percolation Tank,19.852688,74.546525,VLG001,7.8305,8.54,Good,4.12,Low,9,"Ipomoea aquatica, algae",2025-05-07
+WB009,Ranjankhol Check Dam,Check Dam,19.941472,74.527245,VLG081,1.5057,6.17,Poor,3.86,Severe,9,"Nymphaea, Typha",2025-05-08
+WB010,Godavari River,River,19.81667,74.371839,VLG062,6.6312,0.74,Moderate,4.29,Moderate,0,"Nymphaea, Typha",2025-10-13
+WB011,Chaskaon Lake,Lake,19.901239,74.447958,VLG015,2.3626,14.21,Excellent,7.01,Moderate,10,"Nymphaea, Typha",2025-10-30
+WB012,Musalwadi Percolation Tank,Percolation Tank,19.92484,74.426056,VLG032,8.9458,12.31,Excellent,7.96,Low,9,"Duckweed, reeds",2025-07-12
+WB013,Sangamner Canal,Canal,19.925734,74.5544,VLG060,4.2279,9.81,Very Poor,3.72,Severe,14,"Duckweed, reeds",2025-04-14
+WB014,Loni Pond,Pond,19.850183,74.588635,VLG090,10.0277,3.68,Moderate,5.48,Severe,13,"Duckweed, reeds",2025-07-07
+WB015,Kopargaon Peth Check Dam,Check Dam,19.912768,74.474927,VLG046,10.5159,12.54,Good,6.1,Low,22,None observed,2025-04-30
+WB016,Godavari River,River,19.932586,74.431024,VLG032,5.3956,2.12,Excellent,2.11,High,5,"Water Hyacinth, Lotus",2025-03-19
+WB017,Loni Percolation Tank,Percolation Tank,19.9468,74.521444,VLG090,5.0535,1.21,Excellent,7.49,Low,3,"Nymphaea, Typha",2025-05-04
+WB018,Wadgaon Pond,Pond,19.895655,74.501472,VLG026,8.994,12.5,Excellent,4.17,Moderate,14,"Duckweed, reeds",2025-04-09
+WB019,Hingangaon Pathar Lake,Lake,19.850324,74.584195,VLG085,6.667,7.59,Moderate,7.41,Low,3,None observed,2025-12-19
+WB020,Godavari River,River,19.909054,74.398746,VLG058,7.5392,3.52,Very Poor,5.21,Moderate,21,"Water Hyacinth, Lotus",2025-08-29
+WB021,Aloli Pathar Percolation Tank,Percolation Tank,19.850987,74.46156,VLG054,6.4445,13.72,Moderate,2.04,Moderate,10,"Duckweed, reeds",2025-10-15
+WB022,Rahata Pond,Pond,19.945837,74.531037,VLG066,4.9791,9.12,Moderate,4.19,High,21,"Ipomoea aquatica, algae",2025-03-29
+WB023,Godavari River,River,19.817609,74.43656,VLG093,12.2119,6.74,Very Poor,7.67,Moderate,4,"Nymphaea, Typha",2025-08-19
+WB024,Askheda Canal,Canal,19.89211,74.432879,VLG087,9.763,11.78,Poor,4.51,High,5,"Ipomoea aquatica, algae",2025-11-03
+WB025,Nandur Pond,Pond,19.807094,74.376525,VLG100,0.4405,2.75,Very Poor,5.97,Low,12,"Water Hyacinth, Lotus",2025-03-31
+WB026,Kasabe Check Dam,Check Dam,19.819476,74.419117,VLG061,10.6828,3.81,Moderate,6.15,Severe,8,"Nymphaea, Typha",2025-09-21
+WB027,Songaon Check Dam,Check Dam,19.882787,74.48306,VLG012,10.8831,8.01,Moderate,3.23,Low,17,"Nymphaea, Typha",2025-06-29
+WB028,Aloli Percolation Tank,Percolation Tank,19.875343,74.546105,VLG079,12.1556,10.35,Poor,6.47,High,8,"Water Hyacinth, Lotus",2025-06-22
+WB029,Kasabe Check Dam,Check Dam,19.815028,74.52928,VLG031,11.7119,7.24,Good,3.75,Moderate,14,None observed,2025-05-02
+WB030,Ranjankhol Canal,Canal,19.851762,74.360918,VLG096,6.8677,13.17,Poor,7.69,Low,15,"Ipomoea aquatica, algae",2025-11-13
+WB031,Chas Wadi Canal,Canal,19.949465,74.579653,VLG042,5.1024,3.49,Excellent,1.51,Moderate,10,"Water Hyacinth, Lotus",2025-06-11
+WB032,Pathare Percolation Tank,Percolation Tank,19.920286,74.409914,VLG053,1.5094,5.04,Good,6.3,High,8,"Ipomoea aquatica, algae",2025-10-02
+WB033,Shrirampur Percolation Tank,Percolation Tank,19.849004,74.406747,VLG068,9.9289,4.88,Very Poor,9.12,Low,20,"Duckweed, reeds",2025-10-02
+WB034,Yeola Check Dam,Check Dam,19.841303,74.495234,VLG074,7.1615,13.0,Excellent,4.73,Low,2,"Nymphaea, Typha",2025-02-20
+WB035,Pimpalgaon Reservoir,Reservoir,19.93765,74.510807,VLG024,0.4454,7.57,Very Poor,6.0,Moderate,7,"Water Hyacinth, Lotus",2025-11-21
+WB036,Pimpalgaon Canal,Canal,19.863955,74.380039,VLG024,7.1157,3.23,Moderate,8.15,Moderate,3,"Duckweed, reeds",2025-01-14
+WB037,Songaon Percolation Tank,Percolation Tank,19.896664,74.361807,VLG089,9.4666,12.84,Very Poor,7.52,High,1,None observed,2025-09-11
+WB038,Musalwadi Canal,Canal,19.875651,74.598672,VLG025,4.5697,6.81,Moderate,3.83,High,11,"Nymphaea, Typha",2025-06-10
+WB039,Pohegaon Canal,Canal,19.884561,74.374844,VLG019,10.7185,14.33,Moderate,6.22,Moderate,21,"Duckweed, reeds",2025-12-08
+WB040,Songaon Canal,Canal,19.877323,74.374521,VLG089,8.6045,13.94,Very Poor,3.44,Moderate,12,"Water Hyacinth, Lotus",2025-10-15
+WB041,Songaon Canal,Canal,19.873675,74.45923,VLG049,3.3937,7.64,Moderate,2.31,High,18,"Duckweed, reeds",2025-05-21
+WB042,Sangamner Vasti Stream,Stream,19.945014,74.592233,VLG003,10.9507,11.44,Poor,5.08,Low,4,"Nymphaea, Typha",2025-02-15
+WB043,Aloli Pond,Pond,19.809876,74.533432,VLG010,1.3975,9.89,Poor,7.41,Severe,12,"Nymphaea, Typha",2025-01-29
+WB044,Wadgaon Lake,Lake,19.878961,74.415884,VLG086,5.6841,11.25,Good,4.76,High,21,"Ipomoea aquatica, algae",2025-08-30
+WB045,Karjule Canal,Canal,19.870238,74.583655,VLG023,5.0522,1.55,Good,7.84,High,20,"Duckweed, reeds",2025-09-01
+WB046,Bramhangaon Check Dam,Check Dam,19.931299,74.595372,VLG070,4.6212,9.84,Good,7.31,Moderate,2,"Nymphaea, Typha",2025-04-08
+WB047,Karjule Canal,Canal,19.804592,74.506445,VLG062,7.2523,5.93,Poor,3.02,High,10,"Nymphaea, Typha",2025-09-04
+WB048,Aloli Canal,Canal,19.8657,74.411839,VLG027,8.0592,1.98,Poor,2.65,High,14,"Nymphaea, Typha",2025-10-20
+WB049,Songaon Percolation Tank,Percolation Tank,19.811935,74.55539,VLG049,2.8024,4.46,Excellent,2.69,High,4,"Nymphaea, Typha",2025-05-18
+WB050,Sangamner Reservoir,Reservoir,19.841998,74.456845,VLG060,5.0151,5.7,Very Poor,5.32,Moderate,12,"Nymphaea, Typha",2025-05-25
+WB051,Loni Check Dam,Check Dam,19.823051,74.367373,VLG090,0.5257,11.55,Good,5.87,High,14,"Water Hyacinth, Lotus",2025-10-23
+WB052,Sangamner Pond,Pond,19.835505,74.381409,VLG060,9.2177,3.84,Poor,8.65,High,11,"Nymphaea, Typha",2025-01-10
+WB053,Chas Wadi Check Dam,Check Dam,19.879844,74.504512,VLG042,10.305,6.61,Poor,4.56,Moderate,22,None observed,2025-01-23
+WB054,Sonai Wadi Pond,Pond,19.826332,74.407846,VLG028,6.104,6.47,Excellent,8.91,Low,0,"Water Hyacinth, Lotus",2025-05-19
+WB055,Kopargaon Peth Reservoir,Reservoir,19.944386,74.490777,VLG046,1.9008,2.18,Excellent,7.71,Severe,13,None observed,2025-01-13
+WB056,Godavari River,River,19.837742,74.383367,VLG060,11.7868,6.52,Very Poor,8.09,Moderate,9,None observed,2025-12-13
+WB057,Dhondegaon Pond,Pond,19.928114,74.457579,VLG055,10.057,14.94,Poor,4.91,High,17,"Nymphaea, Typha",2025-06-29
+WB058,Pohegaon Percolation Tank,Percolation Tank,19.927812,74.417871,VLG019,1.1044,14.4,Good,2.25,Moderate,9,"Ipomoea aquatica, algae",2025-03-23
+WB059,Sangamner Pond,Pond,19.907509,74.553702,VLG091,0.2063,1.99,Very Poor,7.64,Low,12,"Duckweed, reeds",2025-06-22
+WB060,Nandur Pond,Pond,19.813534,74.357336,VLG100,8.4901,11.11,Moderate,9.23,Severe,2,"Duckweed, reeds",2025-03-06
+WB061,Nandur Reservoir,Reservoir,19.838838,74.499104,VLG030,1.2786,10.11,Good,9.19,Low,21,"Water Hyacinth, Lotus",2025-03-09
+WB062,Wadgaon Canal,Canal,19.832064,74.444414,VLG018,10.7237,3.02,Good,8.07,High,11,"Nymphaea, Typha",2025-11-21
+WB063,Bhojade Budruk Check Dam,Check Dam,19.867923,74.404657,VLG005,4.5431,8.5,Good,8.8,Low,2,None observed,2025-07-12
+WB064,Rahata Budruk Pond,Pond,19.924819,74.413125,VLG043,3.6359,3.91,Very Poor,7.74,Low,18,"Nymphaea, Typha",2025-04-22
+WB065,Sangamner Stream,Stream,19.922176,74.44628,VLG091,7.0811,11.35,Good,7.63,Low,10,"Water Hyacinth, Lotus",2025-10-08
+WB066,Dahigaon Peth Check Dam,Check Dam,19.897507,74.431636,VLG014,9.3044,11.57,Moderate,5.45,Low,11,"Water Hyacinth, Lotus",2025-06-12
+WB067,Dhondegaon Canal,Canal,19.822724,74.538957,VLG055,0.5337,13.66,Excellent,4.74,High,10,"Ipomoea aquatica, algae",2025-06-02
+WB068,Bhendi Budruk Check Dam,Check Dam,19.907192,74.354815,VLG007,4.218,0.6,Moderate,2.65,Moderate,6,"Nymphaea, Typha",2025-06-22
+WB069,Aloli Peth Pond,Pond,19.807931,74.547774,VLG048,10.4576,12.05,Good,6.83,Low,8,None observed,2025-07-25
+WB070,Dahigaon Check Dam,Check Dam,19.866051,74.355169,VLG040,6.9509,2.15,Good,7.31,Severe,14,"Ipomoea aquatica, algae",2025-08-14
+WB071,Nandur Stream,Stream,19.883358,74.421137,VLG100,4.8347,12.97,Poor,8.91,Severe,7,"Nymphaea, Typha",2025-02-25
+WB072,Titvi Tanda Percolation Tank,Percolation Tank,19.919057,74.586437,VLG071,0.2548,10.14,Moderate,6.33,Moderate,8,"Nymphaea, Typha",2025-06-15
+WB073,Rui Peth Pond,Pond,19.941222,74.567598,VLG092,5.8617,12.66,Poor,9.36,Low,15,None observed,2025-08-20
+WB074,Tigaon Check Dam,Check Dam,19.873712,74.561438,VLG006,12.206,0.65,Good,8.53,Moderate,10,"Water Hyacinth, Lotus",2025-09-03
+WB075,Aloli Pond,Pond,19.891342,74.526151,VLG010,0.49,13.76,Poor,4.7,Severe,12,"Duckweed, reeds",2025-08-01
+WB076,Askheda Wadi Percolation Tank,Percolation Tank,19.858104,74.448855,VLG078,9.939,3.9,Poor,1.79,High,8,"Water Hyacinth, Lotus",2025-01-19
+WB077,Nandur Pond,Pond,19.835304,74.547805,VLG030,12.0568,10.1,Poor,5.07,Severe,8,"Duckweed, reeds",2025-10-02
+WB078,Nandur Check Dam,Check Dam,19.912964,74.358112,VLG030,8.2625,5.36,Moderate,6.11,Severe,15,"Ipomoea aquatica, algae",2025-09-09
+WB079,Chas Vasti Canal,Canal,19.948659,74.539372,VLG056,9.2663,4.63,Very Poor,4.05,Low,1,"Water Hyacinth, Lotus",2025-11-05
+WB080,Kasabe Percolation Tank,Percolation Tank,19.81865,74.453892,VLG061,11.8325,9.83,Poor,6.91,Moderate,12,None observed,2025-01-03
+WB081,Bramhangaon Pond,Pond,19.936917,74.407587,VLG045,8.7868,10.98,Poor,5.52,Severe,13,"Water Hyacinth, Lotus",2025-02-10
+WB082,Shrirampur Pond,Pond,19.801556,74.472726,VLG068,6.9906,10.7,Excellent,5.27,Moderate,20,"Ipomoea aquatica, algae",2025-02-10
+WB083,Loni Reservoir,Reservoir,19.895234,74.454431,VLG090,9.5141,2.14,Very Poor,4.94,High,22,None observed,2025-10-11
+WB084,Dhondegaon Stream,Stream,19.892045,74.420458,VLG021,6.6266,3.32,Excellent,7.95,Low,22,"Ipomoea aquatica, algae",2025-08-27
+WB085,Songaon Stream,Stream,19.840421,74.365462,VLG089,4.0444,12.9,Very Poor,9.25,Low,8,"Nymphaea, Typha",2025-01-19
+WB086,Godavari River,River,19.866004,74.545293,VLG021,5.4468,0.98,Moderate,4.53,Low,11,"Water Hyacinth, Lotus",2025-03-30
+WB087,Songaon Percolation Tank,Percolation Tank,19.840292,74.558745,VLG039,3.8944,4.36,Very Poor,9.08,High,16,"Ipomoea aquatica, algae",2025-09-26
+WB088,Songaon Percolation Tank,Percolation Tank,19.924488,74.496873,VLG089,7.2814,3.58,Poor,4.73,Moderate,9,None observed,2025-01-27
+WB089,Karjule Reservoir,Reservoir,19.834977,74.409772,VLG023,10.0533,2.13,Excellent,6.02,Moderate,18,"Water Hyacinth, Lotus",2025-11-23
+WB090,Godavari River,River,19.940703,74.44618,VLG004,8.6514,13.62,Excellent,4.25,High,7,"Ipomoea aquatica, algae",2025-06-05
+WB091,Godavari River,River,19.890917,74.42588,VLG093,11.5889,11.19,Excellent,5.66,High,22,None observed,2025-05-15
+WB092,Godavari River,River,19.862507,74.440244,VLG062,0.2433,0.66,Very Poor,6.65,Severe,16,"Water Hyacinth, Lotus",2025-07-27
+WB093,Songaon Canal,Canal,19.827008,74.537923,VLG049,7.692,13.98,Good,3.29,Low,15,"Duckweed, reeds",2025-08-27
+WB094,Ranjankhol Percolation Tank,Percolation Tank,19.92629,74.437903,VLG016,5.9949,11.85,Excellent,8.99,Low,22,"Ipomoea aquatica, algae",2025-11-28
+WB095,Rahata Stream,Stream,19.856332,74.541131,VLG066,0.1995,3.2,Poor,1.82,Low,2,"Nymphaea, Typha",2025-03-25
+WB096,Godavari River,River,19.826912,74.494374,VLG098,11.4785,4.79,Moderate,8.62,Low,9,"Duckweed, reeds",2025-07-15
+WB097,Chas Vasti Pond,Pond,19.851239,74.597111,VLG056,6.2236,4.74,Moderate,9.48,Low,21,"Ipomoea aquatica, algae",2025-04-11
+WB098,Sangamner Pond,Pond,19.85041,74.551004,VLG041,3.0246,0.79,Good,6.75,Severe,5,"Nymphaea, Typha",2025-06-01
+WB099,Songaon Check Dam,Check Dam,19.942893,74.514629,VLG012,10.4427,13.56,Excellent,5.07,Moderate,0,"Water Hyacinth, Lotus",2025-11-07
+WB100,Dahigaon Peth Stream,Stream,19.90437,74.539981,VLG014,11.2045,9.25,Excellent,5.81,Severe,7,None observed,2025-07-17
+WB101,Yeola Tanda Check Dam,Check Dam,19.907898,74.414535,VLG077,3.866,11.81,Poor,7.49,Moderate,4,None observed,2025-04-05
+WB102,Kokamthan Vasti Canal,Canal,19.912878,74.42155,VLG084,9.2148,13.42,Good,8.39,Severe,15,"Water Hyacinth, Lotus",2025-09-12
+WB103,Kasabe Canal,Canal,19.917996,74.412979,VLG061,1.3884,4.34,Excellent,9.47,Low,17,"Nymphaea, Typha",2025-06-01
+WB104,Bramhangaon Wadi Check Dam,Check Dam,19.889358,74.35819,VLG013,2.9067,10.48,Moderate,6.36,Low,5,"Ipomoea aquatica, algae",2025-11-10
+WB105,Chandanapuri Budruk Stream,Stream,19.945736,74.361745,VLG017,3.3635,11.07,Poor,7.6,High,7,"Ipomoea aquatica, algae",2025-06-24
+WB106,Chandanapuri Budruk Reservoir,Reservoir,19.895856,74.582195,VLG017,10.2143,13.34,Excellent,9.23,Severe,7,"Nymphaea, Typha",2025-08-13
+WB107,Shrirampur Pond,Pond,19.870944,74.359279,VLG052,4.6584,7.71,Excellent,2.4,Moderate,8,"Duckweed, reeds",2025-11-18
+WB108,Shrirampur Pond,Pond,19.859803,74.386764,VLG068,9.847,3.35,Moderate,8.78,Low,18,"Nymphaea, Typha",2025-12-17
+WB109,Musalwadi Reservoir,Reservoir,19.939161,74.443531,VLG001,1.6708,8.07,Poor,4.11,Moderate,11,None observed,2025-05-20
+WB110,Shrirampur Tanda Canal,Canal,19.835288,74.355351,VLG004,9.6876,10.13,Very Poor,6.13,Low,12,"Duckweed, reeds",2025-04-10
+WB111,Vari Percolation Tank,Percolation Tank,19.887027,74.540487,VLG073,11.8673,12.15,Very Poor,8.13,Severe,9,"Nymphaea, Typha",2025-12-05
+WB112,Chandanapuri Budruk Percolation Tank,Percolation Tank,19.904531,74.414042,VLG017,3.4332,1.76,Very Poor,8.84,High,1,"Duckweed, reeds",2025-12-17
+WB113,Askheda Wadi Pond,Pond,19.909225,74.406029,VLG078,6.0874,11.67,Excellent,8.66,High,4,None observed,2025-03-07
+WB114,Loni Percolation Tank,Percolation Tank,19.854334,74.541611,VLG008,9.9715,8.66,Good,8.25,Low,18,"Ipomoea aquatica, algae",2025-11-19
+WB115,Tigaon Wadi Canal,Canal,19.856231,74.418737,VLG057,2.4365,4.65,Good,1.61,Severe,15,"Ipomoea aquatica, algae",2025-04-23
+WB116,Kokamthan Vasti Canal,Canal,19.862391,74.520951,VLG084,4.5071,4.0,Moderate,8.55,Moderate,19,"Nymphaea, Typha",2025-11-11
+WB117,Aloli Reservoir,Reservoir,19.873717,74.430865,VLG079,3.757,12.18,Excellent,6.92,High,9,"Nymphaea, Typha",2025-02-24
+WB118,Chaskaon Khurd Stream,Stream,19.898255,74.423974,VLG038,5.4043,2.26,Poor,5.78,Moderate,12,None observed,2025-05-15
+WB119,Rui Peth Pond,Pond,19.822684,74.530262,VLG092,4.9581,5.65,Very Poor,7.38,Low,8,"Duckweed, reeds",2025-03-10
+WB120,Ranjankhol Pond,Pond,19.831737,74.581895,VLG080,11.4277,11.19,Moderate,4.15,Moderate,22,None observed,2025-11-18
+WB121,Chaskaon Check Dam,Check Dam,19.919539,74.586378,VLG015,10.412,9.8,Good,8.4,Moderate,10,None observed,2025-05-30
+WB122,Kolpewadi Vasti Pond,Pond,19.899376,74.558046,VLG009,8.8617,4.29,Very Poor,8.57,Severe,21,None observed,2025-08-25
+WB123,Kasabe Stream,Stream,19.826539,74.363368,VLG094,11.3948,12.81,Poor,8.14,High,11,"Nymphaea, Typha",2025-04-23
+WB124,Aloli Canal,Canal,19.829107,74.460865,VLG027,2.0245,13.91,Very Poor,4.68,Low,3,"Ipomoea aquatica, algae",2025-10-26
+WB125,Hingangaon Pond,Pond,19.85116,74.475002,VLG088,10.8144,2.51,Excellent,7.15,Low,9,"Water Hyacinth, Lotus",2025-10-13
+WB126,Tigaon Wadi Lake,Lake,19.923718,74.392673,VLG057,3.3975,11.36,Poor,2.43,High,7,"Ipomoea aquatica, algae",2025-09-27
+WB127,Vari Check Dam,Check Dam,19.801877,74.484826,VLG073,12.2556,13.62,Good,5.5,High,6,"Ipomoea aquatica, algae",2025-07-20
+WB128,Sinnar Pond,Pond,19.923077,74.537197,VLG051,6.7611,1.12,Good,9.36,Severe,22,None observed,2025-04-08
+WB129,Pohegaon Pond,Pond,19.825264,74.438637,VLG019,1.5868,5.01,Poor,1.98,Low,7,"Duckweed, reeds",2025-01-06
+WB130,Aloli Percolation Tank,Percolation Tank,19.804678,74.532926,VLG010,6.2748,6.24,Moderate,6.48,High,16,"Ipomoea aquatica, algae",2025-05-19
+WB131,Godavari River,River,19.840845,74.426032,VLG064,8.0114,8.42,Very Poor,5.06,Severe,2,"Duckweed, reeds",2025-07-20
+WB132,Rahata Budruk Canal,Canal,19.870679,74.385112,VLG043,2.2178,8.16,Moderate,8.08,High,14,None observed,2025-11-06
+WB133,Songaon Budruk Percolation Tank,Percolation Tank,19.885201,74.58229,VLG059,5.1137,13.74,Poor,2.92,High,20,None observed,2025-06-20
+WB134,Musalwadi Pond,Pond,19.906296,74.561591,VLG025,6.5807,6.04,Very Poor,6.48,Severe,21,"Ipomoea aquatica, algae",2025-01-16
+WB135,Godavari River,River,19.881723,74.422908,VLG059,9.0753,9.96,Moderate,2.29,Moderate,5,"Nymphaea, Typha",2025-06-27
+WB136,Rui Peth Pond,Pond,19.883236,74.383643,VLG092,9.5251,1.12,Good,6.35,Severe,4,"Water Hyacinth, Lotus",2025-03-20
+WB137,Shrirampur Tanda Reservoir,Reservoir,19.945428,74.585741,VLG004,2.9335,12.81,Poor,8.96,High,3,"Nymphaea, Typha",2025-05-18
+WB138,Askheda Canal,Canal,19.881357,74.515593,VLG087,11.7966,7.75,Good,4.22,Severe,12,"Duckweed, reeds",2025-07-28
+WB139,Ranjankhol Pond,Pond,19.893702,74.382047,VLG080,2.6555,13.93,Very Poor,4.28,Low,10,"Nymphaea, Typha",2025-10-22
+WB140,Yeola Tanda Check Dam,Check Dam,19.855853,74.520441,VLG077,5.3732,1.25,Moderate,8.07,High,18,"Water Hyacinth, Lotus",2025-12-28
+WB141,Dhondegaon Pond,Pond,19.800795,74.366412,VLG055,7.9219,2.7,Very Poor,8.88,High,12,"Nymphaea, Typha",2025-05-21
+WB142,Aloli Check Dam,Check Dam,19.932751,74.38787,VLG010,9.3165,2.89,Good,8.17,Severe,10,None observed,2025-12-08
+WB143,Kokamthan Vasti Pond,Pond,19.882275,74.496911,VLG084,11.6956,13.72,Very Poor,3.6,High,3,"Duckweed, reeds",2025-12-17
+WB144,Askheda Wadi Pond,Pond,19.82555,74.577456,VLG078,6.2026,5.55,Very Poor,2.75,Moderate,17,"Ipomoea aquatica, algae",2025-10-05
+WB145,Shrirampur Percolation Tank,Percolation Tank,19.827689,74.55048,VLG068,2.8788,7.88,Very Poor,3.3,Severe,21,"Ipomoea aquatica, algae",2025-06-10
+WB146,Chandanapuri Budruk Stream,Stream,19.82024,74.41467,VLG017,4.1373,5.88,Very Poor,8.31,Low,3,"Ipomoea aquatica, algae",2025-01-22
+WB147,Songaon Check Dam,Check Dam,19.858798,74.415528,VLG039,7.3174,0.79,Poor,9.23,Moderate,3,"Ipomoea aquatica, algae",2025-10-15
+WB148,Sonai Pond,Pond,19.845367,74.419742,VLG076,11.9387,11.57,Poor,5.65,High,10,None observed,2025-05-03
+WB149,Dahigaon Vasti Pond,Pond,19.805267,74.482234,VLG099,0.0488,3.24,Poor,5.66,Low,11,"Duckweed, reeds",2025-05-19
+WB150,Ranjankhol Lake,Lake,19.923408,74.356587,VLG096,6.4177,10.24,Excellent,3.27,Low,8,"Ipomoea aquatica, algae",2025-02-19

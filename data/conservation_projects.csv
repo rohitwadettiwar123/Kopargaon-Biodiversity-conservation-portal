@@ -1,0 +1,51 @@
+project_id,project_name,location,start_date,status,budget_inr,organization
+PRJ001,Butterfly Garden - Loni,Loni,2025-08-11,Completed,574379,Local Self-Help Group
+PRJ002,Native Species Nursery - Bramhangaon,Bramhangaon,2023-03-30,On Hold,1787335,WWF-India Local Chapter
+PRJ003,Tree Plantation - Loni,Loni,2021-05-26,Completed,493544,Local Self-Help Group
+PRJ004,Tree Plantation - Loni,Loni,2018-01-02,On Hold,656328,Godavari Conservation Trust
+PRJ005,Bird Census - Rahata,Rahata,2021-12-31,Ongoing,2237908,Rotary Club Kopargaon
+PRJ006,Native Species Nursery - Tigaon,Tigaon,2021-08-07,Ongoing,1853671,Local Self-Help Group
+PRJ007,Native Species Nursery - Aloli Pathar,Aloli Pathar,2022-02-02,Planned,1443246,Local Self-Help Group
+PRJ008,School Biodiversity Program - Shrirampur Tanda,Shrirampur Tanda,2022-01-22,Ongoing,392159,Maharashtra Forest Department
+PRJ009,Bird Census - Musalwadi,Musalwadi,2020-06-27,Completed,1504331,Local Self-Help Group
+PRJ010,Bird Census - Ranjankhol,Ranjankhol,2018-02-15,Planned,348908,WWF-India Local Chapter
+PRJ011,Anti-Poaching Patrol - Titvi Tanda,Titvi Tanda,2020-04-19,Ongoing,2135658,Godavari Conservation Trust
+PRJ012,River Cleanup - Dhondegaon,Dhondegaon,2018-06-28,Ongoing,2289445,Maharashtra Forest Department
+PRJ013,River Cleanup - Tigaon,Tigaon,2023-11-07,Ongoing,1971160,District Environment Cell
+PRJ014,School Biodiversity Program - Pimpalgaon,Pimpalgaon,2018-08-06,Completed,282756,BNHS Regional Unit
+PRJ015,Butterfly Garden - Karjule,Karjule,2021-07-21,Ongoing,1725563,Godavari Conservation Trust
+PRJ016,Wetland Restoration - Karjule Pathar,Karjule Pathar,2017-01-30,Ongoing,2337449,Rotary Club Kopargaon
+PRJ017,School Biodiversity Program - Chandanapuri,Chandanapuri,2025-02-21,Completed,1292760,BNHS Regional Unit
+PRJ018,School Biodiversity Program - Titvi Khurd,Titvi Khurd,2019-01-12,Completed,670404,Rotary Club Kopargaon
+PRJ019,Bird Census - Sangamner Vasti,Sangamner Vasti,2018-05-06,Ongoing,815547,BNHS Regional Unit
+PRJ020,Community Awareness Drive - Tigaon Wadi,Tigaon Wadi,2025-07-01,On Hold,1396177,District Environment Cell
+PRJ021,Butterfly Garden - Kokamthan Vasti,Kokamthan Vasti,2023-05-06,Ongoing,899415,BNHS Regional Unit
+PRJ022,Anti-Poaching Patrol - Shrirampur,Shrirampur,2025-05-30,Ongoing,2036000,BNHS Regional Unit
+PRJ023,School Biodiversity Program - Vari,Vari,2023-03-22,On Hold,1669126,Kopargaon Nagar Parishad
+PRJ024,Tree Plantation - Bhendi Budruk,Bhendi Budruk,2018-12-01,Completed,1205254,Kopargaon Nagar Parishad
+PRJ025,Bird Census - Ozar,Ozar,2022-08-28,Completed,1415545,Godavari Conservation Trust
+PRJ026,Wetland Restoration - Deolali Peth,Deolali Peth,2019-03-29,Ongoing,1591279,Godavari Conservation Trust
+PRJ027,Wetland Restoration - Askheda Peth,Askheda Peth,2025-01-22,On Hold,1328359,Godavari Conservation Trust
+PRJ028,Wetland Restoration - Bhendi Budruk,Bhendi Budruk,2024-04-21,Completed,634111,Kopargaon Nagar Parishad
+PRJ029,Native Species Nursery - Hingangaon,Hingangaon,2018-03-16,Planned,326499,Maharashtra Forest Department
+PRJ030,Native Species Nursery - Karjule Budruk,Karjule Budruk,2019-09-05,Completed,147964,District Environment Cell
+PRJ031,Anti-Poaching Patrol - Ranjankhol,Ranjankhol,2025-12-18,On Hold,1211893,BNHS Regional Unit
+PRJ032,Bird Census - Sonai Wadi,Sonai Wadi,2021-10-30,Planned,1024514,District Environment Cell
+PRJ033,Wetland Restoration - Ozar,Ozar,2024-12-15,Planned,821279,Godavari Conservation Trust
+PRJ034,Community Awareness Drive - Aloli Wadi,Aloli Wadi,2025-09-30,Ongoing,1218959,Godavari Conservation Trust
+PRJ035,Native Species Nursery - Kasabe,Kasabe,2023-03-28,Completed,902667,District Environment Cell
+PRJ036,River Cleanup - Kasabe,Kasabe,2017-03-31,Planned,2264805,WWF-India Local Chapter
+PRJ037,Anti-Poaching Patrol - Sangamner,Sangamner,2023-10-30,Planned,1889506,Godavari Conservation Trust
+PRJ038,Native Species Nursery - Aloli,Aloli,2017-04-17,On Hold,2397763,BNHS Regional Unit
+PRJ039,River Cleanup - Deolali Peth,Deolali Peth,2025-09-18,Planned,674811,WWF-India Local Chapter
+PRJ040,Native Species Nursery - Pipalgaon,Pipalgaon,2016-09-28,On Hold,514304,Maharashtra Forest Department
+PRJ041,Anti-Poaching Patrol - Ranjankhol,Ranjankhol,2016-09-01,Planned,443732,Godavari Conservation Trust
+PRJ042,School Biodiversity Program - Chas,Chas,2020-02-06,On Hold,1941609,District Environment Cell
+PRJ043,Wetland Restoration - Nandur Peth,Nandur Peth,2023-04-28,On Hold,1591881,Kopargaon Nagar Parishad
+PRJ044,Community Awareness Drive - Chandanapuri,Chandanapuri,2025-06-16,Completed,2322328,Local Self-Help Group
+PRJ045,Bird Census - Bramhangaon Wadi,Bramhangaon Wadi,2016-08-01,On Hold,2454194,Rotary Club Kopargaon
+PRJ046,Bird Census - Musalwadi,Musalwadi,2025-03-19,Planned,1612565,Maharashtra Forest Department
+PRJ047,Lake Rejuvenation - Vari,Vari,2024-10-01,Completed,1793304,Maharashtra Forest Department
+PRJ048,Wetland Restoration - Songaon,Songaon,2025-06-23,Completed,2116141,Maharashtra Forest Department
+PRJ049,School Biodiversity Program - Pipalgaon Budruk,Pipalgaon Budruk,2023-03-01,On Hold,1109954,BNHS Regional Unit
+PRJ050,Anti-Poaching Patrol - Karjule,Karjule,2019-02-24,Planned,1728290,Kopargaon Nagar Parishad

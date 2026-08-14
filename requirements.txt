@@ -1,0 +1,48 @@
+# ============================================================
+# Kopargaon Biodiversity Conservation Portal
+# Node.js Package Requirements
+# ============================================================
+# This project uses Node.js (not Python).
+# Install all dependencies with:
+#   npm install
+#
+# Then start the server with:
+#   npm start
+# or
+#   node backend/server.js
+#
+# The full portal will be available at:
+#   http://localhost:3000
+# ============================================================
+
+# Node.js Runtime Requirement
+node >= 18.0.0
+npm >= 9.0.0
+
+# ── Production Dependencies (from package.json) ──────────────
+bcrypt@^6.0.0          # Password hashing
+cors@^2.8.6            # Cross-Origin Resource Sharing
+csv-parser@^3.2.1      # CSV file parsing
+express@^5.2.1         # Web framework
+express-rate-limit@^8.6.2  # API rate limiting
+helmet@^8.3.0          # HTTP security headers
+jsonwebtoken@^9.0.3    # JWT authentication
+morgan@^1.11.0         # HTTP request logger
+multer@^2.2.0          # File upload handling
+sqlite3@^6.0.1         # SQLite database
+uuid@^14.0.1           # UUID generation
+
+# ── Frontend (No Installation Required) ─────────────────────
+# All frontend dependencies are loaded via CDN:
+# - Leaflet.js (GIS Maps)
+# - Chart.js (Data visualization)
+# - Font Awesome (Icons)
+# - Google Fonts (Inter, Space Grotesk)
+# - AOS (Animate on Scroll)
+
+# ── Quick Start ───────────────────────────────────────────────
+# 1. npm install
+# 2. npm start
+# 3. Open http://localhost:3000 in your browser
+# 4. Login: admin@kbic.in / admin123
+#    or:    citizen@kbic.in / pass123
