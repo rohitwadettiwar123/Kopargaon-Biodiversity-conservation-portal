@@ -3,14 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weather Dashboard | Kopargaon Biodiversity Portal</title>
+<title>Weather Analytics | Kopargaon Biodiversity Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
-<style>
-.coming-soon { text-align:center; padding: 100px 20px; color: var(--text-dim); }
-.coming-soon i { font-size: 64px; margin-bottom: 20px; color: var(--green-primary); }
-</style>
 </head>
 <body>
 <div id="app">
@@ -23,18 +19,38 @@
     </header>
     <main id="content">
       <div class="page-header">
-        <h1 class="page-title"><i class="fa fa-cloud-sun text-blue"></i> Weather & Climate</h1>
+        <h1 class="page-title"><i class="fa fa-cloud-sun text-blue"></i> Weather & Climate Trends</h1>
       </div>
-      <div class="card coming-soon">
-        <i class="fa fa-cloud-showers-heavy"></i>
-        <h2>Meteorological Data Integration</h2>
-        <p>Live weather tracking and historical climate trends for Kopargaon are being configured.</p>
+
+      <div class="grid-4" style="margin-bottom:20px;">
+        <div class="card stat-card"><div class="stat-value text-amber" id="w-temp">--°C</div><div class="stat-label">Avg Max Temp</div></div>
+        <div class="card stat-card"><div class="stat-value text-blue" id="w-rain">-- mm</div><div class="stat-label">Total Rainfall</div></div>
+        <div class="card stat-card"><div class="stat-value text-primary" id="w-humid">--%</div><div class="stat-label">Avg Humidity</div></div>
+        <div class="card stat-card"><div class="stat-value text-green" id="w-wind">-- km/h</div><div class="stat-label">Avg Wind Speed</div></div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-title">Temperature vs Rainfall (Historical)</div>
+        <canvas id="weather-chart" style="height:400px;"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Weather Records</div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Condition</th><th>Max Temp</th><th>Min Temp</th><th>Rainfall</th><th>Humidity</th></tr></thead>
+            <tbody id="weather-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </main>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/data-loader.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/weather-page.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (Auth.guard()) WeatherPage.init(); });</script>
 </body>
 </html>

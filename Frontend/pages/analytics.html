@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left"><div class="header-page-title">Global Analytics</div></div>
+      <div class="header-right"><div class="user-btn" id="logout-dropdown-btn">Logout</div></div>
+    </header>
+    <main id="content">
+      <div class="page-header">
+        <h1 class="page-title"><i class="fa fa-chart-line text-blue"></i> Comprehensive Biodiversity Analytics</h1>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:20px;">
+        <div class="card stat-card"><div class="stat-value text-green" id="a-obs">0</div><div class="stat-label">Total Observations</div></div>
+        <div class="card stat-card"><div class="stat-value text-blue" id="a-species">0</div><div class="stat-label">Unique Species Observed</div></div>
+        <div class="card stat-card"><div class="stat-value text-amber" id="a-reports">0</div><div class="stat-label">Citizen Reports</div></div>
+        <div class="card stat-card"><div class="stat-value text-primary" id="a-users">0</div><div class="stat-label">Active Users</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-title">Monthly Observation Trends (Last 12 Months)</div>
+          <canvas id="monthly-trend-chart" style="height:350px;"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-title">Species Category Breakdown</div>
+          <canvas id="species-category-chart" style="height:350px;"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Monthly Statistics Data</div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Month/Year</th><th>Total Observations</th><th>Unique Species</th><th>Top Observed Species</th></tr>
+            </thead>
+            <tbody id="a-tbody">
+              <tr><td colspan="4" style="text-align:center"><i class="fa fa-spinner fa-spin"></i> Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/analytics-page.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (Auth.guard()) AnalyticsPage.init(); });</script>
+</body>
+</html>

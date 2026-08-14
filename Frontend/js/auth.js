@@ -109,6 +109,12 @@ const Auth = (() => {
   function hasPermission(permission) {
     const user = getUser();
     if (!user) return false;
+    
+    // Strict email-based permission for verification
+    if (permission === 'verify_citizen_reports') {
+      return user.email === 'admin@kbic.in';
+    }
+
     const role = user.role || 'Observer';
     const perms = ROLE_PERMISSIONS[role] || ROLE_PERMISSIONS['Observer'];
     return perms.includes(permission);

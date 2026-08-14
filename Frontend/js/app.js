@@ -20,6 +20,7 @@ const App = (() => {
     { id: 'education',     label: 'Education Hub',       icon: 'fa-graduation-cap', href: 'education.html',             badge: null },
     { id: 'leaderboard',   label: 'Leaderboard',         icon: 'fa-trophy',         href: 'leaderboard.html',           badge: null },
     { id: 'profile',       label: 'Profile',             icon: 'fa-user-circle',    href: 'profile.html',               badge: null },
+    { id: 'analytics',     label: 'Analytics',           icon: 'fa-chart-line',     href: 'analytics.html',             badge: null },
     { id: 'logout',        label: 'Logout',              icon: 'fa-sign-out-alt',   href: '#',                          badge: null },
   ];
 

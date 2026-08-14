@@ -6,11 +6,8 @@
 <title>NDVI Analytics | Kopargaon Biodiversity Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="../css/style.css">
-<style>
-.coming-soon { text-align:center; padding: 100px 20px; color: var(--text-dim); }
-.coming-soon i { font-size: 64px; margin-bottom: 20px; color: var(--green-primary); }
-</style>
 </head>
 <body>
 <div id="app">
@@ -23,18 +20,45 @@
     </header>
     <main id="content">
       <div class="page-header">
-        <h1 class="page-title"><i class="fa fa-seedling text-green"></i> Vegetation Index (NDVI)</h1>
+        <h1 class="page-title"><i class="fa fa-satellite text-blue"></i> Satellite Vegetation Index (NDVI)</h1>
       </div>
-      <div class="card coming-soon">
-        <i class="fa fa-satellite"></i>
-        <h2>Satellite Integration in Progress</h2>
-        <p>The Sentinel-2 NDVI analytics module is currently being configured for Kopargaon's GIS boundaries.</p>
+
+      <div class="grid-4" style="margin-bottom:20px;">
+        <div class="card stat-card"><div class="stat-value text-green" id="ndvi-avg">0.00</div><div class="stat-label">Average NDVI</div></div>
+        <div class="card stat-card"><div class="stat-value text-blue" id="ndvi-max">0.00</div><div class="stat-label">Maximum NDVI</div></div>
+        <div class="card stat-card"><div class="stat-value text-amber" id="ndvi-min">0.00</div><div class="stat-label">Minimum NDVI</div></div>
+        <div class="card stat-card"><div class="stat-value text-primary" id="ndvi-count">0</div><div class="stat-label">Data Points</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-title">Vegetation Health Map</div>
+          <div id="ndvi-map" style="height:350px; border-radius:12px; background:var(--bg-tertiary);"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">NDVI Distribution</div>
+          <canvas id="ndvi-pie-chart" style="height:350px;"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Data Readings</div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Date</th><th>Coordinates</th><th>NDVI Value</th><th>Health Category</th></tr></thead>
+            <tbody id="ndvi-tbody"></tbody>
+          </table>
+        </div>
       </div>
     </main>
   </div>
 </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/data-loader.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/ndvi.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (Auth.guard()) NDVIPage.init(); });</script>
 </body>
 </html>

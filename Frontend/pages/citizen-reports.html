@@ -162,29 +162,12 @@
           </div>
         </div>
 
-        <!-- RIGHT: Reports History -->
+        <!-- RIGHT: Reports — Admin Panel or User Reports (injected by JS) -->
         <div>
-          <div class="card" style="padding:0;overflow:hidden">
-            <div style="padding:14px 16px;border-bottom:1px solid var(--border)">
-              <div class="card-title"><i class="fa fa-history text-green card-title-icon"></i> Recent Reports</div>
-            </div>
-            <div style="overflow-x:auto">
-              <table style="width:100%;border-collapse:collapse;font-size:11.5px">
-                <thead>
-                  <tr style="background:var(--bg-tertiary)">
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Report ID</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Species</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Date</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Remarks</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Status</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Notes</th>
-                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;width:90px">Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="cr-tbody">
-                  <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-dim)"><i class="fa fa-spinner fa-spin"></i> Loading...</td></tr>
-                </tbody>
-              </table>
+          <div id="reports-container">
+            <div class="card" style="padding:40px;text-align:center;color:var(--text-dim)">
+              <i class="fa fa-spinner fa-spin" style="font-size:24px;margin-bottom:12px;display:block"></i>
+              Loading reports...
             </div>
           </div>
         </div>

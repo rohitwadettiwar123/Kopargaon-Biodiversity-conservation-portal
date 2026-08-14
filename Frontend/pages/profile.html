@@ -3,52 +3,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="My Profile — Kopargaon Biodiversity Portal">
 <title>My Profile | Kopargaon Biodiversity Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="../css/style.css">
 <style>
-.profile-card { max-width: 600px; margin: 40px auto; text-align: center; padding: 40px; }
-.p-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--green-faint); color: var(--green-primary); font-size: 40px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 20px; border: 3px solid var(--border); }
+/* ── Profile Page Styles ─────────────────────────────────────────────── */
+.profile-hero {
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(34,197,94,0.08) 50%, var(--bg-secondary) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 70%);
+  pointer-events: none;
+}
+.profile-avatar-wrap { position: relative; flex-shrink: 0; }
+.profile-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  color: #fff;
+  font-size: 42px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.25), 0 8px 32px rgba(34,197,94,0.3);
+  letter-spacing: -1px;
+  border: 3px solid var(--bg-secondary);
+}
+.profile-online-dot {
+  position: absolute; bottom: 6px; right: 6px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid var(--bg-secondary);
+  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+}
+.profile-meta h1 { font-size: 26px; font-weight: 800; color: var(--text-white, #fff); margin-bottom: 6px; }
+.profile-meta .email-row {
+  font-size: 13px; color: var(--text-dim); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.profile-meta .role-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.role-badge {
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  background: #3b82f6; color: #fff;
+}
+.village-tag {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--text-dim);
+  padding: 3px 10px; border-radius: 12px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+}
+.profile-edit-btn {
+  margin-left: auto; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.btn-edit {
+  padding: 9px 20px; border-radius: 10px;
+  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+  color: #22c55e; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-edit:hover { background: rgba(34,197,94,0.2); border-color: #22c55e; }
+
+/* ── Stats row ──────────────────────────────────────────────────────── */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); border-color: rgba(34,197,94,0.3); }
+.stat-icon { font-size: 22px; margin-bottom: 8px; }
+.stat-val { font-size: 28px; font-weight: 800; color: var(--text-white, #fff); margin-bottom: 4px; }
+.stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ── Badges ─────────────────────────────────────────────────────────── */
+.badges-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.section-title {
+  font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+  color: var(--text-dim); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.badge-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.b-chip {
+  padding: 7px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+.b-chip:hover { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.08); color: #22c55e; }
+
+/* ── Reports table ──────────────────────────────────────────────────── */
+.card-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.card-head {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-head-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+
+/* ── Edit Modal ─────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,0.7);
+  display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.visible { display: flex; }
+.modal-box {
+  background: #0f2318;
+  border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%; max-width: 440px;
+  position: relative;
+}
+.modal-title { font-size: 18px; font-weight: 800; margin-bottom: 24px; }
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none; color: var(--text-dim);
+  font-size: 18px; cursor: pointer; padding: 4px 8px;
+}
+.modal-close:hover { color: #ef4444; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%; padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 10px; color: #fff; font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+}
+.form-input:focus { outline: none; border-color: #22c55e; }
+.btn-save {
+  width: 100%; padding: 12px;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  border: none; border-radius: 10px;
+  color: #fff; font-size: 14px; font-weight: 700;
+  cursor: pointer; margin-top: 8px;
+  transition: opacity 0.2s;
+}
+.btn-save:hover { opacity: 0.9; }
+
+@media (max-width: 768px) {
+  .profile-hero { flex-direction: column; text-align: center; padding: 24px; }
+  .profile-edit-btn { margin-left: 0; }
+  .profile-stats { grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
 <body>
 <div id="app">
   <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
   <div id="main">
+
+    <!-- Header -->
     <header id="header">
       <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
-      <div class="header-left"><div class="header-page-title">Profile</div></div>
-    </header>
-    <main id="content">
-      <div class="card profile-card">
-        <div class="p-avatar" id="p-avatar">?</div>
-        <h2 id="p-name">Loading...</h2>
-        <p id="p-role" style="color:var(--text-dim);margin-bottom:20px"></p>
-        <div class="grid-2" style="gap:20px;text-align:left;background:var(--bg-tertiary);padding:20px;border-radius:12px">
-          <div><label class="form-label">Email</label><div id="p-email" style="font-weight:600"></div></div>
-          <div><label class="form-label">Member Since</label><div id="p-date" style="font-weight:600"></div></div>
-        </div>
-        <button class="btn btn-outline" style="margin-top:30px;width:100%" onclick="Auth.logout()">Logout</button>
+      <div class="header-left">
+        <div class="header-page-title"><i class="fa fa-user-circle" style="color:var(--green-primary);margin-right:8px"></i>My Profile</div>
       </div>
+      <div class="header-right">
+        <button class="icon-btn" id="notif-btn" title="Notifications"><i class="fa fa-bell"></i></button>
+        <button class="icon-btn" id="user-btn" title="Account">
+          <span class="user-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#15803d);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">?</span>
+        </button>
+        <div class="dropdown" id="user-dropdown">
+          <div class="dropdown-item" id="logout-dropdown-btn" style="cursor:pointer">
+            <i class="fa fa-sign-out-alt"></i> Logout
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+
+      <!-- Profile Hero Card -->
+      <div class="profile-hero">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar" id="p-avatar">?</div>
+          <div class="profile-online-dot"></div>
+        </div>
+        <div class="profile-meta" style="flex:1">
+          <h1 id="p-name">Loading...</h1>
+          <div class="email-row">
+            <i class="fa fa-envelope" style="color:var(--green-primary)"></i>
+            <span id="p-email">—</span>
+            &nbsp;|&nbsp;
+            <i class="fa fa-calendar-alt" style="color:var(--accent-cyan,#00d4ff)"></i>
+            Joined <span id="p-date">—</span>
+          </div>
+          <div class="role-row">
+            <span class="role-badge" id="p-role-badge">Citizen</span>
+            <div class="village-tag">
+              <i class="fa fa-map-marker-alt" style="color:var(--green-primary)"></i>
+              <span id="p-village">—</span>
+            </div>
+          </div>
+          <div class="badge-grid" id="p-badges">
+            <div style="font-size:12px;color:var(--text-dim);font-style:italic">Loading badges...</div>
+          </div>
+        </div>
+        <div class="profile-edit-btn">
+          <button class="btn-edit" id="edit-profile-btn">
+            <i class="fa fa-edit"></i> Edit Profile
+          </button>
+          <div style="font-size:11px;color:var(--text-dim);text-align:center">
+            <span id="p-role-text" style="color:var(--green-primary);font-weight:600"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="profile-stats">
+        <div class="stat-card">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-val" id="p-points">0</div>
+          <div class="stat-label">Total Points</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-val" id="p-reports-count">0</div>
+          <div class="stat-label">Reports Submitted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-val" id="p-verified-count">0</div>
+          <div class="stat-label">Verified Reports</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏅</div>
+          <div class="stat-val" id="p-badges-count">0</div>
+          <div class="stat-label">Badges Earned</div>
+        </div>
+      </div>
+
+      <!-- My Recent Reports -->
+      <div class="card-section">
+        <div class="card-head">
+          <div class="card-head-title">
+            <i class="fa fa-file-alt" style="color:var(--green-primary)"></i>
+            My Citizen Reports
+          </div>
+          <a href="citizen-reports.html" style="font-size:12px;color:var(--green-primary);text-decoration:none;font-weight:600">
+            Submit New Report →
+          </a>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Species</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="p-reports-tbody">
+              <tr><td colspan="5" style="text-align:center;padding:20px">
+                <i class="fa fa-spinner fa-spin" style="color:var(--green-primary)"></i> Loading...
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-box">
+    <button class="modal-close" id="edit-modal-close"><i class="fa fa-times"></i></button>
+    <div class="modal-title">✏️ Edit Profile</div>
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input type="text" id="edit-name" class="form-input" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Village / Location</label>
+      <input type="text" id="edit-village" class="form-input" placeholder="Your village or area">
+    </div>
+    <button class="btn-save" id="edit-save-btn">Save Changes</button>
+  </div>
+</div>
+
 <script src="../js/data-loader.js"></script>
 <script src="../js/auth.js"></script>
+<script src="../js/notifications.js"></script>
 <script src="../js/app.js"></script>
+<script src="../js/profile.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  if (!Auth.guard()) return;
-  const user = Auth.getUser();
-  if (user) {
-    document.getElementById('p-name').textContent = user.full_name;
-    document.getElementById('p-avatar').textContent = user.full_name.charAt(0).toUpperCase();
-    document.getElementById('p-role').textContent = user.role;
-    document.getElementById('p-email').textContent = user.email;
-    document.getElementById('p-date').textContent = new Date(user.join_date).toLocaleDateString();
-  }
-});
+  document.addEventListener('DOMContentLoaded', () => {
+    if (Auth.guard()) {
+      ProfilePage.init();
+    }
+  });
 </script>
 </body>
 </html>
