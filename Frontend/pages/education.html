@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Education Hub | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+  .edu-page { display:flex; flex-direction:column; gap:16px; }
+
+  /* Hero search bar */
+  .edu-hero {
+    background:linear-gradient(135deg,rgba(6,25,15,0.9),rgba(5,46,22,0.8));
+    border:1px solid rgba(34,197,94,0.2); border-radius:16px;
+    padding:28px 32px; text-align:center;
+  }
+  .edu-hero h2 { font-size:22px; font-weight:800; color:#fff; margin-bottom:6px; }
+  .edu-hero p { color:var(--text-secondary); font-size:14px; margin-bottom:20px; }
+  .hero-search {
+    display:flex; gap:8px; max-width:600px; margin:0 auto;
+  }
+  .hero-search input {
+    flex:1; padding:10px 16px; border-radius:10px;
+    border:1px solid rgba(34,197,94,0.3); background:rgba(0,0,0,0.3);
+    color:#fff; font-size:14px; font-family:inherit; outline:none;
+  }
+  .hero-search input::placeholder { color:rgba(255,255,255,0.4); }
+  .hero-search input:focus { border-color:rgba(34,197,94,0.6); }
+  .hero-search button {
+    padding:10px 20px; border-radius:10px; border:none;
+    background:var(--green-primary); color:#fff; font-size:14px;
+    font-family:inherit; font-weight:600; cursor:pointer; white-space:nowrap;
+  }
+
+  /* Filter chips */
+  .filter-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { padding:6px 16px; border-radius:20px; border:1px solid rgba(34,197,94,0.25); background:rgba(34,197,94,0.05); color:var(--text-secondary); font-size:12px; cursor:pointer; transition:all 0.2s; font-weight:500; }
+  .chip.active { background:rgba(34,197,94,0.18); border-color:rgba(34,197,94,0.6); color:#86efac; }
+  .chip:hover { background:rgba(34,197,94,0.12); }
+
+  /* Species cards grid */
+  .species-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+  .species-card {
+    background:var(--bg-secondary); border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; overflow:hidden; cursor:pointer; transition:all 0.25s;
+  }
+  .species-card:hover { border-color:rgba(34,197,94,0.3); transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.3); }
+  .species-img {
+    width:100%; height:140px; background:linear-gradient(135deg,rgba(5,46,22,0.8),rgba(6,18,9,0.9));
+    display:flex; align-items:center; justify-content:center; font-size:56px;
+    position:relative;
+  }
+  .species-cat-badge {
+    position:absolute; top:8px; right:8px; padding:3px 8px; border-radius:8px;
+    font-size:10px; font-weight:700; background:rgba(0,0,0,0.6); color:#fff;
+    backdrop-filter:blur(4px);
+  }
+  .species-body { padding:14px; }
+  .species-common { font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:2px; }
+  .species-scientific { font-size:11px; color:var(--text-dim); font-style:italic; margin-bottom:8px; }
+  .species-habitat { font-size:11px; color:var(--text-secondary); margin-bottom:8px; }
+  .species-habitat i { color:#86efac; margin-right:4px; }
+  .species-footer { display:flex; align-items:center; justify-content:space-between; }
+  .iucn-badge { padding:2px 8px; border-radius:8px; font-size:10px; font-weight:700; }
+  .iucn-lc  { background:rgba(34,197,94,0.2); color:#86efac; }
+  .iucn-nt  { background:rgba(234,179,8,0.2); color:#fde68a; }
+  .iucn-vu  { background:rgba(249,115,22,0.2); color:#fdba74; }
+  .iucn-en  { background:rgba(239,68,68,0.2); color:#fca5a5; }
+  .iucn-cr  { background:rgba(127,29,29,0.4); color:#fca5a5; }
+  .iucn-dd  { background:rgba(107,114,128,0.2); color:#d1d5db; }
+  .iucn-ne  { background:rgba(107,114,128,0.15); color:#d1d5db; }
+
+  /* Modal */
+  .edu-modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
+  .edu-modal.open { display:flex; }
+  .edu-modal-content {
+    background:var(--bg-secondary); border:1px solid rgba(34,197,94,0.2);
+    border-radius:18px; max-width:600px; width:90%; max-height:85vh;
+    overflow-y:auto; padding:28px; position:relative;
+  }
+  .modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .modal-close:hover { background:rgba(255,255,255,0.1); color:#fff; }
+  .modal-emoji { font-size:64px; text-align:center; margin-bottom:16px; }
+  .modal-title { font-size:20px; font-weight:800; color:var(--text-primary); text-align:center; }
+  .modal-scientific { font-size:13px; color:var(--text-dim); font-style:italic; text-align:center; margin-bottom:16px; }
+  .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+  .modal-item { background:var(--bg-tertiary); border-radius:10px; padding:12px; }
+  .modal-item-label { font-size:10px; text-transform:uppercase; color:var(--text-dim); letter-spacing:0.06em; margin-bottom:4px; }
+  .modal-item-value { font-size:13px; font-weight:600; color:var(--text-primary); }
+  .modal-desc { font-size:13px; color:var(--text-secondary); line-height:1.6; margin:12px 0; }
+  .modal-fact { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:10px; padding:12px 14px; margin-top:12px; font-size:12px; color:var(--text-secondary); }
+  .modal-fact strong { color:#86efac; }
+
+  .load-more-wrap { text-align:center; margin-top:16px; }
+  .load-more-btn { padding:10px 28px; border-radius:10px; border:1px solid rgba(34,197,94,0.3); background:rgba(34,197,94,0.08); color:#86efac; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.2s; }
+  .load-more-btn:hover { background:rgba(34,197,94,0.18); }
+
+  .cats-row { display:flex; flex-wrap:wrap; gap:14px; }
+  .cat-stat { flex:1; min-width:100px; background:var(--bg-secondary); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:14px; text-align:center; }
+  .cat-stat-emoji { font-size:28px; margin-bottom:6px; }
+  .cat-stat-num { font-size:20px; font-weight:800; color:var(--text-primary); }
+  .cat-stat-label { font-size:11px; color:var(--text-dim); }
+
+  /* ── Biodiversity Challenges Section ─────────────────── */
+  .challenges-divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(34,197,94,0.3),transparent); margin:8px 0; }
+
+  .challenges-intro {
+    background:linear-gradient(135deg,rgba(5,46,22,0.5),rgba(6,25,15,0.7));
+    border:1px solid rgba(34,197,94,0.2); border-radius:16px;
+    padding:28px 32px; text-align:center; position:relative; overflow:hidden;
+  }
+  .challenges-intro::before {
+    content:''; position:absolute; top:-50%; right:-30%; width:300px; height:300px;
+    background:radial-gradient(circle,rgba(34,197,94,0.08) 0%,transparent 70%); pointer-events:none;
+  }
+  .challenges-intro h3 { font-size:20px; font-weight:800; color:#fff; margin-bottom:6px; }
+  .challenges-intro p { color:var(--text-secondary); font-size:13px; margin-bottom:18px; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.6; }
+  .btn-challenges {
+    display:inline-flex; align-items:center; gap:8px; padding:10px 24px;
+    border-radius:10px; border:none; font-family:inherit; font-size:13px; font-weight:700;
+    background:linear-gradient(135deg,#15803d,#22c55e); color:#fff; cursor:pointer;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-challenges:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(34,197,94,0.35); }
+
+  .challenges-area { display:none; flex-direction:column; gap:14px; }
+  .challenges-area.open { display:flex; }
+
+  .ch-filters { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .ch-filters-label { font-size:11px; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; margin-right:4px; }
+  .ch-chip {
+    padding:5px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.1);
+    background:rgba(255,255,255,0.03); color:var(--text-secondary); font-size:11px;
+    cursor:pointer; transition:all 0.2s; font-weight:500; font-family:inherit;
+  }
+  .ch-chip.active { background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.5); color:#86efac; }
+  .ch-chip:hover { background:rgba(34,197,94,0.08); }
+
+  .ch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+
+  .ch-card {
+    background:var(--bg-secondary); border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:20px; display:flex; flex-direction:column;
+    gap:10px; transition:all 0.25s; cursor:default;
+  }
+  .ch-card:hover { border-color:rgba(34,197,94,0.3); transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.3); }
+  .ch-card-header { display:flex; align-items:center; justify-content:space-between; }
+  .ch-card-num { font-size:11px; font-weight:700; color:var(--text-dim); font-family:monospace; }
+  .ch-card-icon { font-size:28px; }
+  .ch-card-title { font-size:14px; font-weight:700; color:var(--text-primary); }
+  .ch-card-desc { font-size:12px; color:var(--text-secondary); line-height:1.5; }
+  .ch-card-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-top:auto; }
+  .ch-tech-badge { font-size:10px; padding:3px 8px; border-radius:6px; background:rgba(139,92,246,0.12); color:#c4b5fd; font-weight:600; }
+  .ch-diff { font-size:11px; font-weight:600; }
+  .ch-diff.intermediate { color:#fbbf24; }
+  .ch-diff.advanced { color:#f87171; }
+  .ch-view-btn {
+    width:100%; padding:8px; border-radius:8px; border:1px solid rgba(34,197,94,0.25);
+    background:rgba(34,197,94,0.06); color:#86efac; font-size:12px; font-weight:600;
+    cursor:pointer; font-family:inherit; transition:all 0.2s; text-align:center;
+  }
+  .ch-view-btn:hover { background:rgba(34,197,94,0.15); }
+
+  /* Challenge Detail Modal (reuses existing .edu-modal) */
+  .ch-modal-badge { display:inline-flex; align-items:center; gap:4px; padding:4px 12px; border-radius:8px; font-size:11px; font-weight:700; margin-bottom:16px; }
+  .ch-modal-badge.intermediate { background:rgba(251,191,36,0.15); color:#fbbf24; }
+  .ch-modal-badge.advanced { background:rgba(248,113,113,0.15); color:#f87171; }
+  .ch-section-title { font-size:13px; font-weight:700; color:#86efac; text-transform:uppercase; letter-spacing:0.05em; margin:18px 0 8px; }
+  .ch-flow {
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    background:var(--bg-tertiary); border-radius:10px; padding:14px; margin:6px 0 10px;
+  }
+  .ch-flow-step { font-size:12px; font-weight:600; color:var(--text-primary); padding:6px 16px; background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.15); border-radius:8px; }
+  .ch-flow-arrow { font-size:14px; color:var(--text-dim); }
+  .ch-tags { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; }
+  .ch-tag { font-size:10px; padding:3px 10px; border-radius:6px; background:rgba(139,92,246,0.1); color:#c4b5fd; font-weight:500; }
+  .ch-tag.data { background:rgba(6,182,212,0.1); color:#67e8f9; }
+  .ch-impact { background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.15); border-radius:10px; padding:12px 14px; font-size:12px; color:var(--text-secondary); line-height:1.6; margin-top:6px; }
+  .ch-impact strong { color:#86efac; }
+  .ch-priority-list { list-style:none; padding:0; margin:6px 0; }
+  .ch-priority-list li { font-size:12px; color:var(--text-secondary); padding:3px 0; }
+
+  .motivation-card {
+    background:linear-gradient(135deg,rgba(5,46,22,0.4),rgba(6,25,15,0.6));
+    border:1px solid rgba(34,197,94,0.15); border-radius:14px;
+    padding:20px 24px; text-align:center;
+  }
+  .motivation-card h4 { font-size:16px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .motivation-card p { font-size:12px; color:var(--text-secondary); margin-bottom:14px; }
+  .btn-start {
+    display:inline-flex; align-items:center; gap:6px; padding:9px 22px;
+    border-radius:10px; border:1px solid rgba(34,197,94,0.4);
+    background:rgba(34,197,94,0.1); color:#86efac; font-size:12px; font-weight:700;
+    cursor:pointer; font-family:inherit; transition:all 0.2s; text-decoration:none;
+  }
+  .btn-start:hover { background:rgba(34,197,94,0.2); transform:translateY(-1px); }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Education Hub</div>
+        <div class="header-breadcrumb">Species Field Guide &amp; Learning</div>
+      </div>
+      <div class="header-search" id="search-container">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search species, location, reports..." aria-label="Search">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative">
+          <div class="notif-btn" id="notif-btn" role="button"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div>
+            <div class="notif-list"></div>
+          </div>
+        </div>
+        <div style="position:relative">
+          <div class="user-btn" id="user-btn" role="button">
+            <div class="user-avatar">K</div>
+            <div class="user-info"><div class="user-name">Kalyani</div><div class="user-role">Observer</div></div>
+            <i class="fa fa-chevron-down" style="font-size:10px;color:var(--text-dim)"></i>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a class="user-dropdown-item" href="profile.html"><i class="fa fa-user-circle"></i> My Profile</a>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-item danger" id="logout-dropdown-btn"><i class="fa fa-sign-out-alt"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="edu-page">
+
+        <!-- Hero -->
+        <div class="edu-hero">
+          <h2>🌿 Kopargaon Species Field Guide</h2>
+          <p>Explore <span id="hero-count">461</span> documented species in the Kopargaon biodiversity region</p>
+          <div class="hero-search">
+            <input type="text" id="hero-search" placeholder="Search by species name, scientific name, or habitat...">
+            <button onclick="doSearch()">Search</button>
+          </div>
+        </div>
+
+        <!-- Category stats -->
+        <div class="cats-row" id="cats-row"></div>
+
+        <!-- Filters -->
+        <div class="glass-card" style="padding:14px 18px">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+            <span style="font-size:12px;font-weight:600;color:var(--text-secondary)">Category:</span>
+            <div class="filter-chips" id="cat-chips">
+              <div class="chip active" data-cat="all">All Species</div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+              <select id="iucn-filter" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg-tertiary);color:var(--text-primary);font-size:12px;font-family:inherit">
+                <option value="all">All IUCN Status</option>
+                <option value="Least Concern">Least Concern</option>
+                <option value="Near Threatened">Near Threatened</option>
+                <option value="Vulnerable">Vulnerable</option>
+                <option value="Endangered">Endangered</option>
+                <option value="Critically Endangered">Critically Endangered</option>
+                <option value="Data Deficient">Data Deficient</option>
+                <option value="Not Evaluated">Not Evaluated</option>
+              </select>
+              <select id="hab-filter" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:var(--bg-tertiary);color:var(--text-primary);font-size:12px;font-family:inherit">
+                <option value="all">All Habitats</option>
+              </select>
+              <span id="filtered-count" style="font-size:12px;color:var(--text-dim);align-self:center"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Species Grid -->
+        <div class="species-grid" id="species-grid"></div>
+        <div class="load-more-wrap">
+          <button class="load-more-btn" id="load-more-btn" style="display:none">Load More Species</button>
+        </div>
+
+        <!-- ═══ Biodiversity Challenges Section ═══ -->
+        <div class="challenges-divider"></div>
+
+        <div class="challenges-intro" id="challenges-intro">
+          <h3>🌿 Biodiversity Challenges</h3>
+          <p>Looking for a unique college project or hackathon idea?<br>Explore real biodiversity problems and discover what you can build using technology.</p>
+          <button class="btn-challenges" id="btn-explore-challenges"><i class="fa fa-flask"></i> Explore Challenges →</button>
+        </div>
+
+        <div class="challenges-area" id="challenges-area">
+
+          <!-- Filters -->
+          <div class="glass-card" style="padding:12px 16px">
+            <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+              <div class="ch-filters">
+                <span class="ch-filters-label">Tech:</span>
+                <button class="ch-chip active" data-tech="all">All</button>
+                <button class="ch-chip" data-tech="ai">🤖 AI/ML</button>
+                <button class="ch-chip" data-tech="gis">🗺️ GIS</button>
+                <button class="ch-chip" data-tech="ds">📊 Data Science</button>
+                <button class="ch-chip" data-tech="web">🌐 Web</button>
+              </div>
+              <div class="ch-filters" style="margin-left:auto">
+                <span class="ch-filters-label">Difficulty:</span>
+                <button class="ch-chip active" data-diff="all">All</button>
+                <button class="ch-chip" data-diff="Intermediate">🟡 Intermediate</button>
+                <button class="ch-chip" data-diff="Advanced">🔴 Advanced</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Challenge Cards -->
+          <div class="ch-grid" id="ch-grid"></div>
+
+          <!-- Motivation CTA -->
+          <div class="motivation-card">
+            <h4>💡 Have an idea?</h4>
+            <p>Choose a challenge, use your skills, and build your own solution.</p>
+            <a href="citizen-reports.html" class="btn-start"><i class="fa fa-rocket"></i> Start Building →</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <footer><div class="footer-content"><span>Kopargaon Biodiversity Portal &copy; 2025</span><span>Species field guide data</span></div></footer>
+  </div>
+</div>
+
+<!-- Species Modal -->
+<div class="edu-modal" id="species-modal">
+  <div class="edu-modal-content">
+    <button class="modal-close" onclick="closeModal()"><i class="fa fa-times"></i></button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Challenge Detail Modal -->
+<div class="edu-modal" id="challenge-modal">
+  <div class="edu-modal-content" style="max-width:560px">
+    <button class="modal-close" onclick="closeChallengeModal()"><i class="fa fa-times"></i></button>
+    <div id="challenge-modal-body"></div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const CAT_EMOJIS = {
+  Birds:'🦅', Mammals:'🦁', Reptiles:'🦎', Amphibians:'🐸',
+  Fish:'🐟', Insects:'🦋', Plants:'🌺', Spiders:'🕷️',
+  Butterflies:'🦋', Trees:'🌳'
+};
+const IUCN_CLASS = {
+  'Least Concern':'iucn-lc','Near Threatened':'iucn-nt','Vulnerable':'iucn-vu',
+  'Endangered':'iucn-en','Critically Endangered':'iucn-cr','Data Deficient':'iucn-dd',
+  'Not Evaluated':'iucn-ne'
+};
+
+let allResources=[], filteredResources=[];
+let showCount=24;
+let activeCategory='all';
+let searchTerm='';
+
+function getEmoji(cat){ return CAT_EMOJIS[cat]||'🌿'; }
+
+function iucnBadge(st){
+  const cls=IUCN_CLASS[st]||'iucn-ne';
+  return `<span class="iucn-badge ${cls}">${st||'—'}</span>`;
+}
+
+function applyFilters(){
+  const iucn=document.getElementById('iucn-filter').value;
+  const hab=document.getElementById('hab-filter').value;
+  filteredResources=allResources.filter(r=>{
+    if(activeCategory!=='all' && r._category!==activeCategory) return false;
+    if(searchTerm && !r.title.toLowerCase().includes(searchTerm) && !(r.description||'').toLowerCase().includes(searchTerm)) return false;
+    if(iucn!=='all' && r.conservation_status!==iucn) return false;
+    if(hab!=='all' && r.habitat!==hab) return false;
+    return true;
+  });
+  showCount=24;
+  renderGrid();
+  document.getElementById('filtered-count').textContent=`${filteredResources.length} species`;
+}
+
+function renderGrid(){
+  const grid=document.getElementById('species-grid');
+  const slice=filteredResources.slice(0,showCount);
+  grid.innerHTML=slice.map((r,i)=>{
+    const name=r.title.replace('Getting to know ','');
+    const scientific=r.description ? r.description.match(/\(([^)]+)\)/)?.[1]||'' : '';
+    return `<div class="species-card" onclick="openModal(${allResources.indexOf(r)})">
+      <div class="species-img">
+        <span>${getEmoji(r._category)}</span>
+        <span class="species-cat-badge">${r._category||'Species'}</span>
+      </div>
+      <div class="species-body">
+        <div class="species-common">${name}</div>
+        <div class="species-scientific">${scientific}</div>
+        <div class="species-habitat"><i class="fa fa-map-marker-alt"></i>${r.habitat||'—'}</div>
+        <div class="species-footer">
+          ${iucnBadge(r.conservation_status)}
+          <span style="font-size:10px;color:var(--text-dim)">${r.resource_id}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  const btn=document.getElementById('load-more-btn');
+  btn.style.display=showCount<filteredResources.length?'inline-block':'none';
+}
+
+window.openModal=function(idx){
+  const r=allResources[idx];
+  const name=r.title.replace('Getting to know ','');
+  const scientific=r.description ? r.description.match(/\(([^)]+)\)/)?.[1]||'' : '';
+  document.getElementById('modal-body').innerHTML=`
+    <div class="modal-emoji">${getEmoji(r._category)}</div>
+    <div class="modal-title">${name}</div>
+    <div class="modal-scientific">${scientific}</div>
+    <div style="text-align:center;margin-bottom:12px">${iucnBadge(r.conservation_status)}</div>
+    <div class="modal-desc">${r.description||'No description available.'}</div>
+    <div class="modal-grid">
+      <div class="modal-item">
+        <div class="modal-item-label">Category</div>
+        <div class="modal-item-value">${r._category||'—'}</div>
+      </div>
+      <div class="modal-item">
+        <div class="modal-item-label">Habitat</div>
+        <div class="modal-item-value">${r.habitat||'—'}</div>
+      </div>
+      <div class="modal-item">
+        <div class="modal-item-label">IUCN Status</div>
+        <div class="modal-item-value">${r.conservation_status||'—'}</div>
+      </div>
+      <div class="modal-item">
+        <div class="modal-item-label">Medicinal Use</div>
+        <div class="modal-item-value">${r.medicinal_use||'None documented'}</div>
+      </div>
+    </div>
+    ${r.interesting_fact ? `<div class="modal-fact"><strong>💡 Did you know?</strong><br>${r.interesting_fact}</div>` : ''}
+  `;
+  document.getElementById('species-modal').classList.add('open');
+};
+
+window.closeModal=function(){ document.getElementById('species-modal').classList.remove('open'); };
+document.getElementById('species-modal').addEventListener('click',function(e){ if(e.target===this)closeModal(); });
+
+window.doSearch=function(){
+  searchTerm=document.getElementById('hero-search').value.toLowerCase();
+  applyFilters();
+};
+
+document.getElementById('hero-search').addEventListener('keydown',function(e){ if(e.key==='Enter')doSearch(); });
+document.getElementById('load-more-btn').addEventListener('click',()=>{ showCount+=24; renderGrid(); });
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+  try{ allResources=await DataLoader.load('../data/educational_resources.csv'); }
+  catch(e){ allResources=[]; Notifications.error('Failed to load educational resources'); }
+
+  // Determine categories from resource IDs / species IDs - use description to figure out
+  // Categories based on species index (rough guide from data)
+  allResources.forEach(r=>{
+    const desc=r.description||'';
+    if(desc.includes(' is a bird')) r._category='Birds';
+    else if(desc.includes(' is a mammal')) r._category='Mammals';
+    else if(desc.includes(' is a reptile')) r._category='Reptiles';
+    else if(desc.includes(' is an amphibian')) r._category='Amphibians';
+    else if(desc.includes(' is a fish')||desc.includes(' is an fish')) r._category='Fish';
+    else if(desc.includes(' is an insect')||desc.includes(' is a butterfly')) r._category='Insects';
+    else if(desc.includes(' is a plant')||desc.includes(' is a tree')) r._category='Plants';
+    else r._category='Species';
+  });
+
+  // Category stats
+  const catCounts={};
+  allResources.forEach(r=>catCounts[r._category]=(catCounts[r._category]||0)+1);
+  const catsEl=document.getElementById('cats-row');
+  Object.entries(catCounts).sort((a,b)=>b[1]-a[1]).forEach(([cat,count])=>{
+    const div=document.createElement('div');
+    div.className='cat-stat';
+    div.innerHTML=`<div class="cat-stat-emoji">${getEmoji(cat)}</div><div class="cat-stat-num">${count}</div><div class="cat-stat-label">${cat}</div>`;
+    catsEl.appendChild(div);
+  });
+
+  // Category chips
+  const cats=[...new Set(allResources.map(r=>r._category))].sort();
+  const chipsEl=document.getElementById('cat-chips');
+  cats.forEach(cat=>{
+    const chip=document.createElement('div');
+    chip.className='chip'; chip.dataset.cat=cat;
+    chip.innerHTML=`${getEmoji(cat)} ${cat}`;
+    chip.addEventListener('click',()=>{
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCategory=cat;
+      applyFilters();
+    });
+    chipsEl.appendChild(chip);
+  });
+  chipsEl.querySelector('[data-cat="all"]').addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chipsEl.querySelector('[data-cat="all"]').classList.add('active');
+    activeCategory='all';
+    applyFilters();
+  });
+
+  // Habitat dropdown
+  const habs=[...new Set(allResources.map(r=>r.habitat).filter(Boolean))].sort();
+  const hsel=document.getElementById('hab-filter');
+  habs.forEach(h=>{ const o=document.createElement('option');o.value=h;o.textContent=h;hsel.appendChild(o); });
+
+  // Events
+  document.getElementById('iucn-filter').addEventListener('change',applyFilters);
+  document.getElementById('hab-filter').addEventListener('change',applyFilters);
+
+  document.getElementById('hero-count').textContent=allResources.length;
+  filteredResources=[...allResources];
+  renderGrid();
+  document.getElementById('filtered-count').textContent=`${filteredResources.length} species`;
+
+  document.getElementById('logout-dropdown-btn')?.addEventListener('click',()=>Auth.logout());
+
+  // ═══ Biodiversity Challenges Logic ═══
+  initChallenges();
+});
+
+/* ── Challenge Data & Logic ────────────────────────────── */
+const CHALLENGES = [
+  {
+    id:1, icon:'🐦', title:'AI Species Identification',
+    short:'Identify biodiversity species using AI and images.',
+    difficulty:'Intermediate',
+    techs:['ai','web'], techLabel:'AI/ML • Computer Vision • Python • Web Development • PostgreSQL',
+    problem:'Students and citizens often see birds, plants, insects and other organisms but cannot correctly identify them. Because of this, many biodiversity observations remain undocumented or are recorded incorrectly.',
+    flow:['Upload Species Image','AI Identification','Species Name','Species Information','Save Observation'],
+    flowTitle:'Possible Solution Flow',
+    relatedData:['Species Images','Species Master','Species Observations'],
+    impact:'Easier species identification and better biodiversity documentation.'
+  },
+  {
+    id:2, icon:'💧', title:'Water Body Biodiversity Monitoring',
+    short:'Monitor ecological changes in local ponds, lakes and water bodies.',
+    difficulty:'Intermediate',
+    techs:['gis','ds'], techLabel:'Data Science • GIS • Python • PostgreSQL • NDVI',
+    problem:'Local ponds, lakes and other water bodies support many species, but changes in their ecological condition are difficult to monitor.',
+    flow:['Environmental Data','Data Analysis','Biodiversity Indicators','GIS Visualization','Monitoring Dashboard'],
+    flowTitle:'Expected Solution Flow',
+    relatedData:['Water Bodies','Species Observations','Weather','NDVI','Environmental Threats'],
+    impact:'Helps identify ecological changes and supports better monitoring of local water ecosystems.'
+  },
+  {
+    id:3, icon:'🗺️', title:'Biodiversity Hotspot Detection',
+    short:'Generate priority maps for conservation attention using spatial analysis.',
+    difficulty:'Advanced',
+    techs:['gis','ds','ai'], techLabel:'GIS • Machine Learning • Data Science • PostgreSQL • Spatial Analysis',
+    problem:'Conservation resources are limited, so it is difficult to identify which locations should receive greater biodiversity conservation attention.',
+    flow:['Species + Habitat + NDVI Data','Spatial Analysis & ML','Priority Classification','Interactive GIS Map'],
+    flowTitle:'Expected Solution Flow',
+    priorities:['🟢 Low Priority','🟡 Moderate Priority','🔴 High Priority'],
+    relatedData:['Species Observations','Habitats','NDVI','Water Bodies','Environmental Threats','Biodiversity Hotspots'],
+    impact:'Helps identify biodiversity-rich and conservation-priority areas for better environmental planning.'
+  },
+  {
+    id:4, icon:'📸', title:'Citizen Report Verification',
+    short:'AI-assisted verification for citizen-submitted biodiversity observations.',
+    difficulty:'Intermediate',
+    techs:['ai','gis','web'], techLabel:'AI/ML • Computer Vision • GIS • PostgreSQL • Web Development',
+    problem:'Citizens may report plants, birds, insects or other biodiversity observations, but reports can contain: incorrect species identification, incomplete information, duplicate observations, and inaccurate locations.',
+    flow:['Citizen Uploads Image','AI Suggests Species','Confidence Check','Location Validation','Verification','Biodiversity Database'],
+    flowTitle:'Verification Workflow',
+    relatedData:['Citizen Reports','Species Images','Species Master','Species Observations'],
+    impact:'Improves the quality of citizen-generated biodiversity data and increases public participation in biodiversity monitoring.'
+  }
+];
+
+function initChallenges() {
+  const btnExplore = document.getElementById('btn-explore-challenges');
+  const area = document.getElementById('challenges-area');
+  let revealed = false;
+
+  btnExplore.addEventListener('click', () => {
+    revealed = !revealed;
+    area.classList.toggle('open', revealed);
+    btnExplore.innerHTML = revealed
+      ? '<i class="fa fa-chevron-up"></i> Hide Challenges'
+      : '<i class="fa fa-flask"></i> Explore Challenges →';
+    if (revealed) area.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  });
+
+  // Render initial cards
+  renderChallengeCards(CHALLENGES);
+
+  // Tech filter
+  let activeTech = 'all', activeDiff = 'all';
+  document.querySelectorAll('.ch-chip[data-tech]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.ch-chip[data-tech]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeTech = chip.dataset.tech;
+      filterChallenges();
+    });
+  });
+  document.querySelectorAll('.ch-chip[data-diff]').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.ch-chip[data-diff]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeDiff = chip.dataset.diff;
+      filterChallenges();
+    });
+  });
+
+  function filterChallenges() {
+    const filtered = CHALLENGES.filter(ch => {
+      const techMatch = activeTech === 'all' || ch.techs.includes(activeTech);
+      const diffMatch = activeDiff === 'all' || ch.difficulty === activeDiff;
+      return techMatch && diffMatch;
+    });
+    renderChallengeCards(filtered);
+  }
+}
+
+function renderChallengeCards(list) {
+  const grid = document.getElementById('ch-grid');
+  if (!list.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-dim);font-size:13px;grid-column:1/-1">No challenges match these filters.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(ch => {
+    const diffCls = ch.difficulty.toLowerCase();
+    const diffDot = ch.difficulty === 'Advanced' ? '🔴' : '🟡';
+    return `<div class="ch-card">
+      <div class="ch-card-header">
+        <span class="ch-card-num">0${ch.id}</span>
+        <span class="ch-card-icon">${ch.icon}</span>
+      </div>
+      <div class="ch-card-title">${ch.title}</div>
+      <div class="ch-card-desc">${ch.short}</div>
+      <div class="ch-card-footer">
+        <span class="ch-tech-badge">🤖 ${ch.techs.length > 2 ? 'Multi-Tech' : ch.techLabel.split(' • ').slice(0,2).join(' • ')}</span>
+        <span class="ch-diff ${diffCls}">${diffDot} ${ch.difficulty}</span>
+      </div>
+      <button class="ch-view-btn" onclick="openChallengeModal(${ch.id})">View Challenge</button>
+    </div>`;
+  }).join('');
+}
+
+window.openChallengeModal = function(id) {
+  const ch = CHALLENGES.find(c => c.id === id);
+  if (!ch) return;
+  const diffCls = ch.difficulty.toLowerCase();
+  const diffDot = ch.difficulty === 'Advanced' ? '🔴' : '🟡';
+
+  let flowHTML = ch.flow.map((s,i) => {
+    let html = `<div class="ch-flow-step">${s}</div>`;
+    if (i < ch.flow.length - 1) html += '<div class="ch-flow-arrow">↓</div>';
+    return html;
+  }).join('');
+
+  let priorityHTML = '';
+  if (ch.priorities) {
+    priorityHTML = `<div class="ch-section-title">Classification Output</div>
+      <ul class="ch-priority-list">${ch.priorities.map(p => `<li>${p}</li>`).join('')}</ul>`;
+  }
+
+  document.getElementById('challenge-modal-body').innerHTML = `
+    <div style="text-align:center">
+      <div style="font-size:48px;margin-bottom:8px">${ch.icon}</div>
+      <div class="modal-title" style="margin-bottom:4px">Problem ${ch.id} — ${ch.title}</div>
+      <span class="ch-modal-badge ${diffCls}">${diffDot} ${ch.difficulty}</span>
+    </div>
+
+    <div class="ch-section-title">Problem</div>
+    <div class="modal-desc">${ch.problem}</div>
+
+    <div class="ch-section-title">${ch.flowTitle}</div>
+    <div class="ch-flow">${flowHTML}</div>
+    ${priorityHTML}
+
+    <div class="ch-section-title">Suggested Technologies</div>
+    <div class="ch-tags">${ch.techLabel.split(' • ').map(t => `<span class="ch-tag">${t}</span>`).join('')}</div>
+
+    <div class="ch-section-title">Related Data</div>
+    <div class="ch-tags">${ch.relatedData.map(d => `<span class="ch-tag data">${d}</span>`).join('')}</div>
+
+    <div class="ch-section-title">Expected Impact</div>
+    <div class="ch-impact"><strong>💡</strong> ${ch.impact}</div>
+  `;
+  document.getElementById('challenge-modal').classList.add('open');
+};
+
+window.closeChallengeModal = function() {
+  document.getElementById('challenge-modal').classList.remove('open');
+};
+document.getElementById('challenge-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeChallengeModal();
+});
+</script>
+</body>
+</html>

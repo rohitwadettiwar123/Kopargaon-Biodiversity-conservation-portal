@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citizen Reports | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+.cr-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 14px; }
+@media (max-width: 900px) { .cr-layout { grid-template-columns: 1fr; } }
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 12px;
+  padding: 24px; text-align: center; cursor: pointer;
+  transition: var(--transition); background: var(--bg-tertiary);
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--green-primary); background: var(--green-faint);
+}
+.upload-zone i { font-size: 28px; color: var(--text-dim); margin-bottom: 8px; }
+.ai-demo-box {
+  background: linear-gradient(135deg, rgba(34,197,94,0.05) 0%, rgba(56,189,248,0.05) 100%);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.ai-demo-box::before {
+  content: '⚠️ DEMO MODE';
+  position: absolute; top: 8px; right: 10px;
+  font-size: 8px; font-weight: 800;
+  color: var(--accent-amber); letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Citizen Reports</div>
+        <div class="header-breadcrumb">Community Observations</div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search across portal...">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative">
+          <div class="notif-btn" id="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div class="notif-dropdown" id="notif-dropdown"><div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div><div class="notif-list"></div></div>
+        </div>
+        <div style="position:relative">
+          <div class="user-btn" id="user-btn"><div class="user-avatar">K</div><div class="user-info"><div class="user-name">Kalyani</div><div class="user-role">Observer</div></div></div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a class="user-dropdown-item" href="profile.html"><i class="fa fa-user-circle"></i> My Profile</a>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-item danger" id="logout-dropdown-btn"><i class="fa fa-sign-out-alt"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title"><i class="fa fa-file-alt text-green"></i> Citizen Reports</h1>
+          <p style="color:var(--text-dim);font-size:12px;margin-top:3px">Submit wildlife sightings and help conserve Kopargaon's biodiversity</p>
+        </div>
+      </div>
+
+      <div class="cr-layout">
+        <!-- LEFT: Submit Report Form -->
+        <div>
+          <div class="card" style="padding:16px;margin-bottom:12px">
+            <div class="card-title" style="margin-bottom:14px"><i class="fa fa-plus-circle text-green card-title-icon"></i> Submit a New Report</div>
+            <form id="cr-form">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div>
+                  <label class="form-label">Species <span style="color:#ef4444">*</span></label>
+                  <select id="cr-species" class="form-select">
+                    <option value="">Loading species...</option>
+                  </select>
+                </div>
+                <div class="grid-2" style="gap:10px">
+                  <div>
+                    <label class="form-label">Date <span style="color:#ef4444">*</span></label>
+                    <input type="date" id="cr-date" class="form-input">
+                  </div>
+                  <div>
+                    <label class="form-label">Time</label>
+                    <input type="time" id="cr-time" class="form-input" value="08:00">
+                  </div>
+                </div>
+                <div class="grid-2" style="gap:10px">
+                  <div>
+                    <label class="form-label">Latitude <span style="color:#ef4444">*</span></label>
+                    <div style="display:flex;gap:6px">
+                      <input type="text" id="cr-lat" class="form-input" placeholder="19.8750" style="flex:1">
+                      <button type="button" id="cr-gps-btn" class="btn btn-sm btn-outline" title="Use my location">
+                        <i class="fa fa-crosshairs"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="form-label">Longitude <span style="color:#ef4444">*</span></label>
+                    <input type="text" id="cr-lng" class="form-input" placeholder="74.4750">
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label">Village</label>
+                  <select id="cr-village" class="form-select">
+                    <option value="">Select village...</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Count</label>
+                  <input type="number" id="cr-count" class="form-input" value="1" min="1" max="999">
+                </div>
+                <div>
+                  <label class="form-label">Description / Remarks <span style="color:#ef4444">*</span></label>
+                  <textarea id="cr-desc" class="form-input" rows="3" placeholder="Describe your sighting in detail (min. 10 characters)..."></textarea>
+                </div>
+                <div>
+                  <label class="form-label">Photo (optional)</label>
+                  <div class="upload-zone" id="cr-upload-zone">
+                    <i class="fa fa-cloud-upload-alt"></i>
+                    <p style="font-size:12px;color:var(--text-dim);margin:6px 0 0">Drag & drop or click to upload</p>
+                    <p style="font-size:10px;color:var(--text-dim)">JPG, PNG up to 5MB</p>
+                    <input type="file" id="cr-image-input" accept="image/*" style="display:none">
+                  </div>
+                  <div id="cr-image-preview" style="margin-top:8px;text-align:center"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%">
+                  <i class="fa fa-paper-plane"></i> Submit Report
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- AI Species ID Demo -->
+          <div class="card" style="padding:16px">
+            <div class="card-title" style="margin-bottom:12px"><i class="fa fa-brain text-blue card-title-icon"></i> AI Species Identification</div>
+            <div class="ai-demo-box">
+              <div style="font-size:40px;margin-bottom:10px">🤖</div>
+              <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:6px">AI Identification Module</div>
+              <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.6">
+                Upload a photo of an unknown species and our AI model will identify it from Kopargaon's biodiversity database.
+              </div>
+              <div style="padding:8px 12px;background:rgba(251,191,36,0.1);border:1px dashed var(--accent-amber);border-radius:8px;font-size:10px;color:var(--accent-amber);font-weight:600;margin-bottom:12px">
+                ⚠️ This feature requires backend AI integration (TensorFlow/PyTorch model deployment). Currently in development.
+              </div>
+              <button class="btn btn-outline" style="width:100%" onclick="Notifications.info('AI Module', 'AI Species Identification is coming soon. This requires backend model deployment.')">
+                <i class="fa fa-camera"></i> Upload for Identification
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Reports History -->
+        <div>
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border)">
+              <div class="card-title"><i class="fa fa-history text-green card-title-icon"></i> Recent Reports</div>
+            </div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+                <thead>
+                  <tr style="background:var(--bg-tertiary)">
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Report ID</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Species</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Date</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Remarks</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Status</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700">Notes</th>
+                    <th style="padding:9px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;color:var(--text-dim);font-weight:700;width:90px">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="cr-tbody">
+                  <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-dim)"><i class="fa fa-spinner fa-spin"></i> Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Kopargaon Biodiversity Portal</span>
+      &nbsp;·&nbsp;<a href="../index.html">Dashboard</a>
+    </footer>
+  </div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (!Auth.guard()) return; });</script>
+<script src="../js/app.js"></script>
+<script src="../js/citizen-reports.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  await CitizenReports.init();
+  document.getElementById('logout-dropdown-btn')?.addEventListener('click', () => Auth.logout());
+});
+</script>
+</body>
+</html>

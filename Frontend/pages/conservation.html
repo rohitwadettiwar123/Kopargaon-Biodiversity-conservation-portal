@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conservation Projects | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+  .cons-page { display:flex; flex-direction:column; gap:16px; }
+
+  /* Status badges */
+  .st-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:600; }
+  .st-ongoing   { background:rgba(34,197,94,0.15); color:#86efac; border:1px solid rgba(34,197,94,0.3); }
+  .st-completed { background:rgba(59,130,246,0.15); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); }
+  .st-planned   { background:rgba(234,179,8,0.15); color:#fde68a; border:1px solid rgba(234,179,8,0.3); }
+  .st-onhold    { background:rgba(156,163,175,0.15); color:#d1d5db; border:1px solid rgba(156,163,175,0.3); }
+
+  /* Project Cards */
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+  .proj-card {
+    background:var(--bg-secondary); border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; padding:18px; transition:all 0.25s; cursor:pointer;
+    position:relative; overflow:hidden;
+  }
+  .proj-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    border-radius:14px 14px 0 0;
+  }
+  .proj-card.ongoing::before { background:linear-gradient(to right,#22c55e,#86efac); }
+  .proj-card.completed::before { background:linear-gradient(to right,#3b82f6,#93c5fd); }
+  .proj-card.planned::before { background:linear-gradient(to right,#eab308,#fde68a); }
+  .proj-card.on-hold::before { background:linear-gradient(to right,#6b7280,#d1d5db); }
+  .proj-card:hover { border-color:rgba(34,197,94,0.25); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.25); }
+
+  .proj-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+  .proj-id { font-size:10px; font-family:monospace; color:var(--text-dim); }
+  .proj-name { font-size:14px; font-weight:700; color:var(--text-primary); margin:4px 0 8px; line-height:1.4; }
+  .proj-location { font-size:12px; color:var(--text-secondary); margin-bottom:6px; }
+  .proj-location i { color:#86efac; margin-right:4px; }
+  .proj-meta { display:flex; flex-wrap:wrap; gap:8px; font-size:11px; color:var(--text-dim); margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+  .proj-meta span { display:flex; align-items:center; gap:4px; }
+  .proj-budget { font-size:13px; font-weight:700; color:#fbbf24; }
+  .proj-org { font-size:11px; color:var(--text-secondary); }
+
+  .view-toggle { display:flex; gap:6px; }
+  .toggle-btn {
+    padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);
+    background:transparent; color:var(--text-secondary); font-size:12px; cursor:pointer; font-family:inherit;
+    transition:all 0.2s;
+  }
+  .toggle-btn.active { background:rgba(34,197,94,0.15); color:#86efac; border-color:rgba(34,197,94,0.4); }
+
+  .filter-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .filter-select {
+    padding:6px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);
+    background:var(--bg-tertiary); color:var(--text-primary); font-size:12px; font-family:inherit;
+  }
+  .search-box {
+    padding:6px 12px 6px 32px; border-radius:8px; border:1px solid rgba(255,255,255,0.1);
+    background:var(--bg-tertiary); color:var(--text-primary); font-size:12px; font-family:inherit; width:200px;
+  }
+  .search-wrap { position:relative; }
+  .search-wrap i { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text-dim); font-size:12px; }
+
+  /* Table */
+  .cons-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  .cons-table th { background:rgba(34,197,94,0.07); color:var(--text-secondary); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; padding:9px 12px; text-align:left; font-weight:600; border-bottom:1px solid rgba(255,255,255,0.06); white-space:nowrap; }
+  .cons-table td { padding:8px 12px; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+  .cons-table tr:hover td { background:rgba(34,197,94,0.04); }
+  .table-wrap { max-height:500px; overflow-y:auto; border-radius:10px; border:1px solid rgba(255,255,255,0.06); }
+
+  .chart-wrap { height:200px; }
+  .charts-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media(max-width:1024px){ .charts-row { grid-template-columns:1fr 1fr; } }
+  @media(max-width:768px){ .charts-row { grid-template-columns:1fr; } }
+
+  .proj-type-icon { font-size:20px; margin-bottom:8px; }
+
+  #projects-view { display:grid; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Conservation Projects</div>
+        <div class="header-breadcrumb">Active &amp; Planned Initiatives</div>
+      </div>
+      <div class="header-search" id="search-container">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search species, location, reports..." aria-label="Search">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative">
+          <div class="notif-btn" id="notif-btn" role="button"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div>
+            <div class="notif-list"></div>
+          </div>
+        </div>
+        <div style="position:relative">
+          <div class="user-btn" id="user-btn" role="button">
+            <div class="user-avatar">K</div>
+            <div class="user-info"><div class="user-name">Kalyani</div><div class="user-role">Observer</div></div>
+            <i class="fa fa-chevron-down" style="font-size:10px;color:var(--text-dim)"></i>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a class="user-dropdown-item" href="profile.html"><i class="fa fa-user-circle"></i> My Profile</a>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-item danger" id="logout-dropdown-btn"><i class="fa fa-sign-out-alt"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="cons-page">
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:rgba(34,197,94,0.15)"><i class="fa fa-project-diagram" style="color:#86efac"></i></div>
+            <div class="kpi-body"><div class="kpi-value" id="kpi-total">—</div><div class="kpi-label">Total Projects</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:rgba(34,197,94,0.2)"><i class="fa fa-play-circle" style="color:#4ade80"></i></div>
+            <div class="kpi-body"><div class="kpi-value green" id="kpi-ongoing">—</div><div class="kpi-label">Ongoing</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:rgba(59,130,246,0.15)"><i class="fa fa-check-double" style="color:#93c5fd"></i></div>
+            <div class="kpi-body"><div class="kpi-value blue" id="kpi-completed">—</div><div class="kpi-label">Completed</div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon" style="background:rgba(251,191,36,0.15)"><i class="fa fa-rupee-sign" style="color:#fbbf24"></i></div>
+            <div class="kpi-body"><div class="kpi-value" id="kpi-budget" style="font-size:20px">—</div><div class="kpi-label">Total Budget (₹)</div></div>
+          </div>
+        </div>
+
+        <!-- Filters + Toggle -->
+        <div class="glass-card" style="padding:14px 18px">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+            <div class="search-wrap">
+              <i class="fa fa-search"></i>
+              <input class="search-box" id="cons-search" placeholder="Search project or location...">
+            </div>
+            <select class="filter-select" id="status-filter">
+              <option value="all">All Status</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Completed">Completed</option>
+              <option value="Planned">Planned</option>
+              <option value="On Hold">On Hold</option>
+            </select>
+            <select class="filter-select" id="org-filter">
+              <option value="all">All Organizations</option>
+            </select>
+            <select class="filter-select" id="type-filter">
+              <option value="all">All Project Types</option>
+            </select>
+            <div class="view-toggle" style="margin-left:auto">
+              <button class="toggle-btn active" id="btn-cards" onclick="setView('cards')"><i class="fa fa-th-large"></i> Cards</button>
+              <button class="toggle-btn" id="btn-table" onclick="setView('table')"><i class="fa fa-list"></i> Table</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects View -->
+        <div id="projects-view"></div>
+
+        <!-- Charts -->
+        <div class="charts-row">
+          <div class="glass-card" style="padding:16px">
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:12px"><i class="fa fa-chart-pie" style="color:#86efac;margin-right:8px"></i>Status Distribution</h3>
+            <div class="chart-wrap"><canvas id="status-chart"></canvas></div>
+          </div>
+          <div class="glass-card" style="padding:16px">
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:12px"><i class="fa fa-chart-bar" style="color:#86efac;margin-right:8px"></i>Projects by Type</h3>
+            <div class="chart-wrap"><canvas id="type-chart"></canvas></div>
+          </div>
+          <div class="glass-card" style="padding:16px">
+            <h3 style="font-size:14px;font-weight:700;margin-bottom:12px"><i class="fa fa-building" style="color:#86efac;margin-right:8px"></i>By Organization</h3>
+            <div class="chart-wrap"><canvas id="org-chart"></canvas></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <footer><div class="footer-content"><span>Kopargaon Biodiversity Portal &copy; 2025</span><span>Conservation initiative tracking</span></div></footer>
+  </div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (!Auth.guard()) return; });</script>
+<script src="../js/app.js"></script>
+<script>
+const TYPE_ICONS = {
+  'Butterfly Garden':'🦋','Native Species Nursery':'🌱','Tree Plantation':'🌳',
+  'Bird Census':'🦅','Anti-Poaching Patrol':'🛡️','River Cleanup':'🌊',
+  'School Biodiversity Program':'📚','Wetland Restoration':'💧',
+  'Community Awareness Drive':'📢','Lake Rejuvenation':'🏞️'
+};
+const STATUS_COLORS = { Ongoing:'#22c55e', Completed:'#3b82f6', Planned:'#eab308', 'On Hold':'#6b7280' };
+
+let allProjs=[], filteredProjs=[];
+let viewMode='cards';
+
+function getTypeFromName(name){
+  const keys=Object.keys(TYPE_ICONS);
+  return keys.find(k=>name.includes(k))||'Conservation Project';
+}
+
+function statusBadge(st){
+  const cls={Ongoing:'st-ongoing',Completed:'st-completed',Planned:'st-planned','On Hold':'st-onhold'};
+  return `<span class="st-badge ${cls[st]||'st-planned'}">${st}</span>`;
+}
+
+function statusClass(st){
+  return {Ongoing:'ongoing',Completed:'completed',Planned:'planned','On Hold':'on-hold'}[st]||'planned';
+}
+
+function formatBudget(b){
+  const n=parseInt(b)||0;
+  if(n>=1000000) return '₹'+(n/1000000).toFixed(2)+'M';
+  if(n>=1000) return '₹'+(n/1000).toFixed(0)+'K';
+  return '₹'+n;
+}
+
+function applyFilters(){
+  const s=document.getElementById('cons-search').value.toLowerCase();
+  const sf=document.getElementById('status-filter').value;
+  const of=document.getElementById('org-filter').value;
+  const tf=document.getElementById('type-filter').value;
+  filteredProjs=allProjs.filter(p=>{
+    if(s && !p.project_name.toLowerCase().includes(s) && !p.location.toLowerCase().includes(s)) return false;
+    if(sf!=='all' && p.status!==sf) return false;
+    if(of!=='all' && p.organization!==of) return false;
+    if(tf!=='all' && !p.project_name.includes(tf)) return false;
+    return true;
+  });
+  render();
+}
+
+function render(){
+  const el=document.getElementById('projects-view');
+  if(viewMode==='cards'){
+    el.className='projects-grid';
+    el.innerHTML=filteredProjs.map(p=>{
+      const typeKey=getTypeFromName(p.project_name);
+      const icon=TYPE_ICONS[typeKey]||'🌿';
+      return `<div class="proj-card ${statusClass(p.status)}">
+        <div class="proj-header">
+          <span class="proj-id">${p.project_id}</span>
+          ${statusBadge(p.status)}
+        </div>
+        <div class="proj-type-icon">${icon}</div>
+        <div class="proj-name">${p.project_name}</div>
+        <div class="proj-location"><i class="fa fa-map-marker-alt"></i>${p.location}</div>
+        <div class="proj-org"><i class="fa fa-building" style="color:var(--text-dim);margin-right:4px"></i>${p.organization}</div>
+        <div class="proj-meta">
+          <span><i class="fa fa-calendar-alt"></i>${p.start_date}</span>
+          <span class="proj-budget">${formatBudget(p.budget_inr)}</span>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    el.className='glass-card';
+    el.style.padding='16px';
+    el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="font-size:12px;color:var(--text-dim)">${filteredProjs.length} projects</span>
+    </div>
+    <div class="table-wrap">
+      <table class="cons-table">
+        <thead><tr>
+          <th>ID</th><th>Project Name</th><th>Location</th><th>Start Date</th>
+          <th>Status</th><th>Budget</th><th>Organization</th>
+        </tr></thead>
+        <tbody>${filteredProjs.map(p=>`<tr>
+          <td style="font-family:monospace;font-size:11px;color:var(--text-dim)">${p.project_id}</td>
+          <td style="font-weight:600;font-size:12px">${TYPE_ICONS[getTypeFromName(p.project_name)]||'🌿'} ${p.project_name}</td>
+          <td><i class="fa fa-map-marker-alt" style="color:#86efac;margin-right:4px"></i>${p.location}</td>
+          <td style="font-size:11px">${p.start_date}</td>
+          <td>${statusBadge(p.status)}</td>
+          <td style="font-weight:700;color:#fbbf24">${formatBudget(p.budget_inr)}</td>
+          <td style="font-size:11px;color:var(--text-secondary)">${p.organization}</td>
+        </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+}
+
+window.setView=function(v){
+  viewMode=v;
+  document.getElementById('btn-cards').classList.toggle('active',v==='cards');
+  document.getElementById('btn-table').classList.toggle('active',v==='table');
+  render();
+};
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+  try{ allProjs=await DataLoader.load('../data/conservation_projects.csv'); }
+  catch(e){ allProjs=[]; Notifications.error('Failed to load conservation data'); }
+
+  // KPIs
+  const ongoing=allProjs.filter(p=>p.status==='Ongoing').length;
+  const completed=allProjs.filter(p=>p.status==='Completed').length;
+  const totalBudget=allProjs.reduce((s,p)=>s+(parseInt(p.budget_inr)||0),0);
+  App.animateCounter('kpi-total',allProjs.length);
+  App.animateCounter('kpi-ongoing',ongoing);
+  App.animateCounter('kpi-completed',completed);
+  document.getElementById('kpi-budget').textContent='₹'+App.formatNumber(totalBudget);
+
+  // Dropdowns
+  const orgs=[...new Set(allProjs.map(p=>p.organization))].sort();
+  const osel=document.getElementById('org-filter');
+  orgs.forEach(o=>{ const opt=document.createElement('option');opt.value=o;opt.textContent=o;osel.appendChild(opt); });
+
+  const types=[...new Set(Object.keys(TYPE_ICONS))];
+  const tsel=document.getElementById('type-filter');
+  types.forEach(t=>{ const opt=document.createElement('option');opt.value=t;opt.textContent=t;tsel.appendChild(opt); });
+
+  // Events
+  document.getElementById('cons-search').addEventListener('input',applyFilters);
+  ['status-filter','org-filter','type-filter'].forEach(id=>document.getElementById(id).addEventListener('change',applyFilters));
+
+  filteredProjs=[...allProjs];
+  render();
+
+  // Charts
+  const statCounts={Ongoing:0,Completed:0,Planned:0,'On Hold':0};
+  allProjs.forEach(p=>{ if(statCounts[p.status]!==undefined)statCounts[p.status]++; });
+  new Chart(document.getElementById('status-chart'),{
+    type:'doughnut',
+    data:{labels:Object.keys(statCounts),datasets:[{data:Object.values(statCounts),
+      backgroundColor:['#22c55e88','#3b82f688','#eab30888','#6b728088'],
+      borderColor:['#22c55e','#3b82f6','#eab308','#6b7280'],borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{color:'#9ca3af',font:{size:10},padding:8}}}}
+  });
+
+  const typeCounts={};
+  allProjs.forEach(p=>{ const k=getTypeFromName(p.project_name); typeCounts[k]=(typeCounts[k]||0)+1; });
+  const typeKeys=Object.keys(typeCounts).sort((a,b)=>typeCounts[b]-typeCounts[a]);
+  new Chart(document.getElementById('type-chart'),{
+    type:'bar',
+    data:{labels:typeKeys.map(k=>TYPE_ICONS[k]+' '+k.replace(/ -.*$/,'')),
+          datasets:[{data:typeKeys.map(k=>typeCounts[k]),backgroundColor:'#22c55e55',borderColor:'#22c55e',borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9ca3af',font:{size:10}}},
+              y:{grid:{display:false},ticks:{color:'#9ca3af',font:{size:9}}}}}
+  });
+
+  const orgCounts={};
+  allProjs.forEach(p=>orgCounts[p.organization]=(orgCounts[p.organization]||0)+1);
+  const orgKeys=Object.keys(orgCounts).sort((a,b)=>orgCounts[b]-orgCounts[a]);
+  const orgColors=['#6366f155','#22c55e55','#f9731655','#eab30855','#3b82f655','#ec489955','#8b5cf655'];
+  new Chart(document.getElementById('org-chart'),{
+    type:'bar',
+    data:{labels:orgKeys,datasets:[{data:orgKeys.map(k=>orgCounts[k]),
+      backgroundColor:orgKeys.map((_,i)=>orgColors[i%orgColors.length]),
+      borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9ca3af',font:{size:10}}},
+              y:{grid:{display:false},ticks:{color:'#9ca3af',font:{size:9}}}}}
+  });
+
+  document.getElementById('logout-dropdown-btn')?.addEventListener('click',()=>Auth.logout());
+});
+</script>
+<style>
+.kpi-value.green{color:#86efac}.kpi-value.blue{color:#93c5fd}
+</style>
+</body>
+</html>

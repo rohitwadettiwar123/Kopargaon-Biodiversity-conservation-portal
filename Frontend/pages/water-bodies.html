@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Bodies | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+.wb-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; padding:14px; cursor:pointer; transition:var(--transition-slow); }
+.wb-card:hover { border-color:#38bdf8; transform:translateY(-3px); box-shadow:0 8px 24px rgba(56,189,248,0.12); }
+.wb-name { font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:3px; }
+.wb-type { font-size:10.5px; color:var(--text-dim); margin-bottom:8px; }
+.wb-stats { display:flex; flex-direction:column; gap:5px; }
+.wb-stat { display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); }
+.wb-stat strong { color:var(--text-secondary); }
+.quality-Excellent { color:#22c55e; } .quality-Good { color:#38bdf8; }
+.quality-Moderate { color:#f59e0b; } .quality-Poor { color:#ef4444; }
+.pollution-Low { color:#22c55e; } .pollution-Moderate { color:#f59e0b; } .pollution-High { color:#ef4444; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Water Bodies</div>
+        <div class="header-breadcrumb">Aquatic Ecosystem Monitoring</div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search...">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative"><div class="notif-btn" id="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div><div class="notif-dropdown" id="notif-dropdown"><div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div><div class="notif-list"></div></div></div>
+        <div style="position:relative"><div class="user-btn" id="user-btn"><div class="user-avatar">K</div><div class="user-info"><div class="user-name">Kalyani</div><div class="user-role">Observer</div></div></div><div class="user-dropdown" id="user-dropdown"><a class="user-dropdown-item" href="profile.html"><i class="fa fa-user-circle"></i> My Profile</a><div class="user-dropdown-divider"></div><div class="user-dropdown-item danger" id="logout-dropdown-btn"><i class="fa fa-sign-out-alt"></i> Logout</div></div></div>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title"><i class="fa fa-water text-blue"></i> Water Body Monitoring</h1>
+          <p style="color:var(--text-dim);font-size:12px;margin-top:3px">Aquatic ecosystems and water quality assessment</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="kpi-grid" style="margin-bottom:14px">
+        <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fa fa-water"></i></div><div class="kpi-info"><div class="kpi-label">Total Water Bodies</div><div class="kpi-value" id="wb-total">—</div></div></div>
+        <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fa fa-check-circle"></i></div><div class="kpi-info"><div class="kpi-label">Excellent Quality</div><div class="kpi-value" id="wb-excellent">—</div></div></div>
+        <div class="kpi-card cyan"><div class="kpi-icon-wrap"><i class="fa fa-star"></i></div><div class="kpi-info"><div class="kpi-label">High Biodiversity</div><div class="kpi-value" id="wb-highbio">—</div></div></div>
+        <div class="kpi-card amber"><div class="kpi-icon-wrap"><i class="fa fa-exclamation-triangle"></i></div><div class="kpi-info"><div class="kpi-label">High Pollution</div><div class="kpi-value" id="wb-highpol">—</div></div></div>
+      </div>
+
+      <!-- Map -->
+      <div class="card" style="padding:0;overflow:hidden;margin-bottom:14px">
+        <div id="wb-map" style="height:280px;border-radius:12px"></div>
+      </div>
+
+      <!-- Water Body Cards Grid -->
+      <div id="wb-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
+        ${Array(8).fill(0).map(() => `<div class="skeleton" style="height:150px;border-radius:12px"></div>`).join('')}
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Kopargaon Biodiversity Portal</span>
+      &nbsp;·&nbsp;<a href="../index.html">Dashboard</a>
+    </footer>
+  </div>
+</div>
+
+<!-- Water Body Modal -->
+<div class="modal-overlay" id="wb-modal-overlay">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa fa-water text-blue"></i> Water Body Details</div>
+      <div class="modal-close" id="wb-modal-close"><i class="fa fa-times"></i></div>
+    </div>
+    <div class="modal-body" id="wb-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline btn-sm" onclick="document.getElementById('wb-modal-overlay').classList.remove('visible')">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (!Auth.guard()) return; });</script>
+<script src="../js/app.js"></script>
+<script>
+let wbData = [];
+
+async function loadWaterBodies() {
+  wbData = await DataLoader.load('water_bodies.csv');
+  const total = wbData.length;
+  const excellent = wbData.filter(w => w.water_quality === 'Excellent').length;
+  const highBio   = wbData.filter(w => parseFloat(w.biodiversity_score) >= 7).length;
+  const highPol   = wbData.filter(w => w.pollution_level === 'High').length;
+
+  App.animateCounter(document.getElementById('wb-total'), total);
+  App.animateCounter(document.getElementById('wb-excellent'), excellent);
+  App.animateCounter(document.getElementById('wb-highbio'), highBio);
+  App.animateCounter(document.getElementById('wb-highpol'), highPol);
+
+  renderCards();
+  initMap();
+}
+
+function renderCards() {
+  const grid = document.getElementById('wb-grid');
+  if (!grid) return;
+  const typeIcons = { Reservoir:'🏞️', 'Check Dam':'⛰️', 'Percolation Tank':'🌀', River:'🌊', Pond:'💧', Lake:'🏊' };
+  grid.innerHTML = wbData.map((w, i) => {
+    const icon = typeIcons[w.type] || '💧';
+    const qClass = `quality-${w.water_quality}`;
+    const pClass = `pollution-${w.pollution_level}`;
+    const bioScore = parseFloat(w.biodiversity_score) || 0;
+    return `
+      <div class="wb-card" onclick="openWBModal(${i})">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:22px">${icon}</span>
+          <div>
+            <div class="wb-name">${w.name}</div>
+            <div class="wb-type">${w.type}</div>
+          </div>
+        </div>
+        <div class="wb-stats">
+          <div class="wb-stat">Water Quality: <strong class="${qClass}">${w.water_quality}</strong></div>
+          <div class="wb-stat">Biodiversity Score: <strong style="color:${bioScore>=7?'#22c55e':bioScore>=5?'#38bdf8':'#f59e0b'}">${bioScore.toFixed(1)}/10</strong></div>
+          <div class="wb-stat">Area: <strong>${w.area_sqkm} km²</strong></div>
+          <div class="wb-stat">Pollution: <strong class="${pClass}">${w.pollution_level}</strong></div>
+          <div class="wb-stat">Fish Species: <strong>${w.fish_species_count || '?'}</strong></div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openWBModal(idx) {
+  const w = wbData[idx];
+  const overlay = document.getElementById('wb-modal-overlay');
+  const body = document.getElementById('wb-modal-body');
+  if (!overlay || !body || !w) return;
+  const typeIcons = { Reservoir:'🏞️', 'Check Dam':'⛰️', 'Percolation Tank':'🌀', River:'🌊', Pond:'💧', Lake:'🏊' };
+  body.innerHTML = `
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:48px">${typeIcons[w.type]||'💧'}</div>
+      <h2 style="font-size:18px;font-weight:800;margin-top:6px">${w.name}</h2>
+      <span class="badge badge-info">${w.type}</span>
+    </div>
+    <div class="grid-2" style="gap:10px">
+      ${wbRow('Water Quality', w.water_quality, `quality-${w.water_quality}`)}
+      ${wbRow('Biodiversity Score', (parseFloat(w.biodiversity_score)||0).toFixed(1)+'/10')}
+      ${wbRow('Area', w.area_sqkm+' km²')}
+      ${wbRow('Max Depth', w.depth_m ? w.depth_m+'m' : 'N/A')}
+      ${wbRow('Pollution Level', w.pollution_level, `pollution-${w.pollution_level}`)}
+      ${wbRow('Fish Species', w.fish_species_count||'?')}
+      ${wbRow('Aquatic Plants', w.aquatic_plants||'N/A')}
+      ${wbRow('Last Inspection', App.formatDate(w.last_inspection))}
+      ${wbRow('Location', `${parseFloat(w.latitude).toFixed(4)}, ${parseFloat(w.longitude).toFixed(4)}`)}
+      ${wbRow('Village', w.village_id||'N/A')}
+    </div>`;
+  overlay.classList.add('visible');
+}
+
+function wbRow(label, val, cls='') {
+  return `<div style="padding:9px 10px;background:var(--bg-tertiary);border-radius:7px"><div style="font-size:9px;text-transform:uppercase;color:var(--text-dim);margin-bottom:2px">${label}</div><div class="${cls}" style="font-size:12px;font-weight:600;color:var(--text-secondary)">${val||'N/A'}</div></div>`;
+}
+
+async function initMap() {
+  if (typeof L === 'undefined') return;
+  const map = L.map('wb-map', { center:[19.875,74.475], zoom:10 });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri'}).addTo(map);
+  wbData.forEach((w,i) => {
+    const lat = parseFloat(w.latitude), lng = parseFloat(w.longitude);
+    if (isNaN(lat)||isNaN(lng)) return;
+    const qColors = {Excellent:'#22c55e',Good:'#38bdf8',Moderate:'#f59e0b',Poor:'#ef4444'};
+    const color = qColors[w.water_quality] || '#38bdf8';
+    L.circleMarker([lat,lng],{radius:8,fillColor:color,fillOpacity:0.9,color:'#fff',weight:1.5})
+      .bindPopup(`<b>💧 ${w.name}</b><br>${w.type}<br>Quality: <b style="color:${color}">${w.water_quality}</b>`)
+      .addTo(map);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadWaterBodies();
+  document.getElementById('wb-modal-close').addEventListener('click', () => document.getElementById('wb-modal-overlay').classList.remove('visible'));
+  document.getElementById('wb-modal-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) e.currentTarget.classList.remove('visible'); });
+  document.getElementById('logout-dropdown-btn')?.addEventListener('click', () => Auth.logout());
+});
+</script>
+</body>
+</html>

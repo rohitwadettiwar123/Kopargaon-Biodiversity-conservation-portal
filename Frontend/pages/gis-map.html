@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GIS Map | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+  /* Full-page GIS layout */
+  #main { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  #content { flex: 1; padding: 0; overflow: hidden; display: flex; gap: 0; }
+  #gis-map { flex: 1; height: 100%; }
+  #gis-panel {
+    width: 250px; flex-shrink: 0;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .layer-toggle { display: flex; align-items: center; gap: 8px; padding: 6px 0; cursor: pointer; }
+  .layer-toggle input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--green-primary); cursor: pointer; }
+  .layer-toggle label { font-size: 11.5px; color: var(--text-secondary); cursor: pointer; flex: 1; }
+  .layer-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .panel-section { border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .panel-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+  .map-stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); padding: 3px 0; }
+  .map-stat-val { font-weight: 700; color: var(--text-primary); }
+  .priority-legend { display: flex; gap: 6px; flex-wrap: wrap; }
+  .priority-dot { display: flex; align-items: center; gap: 4px; font-size: 9.5px; color: var(--text-dim); }
+  footer { display: none; }
+  @media (max-width: 768px) {
+    #gis-panel { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header" style="position:relative;z-index:600">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">GIS Biodiversity Map</div>
+        <div class="header-breadcrumb">Kopargaon Taluka — Interactive Layers</div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search map...">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative">
+          <div class="notif-btn" id="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div>
+            <div class="notif-list"></div>
+          </div>
+        </div>
+        <div style="position:relative">
+          <div class="user-btn" id="user-btn">
+            <div class="user-avatar">K</div>
+            <div class="user-info"><div class="user-name">Kalyani</div><div class="user-role">Observer</div></div>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a class="user-dropdown-item" href="profile.html"><i class="fa fa-user-circle"></i> My Profile</a>
+            <div class="user-dropdown-divider"></div>
+            <div class="user-dropdown-item danger" id="logout-dropdown-btn"><i class="fa fa-sign-out-alt"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="content">
+      <!-- Map -->
+      <div id="gis-map" style="z-index:1"></div>
+
+      <!-- Side Panel -->
+      <div id="gis-panel">
+        <div class="panel-section">
+          <div class="panel-section-title"><i class="fa fa-layers"></i> Map Layers</div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-obs" checked>
+            <div class="layer-dot" style="background:#34d399"></div>
+            <label for="lyr-obs">Observations</label>
+            <span class="map-stat-val" id="cnt-obs">—</span>
+          </div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-hot" checked>
+            <div class="layer-dot" style="background:#fbbf24"></div>
+            <label for="lyr-hot">Hotspots</label>
+            <span class="map-stat-val" id="cnt-hot">—</span>
+          </div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-water" checked>
+            <div class="layer-dot" style="background:#38bdf8"></div>
+            <label for="lyr-water">Water Bodies</label>
+            <span class="map-stat-val" id="cnt-water">—</span>
+          </div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-threats">
+            <div class="layer-dot" style="background:#ef4444"></div>
+            <label for="lyr-threats">Threats</label>
+            <span class="map-stat-val" id="cnt-threats">—</span>
+          </div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-villages" checked>
+            <div class="layer-dot" style="background:#94a3b8"></div>
+            <label for="lyr-villages">Villages</label>
+            <span class="map-stat-val" id="cnt-villages">—</span>
+          </div>
+          <div class="layer-toggle">
+            <input type="checkbox" id="lyr-pa" checked>
+            <div class="layer-dot" style="background:#22c55e;border-radius:0"></div>
+            <label for="lyr-pa">Protected Areas</label>
+            <span class="map-stat-val" id="cnt-pa">—</span>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="panel-section-title"><i class="fa fa-star"></i> Conservation Priority</div>
+          <div class="priority-legend">
+            <div class="priority-dot"><div class="layer-dot" style="background:#ef4444"></div>Critical</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#f59e0b"></div>High</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#38bdf8"></div>Medium</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#22c55e"></div>Low</div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="panel-section-title"><i class="fa fa-leaf"></i> Species Categories</div>
+          <div class="priority-legend">
+            <div class="priority-dot"><div class="layer-dot" style="background:#34d399"></div>Birds</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#fb923c"></div>Mammals</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#a78bfa"></div>Reptiles</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#fbbf24"></div>Butterflies</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#4ade80"></div>Plants</div>
+            <div class="priority-dot"><div class="layer-dot" style="background:#38bdf8"></div>Amphibians</div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="panel-section-title"><i class="fa fa-info-circle"></i> Map Info</div>
+          <p style="font-size:10.5px;color:var(--text-dim);line-height:1.5">
+            Click any marker for details. Use the zoom controls or scroll to navigate. 
+            Dashed green outline = Kopargaon Taluka boundary.
+          </p>
+          <div style="margin-top:8px">
+            <button class="btn btn-sm btn-outline" style="width:100%" onclick="GISMap.getMap()?.setView([19.875,74.475],11)">
+              <i class="fa fa-crosshairs"></i> Reset View
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel-section-title"><i class="fa fa-chart-bar"></i> Quick Stats</div>
+          <div class="map-stat-row"><span>Center</span><span class="map-stat-val">Kopargaon</span></div>
+          <div class="map-stat-row"><span>District</span><span class="map-stat-val">Ahmednagar</span></div>
+          <div class="map-stat-row"><span>State</span><span class="map-stat-val">Maharashtra</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (!Auth.guard()) return; });</script>
+<script src="../js/app.js"></script>
+<script src="../js/analytics.js"></script>
+<script src="../js/gis-map.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize the full GIS map
+  GISMap.initMap('gis-map', 11);
+  GISMap.addBoundaryOutline();
+  
+  const [obsL, hotL, waterL, threatL, villL, protL] = await Promise.all([
+    GISMap.loadObservationLayer(500),
+    GISMap.loadHotspotsLayer(),
+    GISMap.loadWaterBodiesLayer(),
+    GISMap.loadThreatsLayer(),
+    GISMap.loadVillagesLayer(),
+    GISMap.loadProtectedAreasLayer(),
+  ]);
+
+  // Show default layers
+  if (hotL) { hotL.addTo(GISMap.getMap()); document.getElementById('cnt-hot').textContent = hotL.getLayers().length; }
+  if (waterL) { waterL.addTo(GISMap.getMap()); document.getElementById('cnt-water').textContent = waterL.getLayers().length; }
+  if (villL) { villL.addTo(GISMap.getMap()); document.getElementById('cnt-villages').textContent = villL.getLayers().length; }
+  if (protL) { protL.addTo(GISMap.getMap()); document.getElementById('cnt-pa').textContent = protL.getLayers().length; }
+  if (obsL) { obsL.addTo(GISMap.getMap()); document.getElementById('cnt-obs').textContent = '500'; }
+  
+  const layers = { obsL, hotL, waterL, threatL, villL, protL };
+
+  // Layer toggle checkboxes
+  const toggleMap = {
+    'lyr-obs': obsL, 'lyr-hot': hotL, 'lyr-water': waterL,
+    'lyr-threats': threatL, 'lyr-villages': villL, 'lyr-pa': protL
+  };
+  Object.entries(toggleMap).forEach(([id, layer]) => {
+    const cb = document.getElementById(id);
+    if (!cb || !layer) return;
+    cb.addEventListener('change', () => {
+      const map = GISMap.getMap();
+      if (!map) return;
+      if (cb.checked) layer.addTo(map);
+      else map.removeLayer(layer);
+    });
+  });
+
+  // Threats counter
+  const threatData = await DataLoader.load('environmental_threats.csv');
+  document.getElementById('cnt-threats').textContent = (threatData||[]).filter(t=>t.resolved!=='True').length;
+
+  Notifications.success('Map Ready!', 'All biodiversity layers loaded.', 3000);
+  document.getElementById('logout-dropdown-btn')?.addEventListener('click', () => Auth.logout());
+});
+</script>
+</body>
+</html>

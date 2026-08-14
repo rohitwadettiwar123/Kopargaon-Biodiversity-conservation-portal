@@ -1,0 +1,160 @@
+/* ================================================================
+   KOPARGAON BIODIVERSITY PORTAL — RESPONSIVE CSS
+   responsive.css — Breakpoints, mobile, tablet adaptations
+   ================================================================ */
+
+/* ── Tablet (max 1200px) ──────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .charts-row {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+
+  .charts-row .ndvi-card,
+  .charts-row .weather-card {
+    display: none; /* Hide on tablet for space */
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr 260px;
+  }
+}
+
+/* ── Small Laptop (max 1024px) ───────────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 200px;
+  }
+
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dashboard-observations-section { grid-row: auto; grid-column: auto; }
+
+  .charts-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ── Tablet Portrait (max 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  /* Sidebar becomes overlay */
+  #sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 200;
+    width: var(--sidebar-width);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease;
+  }
+
+  #sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  #main {
+    margin-left: 0 !important;
+  }
+
+  #header {
+    padding: 0 14px;
+  }
+
+  .header-search { max-width: 200px; }
+  .user-info { display: none; }
+
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .kpi-value { font-size: 22px; }
+
+  #dashboard-map { height: 300px; }
+
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .charts-row { grid-template-columns: 1fr; }
+
+  .modal { margin: 10px; max-height: 95vh; }
+
+  .species-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+
+  .page-header { flex-direction: column; align-items: flex-start; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .data-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 199;
+    display: none;
+  }
+  .sidebar-overlay.visible { display: block; }
+
+  .hamburger-btn {
+    display: flex !important;
+  }
+}
+
+/* ── Mobile Portrait (max 480px) ─────────────────────────────── */
+@media (max-width: 480px) {
+  html { font-size: 13px; }
+
+  #content { padding: 12px; }
+
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-value { font-size: 20px; }
+  .kpi-icon-wrap { width: 38px; height: 38px; font-size: 18px; }
+
+  #dashboard-map { height: 250px; }
+
+  .header-search { display: none; }
+  .hamburger-btn { display: flex !important; }
+
+  .species-grid { grid-template-columns: 1fr 1fr; }
+
+  .chart-card { padding: 10px; }
+
+  .modal { border-radius: 10px; }
+  .modal-body { padding: 14px; }
+
+  .btn-lg { padding: 8px 14px; font-size: 13px; }
+
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+
+  .toast-container { right: 10px; left: 10px; bottom: 10px; }
+  .toast { min-width: unset; width: 100%; }
+
+  .filter-bar { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── Hamburger button (hidden on desktop) ─────────────────────── */
+.hamburger-btn {
+  display: none;
+  width: 36px; height: 36px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.hamburger-btn:hover { background: var(--green-faint); }
+
+/* ── Print styles ────────────────────────────────────────────── */
+@media print {
+  #sidebar, #header, .toast-container, .modal-overlay { display: none !important; }
+  #main { margin-left: 0 !important; }
+  body { background: white; color: black; }
+  .card { border: 1px solid #ccc; }
+}
