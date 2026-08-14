@@ -11,9 +11,7 @@ const DataLoader = (() => {
 
   // ── Determine base path based on current page location ─────────────────
   function getBasePath() {
-    const path = window.location.pathname;
-    if (path.includes('/pages/')) return '../data/';
-    return 'data/';
+    return 'http://localhost:3000/api/data/';
   }
 
   // ── Parse CSV Text → Array of Objects ─────────────────────────────────
@@ -59,16 +57,15 @@ const DataLoader = (() => {
   async function load(filename) {
     if (cache[filename]) return cache[filename];
 
-    const base = getBasePath();
-    const url = base + filename;
+    const tableName = filename.replace('.csv', '');
+    const url = getBasePath() + tableName;
 
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP ${response.status} for ${filename}`);
-      const text = await response.text();
-      const data = parseCSV(text);
+      const data = await response.json(); // API returns JSON array of objects
       cache[filename] = data;
-      console.log(`[DataLoader] Loaded ${filename}: ${data.length} rows`);
+      console.log(`[DataLoader] Loaded ${filename} via API: ${data.length} rows`);
       return data;
     } catch (err) {
       console.warn(`[DataLoader] Could not load ${filename}: ${err.message}`);

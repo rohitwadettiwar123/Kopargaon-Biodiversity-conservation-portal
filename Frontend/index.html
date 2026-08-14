@@ -56,7 +56,6 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
-  cursor: none;
 }
 
 /* ================================================================
@@ -78,8 +77,12 @@ body {
   border: 1.5px solid rgba(34,197,94,0.6);
   transition: width 0.2s, height 0.2s, border-color 0.2s;
 }
-.cursor-ring.hover { width:56px; height:56px; border-color: var(--green-primary); }
-@media (hover:none) { .cursor-dot, .cursor-ring { display:none; } body { cursor:auto; } }
+.cursor-ring.hover {
+  width:56px; height:56px;
+  border-color: var(--green-primary);
+  background: rgba(34,197,94,0.05);
+}
+@media (hover:none) { .cursor-dot, .cursor-ring { display:none; } }
 
 /* ================================================================
    SCROLL PROGRESS BAR
@@ -153,7 +156,7 @@ nav.scrolled {
 
 .nav-logo {
   display:flex; align-items:center; gap:10px;
-  text-decoration:none; cursor:none;
+  text-decoration:none;
 }
 .nav-logo-icon {
   width:38px; height:38px;
@@ -186,7 +189,6 @@ nav.scrolled {
   color: var(--text-dim);
   text-decoration:none;
   transition: color 0.2s, background 0.2s;
-  cursor:none;
   white-space:nowrap;
 }
 .nav-links a:hover { color:var(--text-primary); background:var(--green-faint); }
@@ -197,7 +199,7 @@ nav.scrolled {
   padding:8px 18px; border-radius:20px;
   background: linear-gradient(135deg, var(--green-dark), var(--green-primary));
   color: #fff; font-size:12.5px; font-weight:700;
-  text-decoration:none; cursor:none;
+  text-decoration:none;
   box-shadow: var(--glow-green);
   transition: transform 0.2s, box-shadow 0.2s;
   white-space:nowrap;
@@ -332,7 +334,7 @@ nav.scrolled {
   padding:13px 28px; border-radius:12px;
   background: linear-gradient(135deg, var(--green-dark), var(--green-primary));
   color:#fff; font-size:14px; font-weight:700;
-  text-decoration:none; cursor:none;
+  text-decoration:none;
   box-shadow: var(--glow-green);
   transition:transform 0.2s, box-shadow 0.2s;
   display:flex; align-items:center; gap:8px;
@@ -343,7 +345,7 @@ nav.scrolled {
   padding:13px 28px; border-radius:12px;
   border:1px solid var(--border);
   color:var(--text-secondary); font-size:14px; font-weight:600;
-  text-decoration:none; cursor:none;
+  text-decoration:none;
   background:rgba(34,197,94,0.05);
   transition:border-color 0.2s, color 0.2s, background 0.2s;
   display:flex; align-items:center; gap:8px;
@@ -513,7 +515,7 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
 #particle-canvas { position:absolute; inset:0; width:100%; height:100%; }
 .particle-text {
   position:relative; z-index:2;
-  text-align:center; pointer-events:none;
+  text-align:center;
 }
 .particle-text h2 {
   font-family:'Space Grotesk',sans-serif;
@@ -566,7 +568,7 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
   display:inline-flex; align-items:center; gap:6px;
   font-size:12.5px; font-weight:600;
   color:var(--fc-color, var(--green-primary));
-  text-decoration:none; cursor:none;
+  text-decoration:none;
   transition:gap 0.2s;
 }
 .feature-link:hover { gap:10px; }
@@ -600,7 +602,6 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
   border:1px solid var(--border);
   text-align:center;
   scroll-snap-align:start;
-  cursor:none;
   transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
   position:relative; overflow:hidden;
 }
@@ -636,7 +637,7 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
 .scroll-btn {
   width:40px; height:40px; border-radius:50%;
   background:var(--bg-secondary); border:1px solid var(--border);
-  color:var(--text-secondary); cursor:none;
+  color:var(--text-secondary);
   display:flex; align-items:center; justify-content:center;
   font-size:14px;
   transition:background 0.2s, border-color 0.2s, color 0.2s;
@@ -809,7 +810,7 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
   padding:15px 36px; border-radius:14px;
   background:linear-gradient(135deg, var(--green-dark), var(--green-primary));
   color:#fff; font-size:15px; font-weight:700;
-  text-decoration:none; cursor:none;
+  text-decoration:none;
   box-shadow:0 0 0 0 rgba(34,197,94,0.4);
   transition:transform 0.2s, box-shadow 0.2s;
   border:none; display:inline-flex; align-items:center; gap:8px;
@@ -910,7 +911,7 @@ footer {
 .footer-col h4 { font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-secondary); margin-bottom:14px; }
 .footer-col a {
   display:block; font-size:12.5px; color:var(--text-dim);
-  text-decoration:none; margin-bottom:8px; cursor:none;
+  text-decoration:none; margin-bottom:8px;
   transition:color 0.2s;
 }
 .footer-col a:hover { color:var(--green-primary); }
@@ -938,7 +939,7 @@ footer {
   width:44px; height:44px; border-radius:50%;
   background:var(--green-primary);
   color:var(--bg-primary);
-  border:none; cursor:none;
+  border:none;
   display:flex; align-items:center; justify-content:center;
   font-size:16px;
   box-shadow:var(--glow-green);
@@ -1177,6 +1178,7 @@ body.locked { overflow: hidden !important; }
           <button class="auth-demo-fill" onclick="fillDemo('admin@kbic.in','admin123')">Fill</button>
         </div>
       </div>
+
     </div>
 
     <!-- Register Form -->
@@ -1202,7 +1204,7 @@ body.locked { overflow: hidden !important; }
   </div>
 </div>
 
-<!-- Cursor -->
+<!-- Custom Cursor -->
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
 
@@ -1780,11 +1782,12 @@ if (!isMobile && !reduced) {
   };
   moveDot();
 
-  document.querySelectorAll('a,button,.scroll-btn').forEach(el => {
+  document.querySelectorAll('a,button,.scroll-btn,.nav-links a').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('hover'));
     el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
   });
 }
+
 
 /* ================================================================
    SCROLL PROGRESS + NAVBAR + BACK TO TOP
@@ -2517,8 +2520,8 @@ function doLogin() {
   if (!pw)    { _showAuthError('login', 'Please enter your password.'); return; }
   var btn = document.getElementById('login-submit-btn');
   btn.disabled = true; btn.textContent = 'Signing in...';
-  setTimeout(function() {
-    var result = Auth.login(email, pw);
+  setTimeout(async function() {
+    var result = await Auth.login(email, pw);
     btn.disabled = false; btn.textContent = 'Sign In to Portal';
     if (result.success) {
       _completeLogin(result.user);
@@ -2541,8 +2544,8 @@ function doRegister() {
   if (!pw)    { _showAuthError('register', 'Please enter a password.'); return; }
   var btn = document.getElementById('register-submit-btn');
   btn.disabled = true; btn.textContent = 'Creating account...';
-  setTimeout(function() {
-    var result = Auth.register(name, email, pw);
+  setTimeout(async function() {
+    var result = await Auth.register(name, email, pw);
     btn.disabled = false; btn.textContent = 'Create Account';
     if (result.success) {
       _completeLogin(result.user);

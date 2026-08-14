@@ -15,134 +15,50 @@ const Auth = (() => {
   const SESSION_KEY = 'kb_session';
   const USERS_KEY   = 'kb_users';
 
-  // ── Built-in demo accounts ─────────────────────────────────────────────
-  const DEMO_USERS = [
-    {
-      user_id: 'USR0001',
-      full_name: 'Kalyani Patil',
-      email: 'kalyani@kbic.in',
-      password: 'biodiversity123',
-      role: 'Observer',
-      village_id: 'VLG001',
-      points: '245',
-      reports_submitted: '18',
-      badges: 'Green Guardian,Bird Watcher',
-      join_date: '2022-03-15',
-    },
-    {
-      user_id: 'USR0002',
-      full_name: 'Admin User',
-      email: 'admin@kbic.in',
-      password: 'admin123',
-      role: 'Administrator',
-      village_id: 'VLG001',
-      points: '1200',
-      reports_submitted: '85',
-      badges: 'Biodiversity Champion,Nature Protector',
-      join_date: '2021-01-01',
-    },
-    {
-      user_id: 'USR0003',
-      full_name: 'Ravi Deshpande',
-      email: 'ravi@kbic.in',
-      password: 'forest123',
-      role: 'Forest Officer',
-      village_id: 'VLG010',
-      points: '820',
-      reports_submitted: '31',
-      badges: 'Bird Watcher,Nature Protector',
-      join_date: '2021-06-20',
-    },
-  ];
-
-  // ── Role & Permission Matrix ─────────────────────────────────────────────
-  const ROLE_PERMISSIONS = {
-    'Citizen': ['view_dashboard', 'submit_observation', 'submit_citizen_report'],
-    'Observer': ['view_dashboard', 'submit_observation', 'submit_citizen_report'], // Alias for Citizen in demo data
-    'Forest Officer': ['view_dashboard', 'submit_observation', 'submit_citizen_report', 'verify_observations', 'log_threats', 'resolve_threats', 'export_data'],
-    'Researcher': ['view_dashboard', 'submit_observation', 'submit_citizen_report', 'export_data'],
-    'Administrator': ['view_dashboard', 'submit_observation', 'submit_citizen_report', 'verify_observations', 'verify_citizen_reports', 'log_threats', 'resolve_threats', 'add_edit_species', 'manage_users', 'manage_projects', 'export_data', 'view_admin_panel']
-  };
-
-  let currentUser = null;
-
-  // ── Helpers ────────────────────────────────────────────────────────────
-  function _getAllUsers() {
-    try {
-      const stored = localStorage.getItem(USERS_KEY);
-      const registered = stored ? JSON.parse(stored) : [];
-      return [...DEMO_USERS, ...registered];
-    } catch { return [...DEMO_USERS]; }
-  }
-
-  function _getRegisteredUsers() {
-    try {
-      const stored = localStorage.getItem(USERS_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch { return []; }
-  }
-
-  function _saveRegisteredUsers(users) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-
-  function _genId() {
-    return 'USR' + Date.now().toString().slice(-6);
-  }
-
   // ── Core Auth Actions ──────────────────────────────────────────────────
 
   /**
    * Attempt login. Returns { success, error, user }
    */
-  function login(email, password) {
-    const users = _getAllUsers();
-    const user = users.find(
-      u => u.email.toLowerCase() === email.toLowerCase().trim()
-    );
-    if (!user) return { success: false, error: 'No account found with this email.' };
-    if (user.password !== password) return { success: false, error: 'Incorrect password.' };
-
-    const sessionUser = { ...user };
-    delete sessionUser.password; // Never store password in session
-    currentUser = sessionUser;
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionUser));
-    return { success: true, user: sessionUser };
+  async function login(email, password) {
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+      if (!response.ok) return { success: false, error: data.error || 'Login failed' };
+      
+      const sessionUser = { ...data.user, token: data.token };
+      currentUser = sessionUser;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionUser));
+      return { success: true, user: sessionUser };
+    } catch (e) {
+      return { success: false, error: 'Network error connecting to server.' };
+    }
   }
 
   /**
    * Register a new user. Returns { success, error, user }
    */
-  function register(fullName, email, password) {
-    const allUsers = _getAllUsers();
-    const exists = allUsers.find(u => u.email.toLowerCase() === email.toLowerCase().trim());
-    if (exists) return { success: false, error: 'An account with this email already exists.' };
-    if (password.length < 6) return { success: false, error: 'Password must be at least 6 characters.' };
-    if (!fullName.trim()) return { success: false, error: 'Please enter your full name.' };
-
-    const newUser = {
-      user_id: _genId(),
-      full_name: fullName.trim(),
-      email: email.toLowerCase().trim(),
-      password,
-      role: 'Citizen',
-      village_id: '',
-      points: '0',
-      reports_submitted: '0',
-      badges: '',
-      join_date: new Date().toISOString().slice(0, 10),
-    };
-
-    const registered = _getRegisteredUsers();
-    registered.push(newUser);
-    _saveRegisteredUsers(registered);
-
-    // Auto-login after register
-    const sessionUser = { ...newUser };
-    delete sessionUser.password;
-    currentUser = sessionUser;
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionUser));
-    return { success: true, user: sessionUser };
+  async function register(fullName, email, password) {
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name: fullName, email, password })
+      });
+      const data = await response.json();
+      if (!response.ok) return { success: false, error: data.error || 'Registration failed' };
+      
+      const sessionUser = { ...data.user, token: data.token };
+      currentUser = sessionUser;
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionUser));
+      return { success: true, user: sessionUser };
+    } catch (e) {
+      return { success: false, error: 'Network error connecting to server.' };
+    }
   }
 
   function logout() {
@@ -180,6 +96,13 @@ const Auth = (() => {
     return true;
   }
 
+  const ROLE_PERMISSIONS = {
+    'Administrator': ['verify_citizen_reports'],
+    'Admin': ['verify_citizen_reports'],
+    'Citizen': ['submit_reports'],
+    'Observer': ['submit_reports']
+  };
+
   /**
    * Check if the current user has a specific permission based on their role
    */
@@ -199,6 +122,7 @@ const Auth = (() => {
   function isAdmin()            { return ['administrator','admin'].includes(getUserRole().toLowerCase()); }
   function isForestOfficer()    { return ['forest officer'].includes(getUserRole().toLowerCase()) || isAdmin(); }
   function isLoggedIn()         { return !!currentUser; }
+  function getToken()           { return currentUser?.token || null; }
 
   function renderUserUI() {
     if (!currentUser) return;
@@ -226,7 +150,7 @@ const Auth = (() => {
   return {
     init, guard, login, register, logout,
     getUser, getUserInitials, getUserDisplayName, getUserRole,
-    isAdmin, isForestOfficer, isLoggedIn, renderUserUI, hasPermission
+    isAdmin, isForestOfficer, isLoggedIn, renderUserUI, hasPermission, getToken
   };
 })();
 

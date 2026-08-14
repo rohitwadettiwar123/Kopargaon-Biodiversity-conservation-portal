@@ -88,51 +88,38 @@ const CitizenReports = (() => {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
     }
 
-    try {
-      // Primary: Use IP-based geolocation (works on file:// without permissions)
-      const res = await fetch('https://get.geojs.io/v1/ip/geo.json');
-      const data = await res.json();
-      if (data.latitude && data.longitude) {
-        const lat = document.getElementById('cr-lat');
-        const lng = document.getElementById('cr-lng');
-        if (lat) lat.value = parseFloat(data.latitude).toFixed(6);
-        if (lng) lng.value = parseFloat(data.longitude).toFixed(6);
-        Notifications.success('Location detected!', `Lat: ${data.latitude}, Lng: ${data.longitude} (${data.city || 'Unknown'})`);
-      } else {
-        throw new Error('No coordinates');
-      }
-    } catch (err) {
-      // Fallback: Browser Geolocation
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          pos => {
-            const lat = document.getElementById('cr-lat');
-            const lng = document.getElementById('cr-lng');
-            if (lat) lat.value = pos.coords.latitude.toFixed(6);
-            if (lng) lng.value = pos.coords.longitude.toFixed(6);
-            Notifications.success('Location detected!', `Lat: ${pos.coords.latitude.toFixed(4)}, Lng: ${pos.coords.longitude.toFixed(4)}`);
-          },
-          () => {
-            const lat = document.getElementById('cr-lat');
-            const lng = document.getElementById('cr-lng');
-            if (lat) lat.value = '19.875000';
-            if (lng) lng.value = '74.475000';
-            Notifications.info('Using default location', 'GPS unavailable. Using Kopargaon center.');
-          },
-          { timeout: 5000 }
-        );
-      } else {
-        const lat = document.getElementById('cr-lat');
-        const lng = document.getElementById('cr-lng');
-        if (lat) lat.value = '19.875000';
-        if (lng) lng.value = '74.475000';
-        Notifications.info('Using default location', 'GPS unavailable. Using Kopargaon center.');
-      }
-    }
+    const setLocation = (lat, lng, msg) => {
+      const latEl = document.getElementById('cr-lat');
+      const lngEl = document.getElementById('cr-lng');
+      if (latEl) latEl.value = parseFloat(lat).toFixed(6);
+      if (lngEl) lngEl.value = parseFloat(lng).toFixed(6);
+      Notifications.success('Location detected!', msg);
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa fa-crosshairs"></i>'; }
+    };
 
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fa fa-crosshairs"></i>';
+    const fallbackToIP = async () => {
+      try {
+        const res = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        const data = await res.json();
+        if (data.latitude && data.longitude) {
+          setLocation(data.latitude, data.longitude, `Lat: ${data.latitude}, Lng: ${data.longitude} (${data.city || 'Unknown'})`);
+        } else {
+          throw new Error('No coordinates');
+        }
+      } catch (err) {
+        // Ultimate fallback
+        setLocation('19.875000', '74.475000', 'GPS unavailable. Using Kopargaon center.');
+      }
+    };
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => setLocation(pos.coords.latitude, pos.coords.longitude, `Lat: ${pos.coords.latitude.toFixed(4)}, Lng: ${pos.coords.longitude.toFixed(4)} (GPS precise)`),
+        err => fallbackToIP(),
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
+    } else {
+      fallbackToIP();
     }
   }
 
@@ -180,7 +167,7 @@ const CitizenReports = (() => {
     reader.readAsDataURL(file);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const species = document.getElementById('cr-species')?.value;
     const lat = document.getElementById('cr-lat')?.value;
@@ -191,54 +178,80 @@ const CitizenReports = (() => {
     if (!lat || !lng) { Notifications.warning('Location required', 'Please provide your location.'); return; }
     if (!desc || desc.trim().length < 10) { Notifications.warning('Description too short', 'Please provide at least 10 characters.'); return; }
 
-    reportCounter++;
-    const reportId = `CR${String(reportCounter).padStart(5,'0')}`;
-    Notifications.success('Report Submitted!', `Report ID: ${reportId} | Status: Pending Verification`, 5000);
+    try {
+      const res = await fetch('http://localhost:3000/api/reports', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + Auth.getToken()
+        },
+        body: JSON.stringify({ species, lat, lng, desc })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to submit report');
 
-    // Reset form
-    e.target.reset();
-    document.getElementById('cr-image-preview').innerHTML = '';
+      const reportId = data.report_id;
+      Notifications.success('Report Submitted!', `Report ID: ${reportId} | Status: Pending Verification`, 5000);
 
-    // Add to table
-    const tbody = document.getElementById('cr-tbody');
-    if (tbody) {
-      const speciesMap = {};
-      allSpecies.forEach(s => { speciesMap[s.species_id] = s; });
-      const sp = speciesMap[species];
-      
-      let actionHtml = '-';
-      if (Auth.hasPermission('verify_citizen_reports')) {
-        actionHtml = `<button class="btn btn-sm btn-outline" style="padding:2px 6px;font-size:10px" onclick="CitizenReports.verifyReport('${reportId}')"><i class="fa fa-check text-green"></i> Verify</button>`;
+      // Reset form
+      e.target.reset();
+      document.getElementById('cr-image-preview').innerHTML = '';
+
+      // Add to table
+      const tbody = document.getElementById('cr-tbody');
+      if (tbody) {
+        const speciesMap = {};
+        allSpecies.forEach(s => { speciesMap[s.species_id] = s; });
+        const sp = speciesMap[species];
+        
+        let actionHtml = '-';
+        if (Auth.hasPermission('verify_citizen_reports')) {
+          actionHtml = `<button class="btn btn-sm btn-outline" style="padding:2px 6px;font-size:10px" onclick="CitizenReports.verifyReport('${reportId}')"><i class="fa fa-check text-green"></i> Verify</button>`;
+        }
+
+        const newRow = `<tr id="row-${reportId}" style="background:rgba(34,197,94,0.05)">
+          <td style="font-size:10px;color:var(--green-primary)">${reportId}</td>
+          <td>${sp ? sp.common_name : species}</td>
+          <td>${new Date().toLocaleDateString('en-IN')}</td>
+          <td>${desc.slice(0,40)}...</td>
+          <td id="status-${reportId}"><span class="badge badge-pending">⏳ Pending</span></td>
+          <td>Awaiting admin review</td>
+          <td>${actionHtml}</td>
+        </tr>`;
+        tbody.insertAdjacentHTML('afterbegin', newRow);
       }
-
-      const newRow = `<tr id="row-${reportId}" style="background:rgba(34,197,94,0.05)">
-        <td style="font-size:10px;color:var(--green-primary)">${reportId}</td>
-        <td>${sp ? sp.common_name : species}</td>
-        <td>${new Date().toLocaleDateString('en-IN')}</td>
-        <td>${desc.slice(0,40)}...</td>
-        <td id="status-${reportId}"><span class="badge badge-pending">⏳ Pending</span></td>
-        <td>Awaiting admin review</td>
-        <td>${actionHtml}</td>
-      </tr>`;
-      tbody.insertAdjacentHTML('afterbegin', newRow);
+    } catch (err) {
+      Notifications.error('Submit Failed', err.message);
     }
   }
 
-  function verifyReport(reportId) {
+  async function verifyReport(reportId) {
     if (!Auth.hasPermission('verify_citizen_reports')) {
       Notifications.error('Access Denied', 'Only Administrators can verify citizen reports.');
       return;
     }
-    const statusCell = document.getElementById(`status-${reportId}`);
-    if (statusCell) {
-      statusCell.innerHTML = `<span class="badge badge-verified">Verified</span>`;
+    
+    try {
+      const res = await fetch(`http://localhost:3000/api/reports/${reportId}/verify`, {
+        method: 'PATCH',
+        headers: { 'Authorization': 'Bearer ' + Auth.getToken() }
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to verify');
+
+      const statusCell = document.getElementById(`status-${reportId}`);
+      if (statusCell) {
+        statusCell.innerHTML = `<span class="badge badge-verified">Verified</span>`;
+      }
+      const row = document.getElementById(`row-${reportId}`);
+      if (row) {
+        const actionsCell = row.lastElementChild;
+        actionsCell.innerHTML = `<span style="font-size:10px;color:var(--text-dim)">Done</span>`;
+      }
+      Notifications.success('Report Verified', `Report ${reportId} successfully verified.`);
+    } catch (err) {
+      Notifications.error('Verification Failed', err.message);
     }
-    const row = document.getElementById(`row-${reportId}`);
-    if (row) {
-      const actionsCell = row.lastElementChild;
-      actionsCell.innerHTML = `<span style="font-size:10px;color:var(--text-dim)">Done</span>`;
-    }
-    Notifications.success('Report Verified', `Report ${reportId} successfully verified.`);
   }
 
   return { init, handleSubmit, getCurrentLocation, verifyReport };

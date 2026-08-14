@@ -37,32 +37,40 @@ const Dashboard = (() => {
 
     renderKPISkeleton();
 
-    const [species, obs, reports, threats, users] = await Promise.all([
-      DataLoader.load('species_master.csv'),
-      DataLoader.load('species_observations.csv'),
-      DataLoader.load('citizen_reports.csv'),
-      DataLoader.load('environmental_threats.csv'),
-      DataLoader.load('users.csv'),
-    ]);
+    try {
+      const res = await fetch('http://localhost:3000/api/dashboard/stats');
+      const stats = await res.json();
+      
+      const counts = [
+        stats.speciesCount,
+        stats.observationsCount,
+        stats.reportsCount,
+        stats.threatsCount,
+        stats.usersCount,
+      ];
 
-    const counts = [
-      species.length,
-      obs.length,
-      reports.length,
-      threats.length,
-      users.length,
-    ];
-
-    grid.innerHTML = KPI_CONFIG.map((k, i) => `
-      <div class="kpi-card ${k.color}" title="${k.label}: ${counts[i].toLocaleString('en-IN')}">
-        <div class="kpi-icon-wrap"><i class="fa ${k.icon}"></i></div>
-        <div class="kpi-info">
-          <div class="kpi-label">${k.label}</div>
-          <div class="kpi-value" id="${k.id}">0</div>
-          <div class="kpi-sublabel">${k.sublabel}</div>
+      grid.innerHTML = KPI_CONFIG.map((k, i) => \`
+        <div class="kpi-card \${k.color}" title="\${k.label}: \${counts[i].toLocaleString('en-IN')}">
+          <div class="kpi-icon-wrap"><i class="fa \${k.icon}"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">\${k.label}</div>
+            <div class="kpi-value" id="\${k.id}">0</div>
+            <div class="kpi-sublabel">\${k.sublabel}</div>
+          </div>
         </div>
-      </div>
-    `).join('');
+      \`).join('');
+
+      // Animate counters
+      KPI_CONFIG.forEach((k, i) => {
+        const el = document.getElementById(k.id);
+        if (el) App.animateCounter(el, counts[i], 1400);
+      });
+
+      return stats;
+    } catch (e) {
+      console.error('Failed to load KPIs:', e);
+    }
+  }
 
     // Animate counters
     KPI_CONFIG.forEach((k, i) => {
@@ -79,7 +87,7 @@ const Dashboard = (() => {
     if (!list) return;
 
     // Skeleton
-    list.innerHTML = Array(5).fill(0).map(() => `
+    list.innerHTML = Array(5).fill(0).map(() => \`
       <div class="obs-mini-card">
         <div class="obs-mini-img skeleton" style="width:44px;height:44px;border-radius:8px"></div>
         <div class="obs-mini-info">
@@ -87,54 +95,45 @@ const Dashboard = (() => {
           <div class="skeleton" style="width:70px;height:10px;border-radius:4px"></div>
         </div>
       </div>
-    `).join('');
+    \`).join('');
 
-    const [obs, species] = await Promise.all([
-      DataLoader.load('species_observations.csv'),
-      DataLoader.load('species_master.csv'),
-    ]);
+    try {
+      const res = await fetch('http://localhost:3000/api/dashboard/recent-observations');
+      const sorted = await res.json();
 
-    // Build species map
-    const speciesMap = {};
-    (species || []).forEach(s => { speciesMap[s.species_id] = s; });
+      if (sorted.length === 0) {
+        list.innerHTML = \`<div class="empty-state"><div class="empty-icon">🔭</div><p>No recent observations</p></div>\`;
+        return;
+      }
 
-    // Sort by date descending, take latest 15
-    const sorted = (obs || [])
-      .filter(o => o.observation_date)
-      .sort((a, b) => new Date(b.observation_date) - new Date(a.observation_date))
-      .slice(0, 15);
+      list.innerHTML = sorted.map(obs => {
+        const name = obs.common_name || obs.species_id;
+        const sci  = obs.scientific_name || '';
+        const cat  = obs.category || 'Others';
+        const emoji = App.getCategoryEmoji(cat);
+        const verified = String(obs.verified).toLowerCase() === 'true' || obs.verified === 1;
+        const timeStr = App.timeAgo(obs.observation_date);
+        const village = obs.village_id || '';
 
-    if (sorted.length === 0) {
-      list.innerHTML = `<div class="empty-state"><div class="empty-icon">🔭</div><p>No recent observations</p></div>`;
-      return;
-    }
-
-    list.innerHTML = sorted.map(obs => {
-      const sp = speciesMap[obs.species_id];
-      const name = sp ? sp.common_name : obs.species_id;
-      const sci  = sp ? sp.scientific_name : '';
-      const cat  = sp ? sp.category : 'Others';
-      const emoji = App.getCategoryEmoji(cat);
-      const verified = obs.verified === 'True' || obs.verified === 'true';
-      const timeStr = App.timeAgo(obs.observation_date);
-      const village = obs.village_id || '';
-
-      return `
-        <div class="obs-mini-card" data-obs-id="${obs.observation_id}" onclick="Dashboard.openObsModal('${obs.observation_id}')">
-          <div class="obs-mini-img">${emoji}</div>
-          <div class="obs-mini-info">
-            <div class="obs-mini-name">${name}</div>
-            <div class="obs-mini-sci">${sci}</div>
-            <div class="obs-mini-meta">
-              <i class="fa fa-map-marker-alt"></i>
-              ${village}
-              <span style="margin-left:auto">${timeStr}</span>
+        return \`
+          <div class="obs-mini-card" data-obs-id="\${obs.observation_id}" onclick="Dashboard.openObsModal('\${obs.observation_id}')">
+            <div class="obs-mini-img">\${emoji}</div>
+            <div class="obs-mini-info">
+              <div class="obs-mini-name">\${name}</div>
+              <div class="obs-mini-sci">\${sci}</div>
+              <div class="obs-mini-meta">
+                <i class="fa fa-map-marker-alt"></i>
+                \${village}
+                <span style="margin-left:auto">\${timeStr}</span>
+              </div>
             </div>
+            <span class="badge badge-\${verified ? 'verified' : 'pending'}">\${verified ? '✓' : '⏳'}</span>
           </div>
-          <span class="badge badge-${verified ? 'verified' : 'pending'}">${verified ? '✓' : '⏳'}</span>
-        </div>
-      `;
-    }).join('');
+        \`;
+      }).join('');
+    } catch (e) {
+      console.error('Failed to load recent observations:', e);
+    }
   }
 
   // ── Observation Detail Modal ───────────────────────────────────────────
@@ -220,24 +219,21 @@ const Dashboard = (() => {
     const container = document.getElementById('health-score-container');
     if (!container) return;
 
-    const [species, threats, ndvi] = await Promise.all([
-      DataLoader.load('species_master.csv'),
-      DataLoader.load('environmental_threats.csv'),
-      DataLoader.load('ndvi_data.csv'),
-    ]);
+    try {
+      const res = await fetch('http://localhost:3000/api/dashboard/stats');
+      const stats = await res.json();
 
-    // Calculate score (demo algorithm - clearly labeled)
-    const speciesScore = Math.min(100, (species.length / 500) * 100);
+      // Calculate score (demo algorithm - clearly labeled)
+      const speciesScore = Math.min(100, ((stats.speciesCount || 0) / 500) * 100);
 
-    const activeThreats = threats.filter(t => t.resolved !== 'True' && t.resolved !== 'true').length;
-    const threatScore = Math.max(0, 100 - (activeThreats / threats.length) * 100);
+      const activeThreats = stats.activeThreats || 0;
+      const totalThreats = stats.threatsCount || 1;
+      const threatScore = Math.max(0, 100 - (activeThreats / totalThreats) * 100);
 
-    const avgNDVI = ndvi.length > 0
-      ? ndvi.reduce((s, n) => s + (parseFloat(n.ndvi) || 0), 0) / ndvi.length
-      : 0.4;
-    const ndviScore = Math.min(100, ((avgNDVI + 0.2) / 1.2) * 100);
+      const avgNDVI = stats.ndviAvg || 0.4;
+      const ndviScore = Math.min(100, ((avgNDVI + 0.2) / 1.2) * 100);
 
-    const totalScore = Math.round((speciesScore * 0.4 + threatScore * 0.3 + ndviScore * 0.3));
+      const totalScore = Math.round((speciesScore * 0.4 + threatScore * 0.3 + ndviScore * 0.3));
 
     const classification = totalScore >= 80 ? 'Excellent' : totalScore >= 60 ? 'Good' : totalScore >= 40 ? 'Fair' : 'Critical';
     const color = totalScore >= 80 ? 'var(--green-primary)' : totalScore >= 60 ? 'var(--accent-cyan)' : totalScore >= 40 ? 'var(--accent-amber)' : 'var(--accent-red)';
@@ -268,7 +264,10 @@ const Dashboard = (() => {
           ${miniBar('Threat Level', Math.round(100-threatScore), 'var(--accent-amber)', true)}
         </div>
       </div>
-    `;
+    \`;
+    } catch (e) {
+      console.error('Failed to load health score', e);
+    }
   }
 
   function miniBar(label, pct, color, inverse = false) {
