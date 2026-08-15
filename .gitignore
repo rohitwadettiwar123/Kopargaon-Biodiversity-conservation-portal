@@ -37,3 +37,8 @@ Thumb.db
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific temp scripts
+check_db.js
+test-*.js
+migrate-*.js
