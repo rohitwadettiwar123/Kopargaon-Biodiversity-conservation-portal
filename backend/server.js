@@ -406,27 +406,57 @@ app.get('/api/reports/stats', authenticateToken, async (req, res) => {
 
 app.post('/api/reports', authenticateToken, async (req, res) => {
   try {
-    const { species, lat, lng, desc, village_id } = req.body;
+    const { species, lat, lng, desc, village_id, report_time, count } = req.body;
     if (!species || !lat || !lng || !desc) return res.status(400).json({ error: 'species, lat, lng, desc are required.' });
 
-    const report_id   = 'CR' + Date.now().toString().slice(-6);
-    const user_id     = req.user.user_id;
-    const report_date = new Date().toISOString().split('T')[0];
+    const report_id    = 'CR' + Date.now().toString().slice(-6);
+    const user_id      = req.user.user_id;
+    const report_date  = new Date().toISOString().split('T')[0];
+    const submitted_at = new Date().toISOString();
+    // ALWAYS force Pending — users cannot self-approve
+    const verification_status = 'Pending';
 
     await dbRun(
-      `INSERT INTO citizen_reports (report_id,user_id,species_id,latitude,longitude,report_date,remarks,verification_status,admin_comments)
-       VALUES (?,?,?,?,?,?,?,'Pending',?)`,
-      [report_id, user_id, species, lat, lng, report_date, desc, '']
+      `INSERT INTO citizen_reports
+         (report_id, user_id, species_id, latitude, longitude, report_date, report_time,
+          remarks, verification_status, admin_comments, village_id, count, submitted_at)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [report_id, user_id, species, lat, lng, report_date,
+       report_time || '', desc, verification_status, '', village_id || '', parseInt(count)||1, submitted_at]
     );
 
-    // Update user's report count and add points (10 pts per report)
+    // Award 10 points for submission
     await dbRun(
       `UPDATE users SET reports_submitted=COALESCE(CAST(reports_submitted AS INTEGER),0)+1,
        points=COALESCE(CAST(points AS INTEGER),0)+10 WHERE user_id=?`,
       [user_id]
     );
 
-    res.status(201).json({ success: true, report_id, message: 'Report submitted successfully. Pending admin verification.' });
+    res.status(201).json({
+      success: true, report_id,
+      status: 'Pending',
+      message: 'Report submitted successfully. Status: Pending Verification.'
+    });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// GET /api/reports/my — user's OWN reports (always filtered by token, regardless of role)
+app.get('/api/reports/my', authenticateToken, async (req, res) => {
+  try {
+    const { limit=50, offset=0 } = req.query;
+    const rows = await dbAll(`
+      SELECT r.*, s.common_name, s.scientific_name, s.category,
+             v.village_name
+      FROM citizen_reports r
+      LEFT JOIN species_master s ON r.species_id=s.species_id
+      LEFT JOIN villages v ON r.village_id=v.village_id
+      WHERE r.user_id=?
+      ORDER BY r.submitted_at DESC, r.report_date DESC
+      LIMIT ? OFFSET ?`,
+      [req.user.user_id, parseInt(limit), parseInt(offset)]
+    );
+    const countRow = await dbGet('SELECT COUNT(*) as total FROM citizen_reports WHERE user_id=?', [req.user.user_id]);
+    res.json({ total: countRow.total, data: rows });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
@@ -438,31 +468,93 @@ app.post('/api/reports/upload', authenticateToken, upload.single('image'), (req,
 app.patch('/api/reports/:id/verify', authenticateToken, adminOnly, async (req, res) => {
   try {
     const { admin_comments = 'Verified by administrator.' } = req.body;
+    const reviewed_at = new Date().toISOString();
     const result = await dbRun(
-      `UPDATE citizen_reports SET verification_status='Verified', admin_comments=? WHERE report_id=?`,
-      [admin_comments, req.params.id]
+      `UPDATE citizen_reports
+       SET verification_status='Verified', admin_comments=?, admin_id=?, reviewed_at=?
+       WHERE report_id=?`,
+      [admin_comments, req.user.user_id, reviewed_at, req.params.id]
     );
     if (result.changes === 0) return res.status(404).json({ error: 'Report not found.' });
 
-    // Add 20 bonus points to user who submitted the report
+    // Award 20 bonus points to the reporter
     const report = await dbGet('SELECT user_id FROM citizen_reports WHERE report_id=?', [req.params.id]);
     if (report) {
       await dbRun(`UPDATE users SET points=COALESCE(CAST(points AS INTEGER),0)+20 WHERE user_id=?`, [report.user_id]);
     }
-
-    res.json({ success: true, message: 'Report verified successfully.' });
+    res.json({ success: true, message: 'Report approved. +20 points awarded to reporter.' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.patch('/api/reports/:id/reject', authenticateToken, adminOnly, async (req, res) => {
   try {
-    const { admin_comments = 'Report rejected by administrator.' } = req.body;
+    const { admin_comments = 'Report does not meet verification standards.' } = req.body;
+    if (!admin_comments || admin_comments.trim().length < 3) {
+      return res.status(400).json({ error: 'A rejection reason is required.' });
+    }
+    const reviewed_at = new Date().toISOString();
     const result = await dbRun(
-      `UPDATE citizen_reports SET verification_status='Rejected', admin_comments=? WHERE report_id=?`,
-      [admin_comments, req.params.id]
+      `UPDATE citizen_reports
+       SET verification_status='Rejected', admin_comments=?, admin_id=?, reviewed_at=?
+       WHERE report_id=?`,
+      [admin_comments, req.user.user_id, reviewed_at, req.params.id]
     );
     if (result.changes === 0) return res.status(404).json({ error: 'Report not found.' });
-    res.json({ success: true, message: 'Report rejected.' });
+    res.json({ success: true, message: 'Report rejected with reason saved.' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ── ADMIN REPORT DETAIL ─────────────────────────────────────────────────────
+// GET /api/admin/reports/stats  — admin stats overview
+// GET /api/admin/reports/pending — admin pending list (alias)
+// GET /api/admin/reports/:id    — full report detail for admin review
+
+app.get('/api/admin/reports/stats', authenticateToken, adminOnly, async (req, res) => {
+  try {
+    const [total, pending, approved, rejected] = await Promise.all([
+      dbGet('SELECT COUNT(*) as c FROM citizen_reports'),
+      dbGet("SELECT COUNT(*) as c FROM citizen_reports WHERE LOWER(verification_status)='pending'"),
+      dbGet("SELECT COUNT(*) as c FROM citizen_reports WHERE LOWER(verification_status)='verified'"),
+      dbGet("SELECT COUNT(*) as c FROM citizen_reports WHERE LOWER(verification_status)='rejected'")
+    ]);
+    res.json({
+      total: total.c, pending: pending.c,
+      approved: approved.c, rejected: rejected.c
+    });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/admin/reports/pending', authenticateToken, adminOnly, async (req, res) => {
+  try {
+    const rows = await dbAll(`
+      SELECT r.*, s.common_name, s.scientific_name, s.category,
+             u.full_name as reporter_name, u.email as reporter_email,
+             v.village_name
+      FROM citizen_reports r
+      LEFT JOIN species_master s ON r.species_id=s.species_id
+      LEFT JOIN users u ON r.user_id=u.user_id
+      LEFT JOIN villages v ON r.village_id=v.village_id
+      WHERE LOWER(r.verification_status)='pending'
+      ORDER BY r.submitted_at DESC, r.report_date DESC`);
+    res.json({ total: rows.length, data: rows });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/admin/reports/:id', authenticateToken, adminOnly, async (req, res) => {
+  try {
+    const row = await dbGet(`
+      SELECT r.*, s.common_name, s.scientific_name, s.category, s.iucn_status, s.habitat,
+             u.full_name as reporter_name, u.email as reporter_email, u.role as reporter_role,
+             v.village_name,
+             au.full_name as admin_name
+      FROM citizen_reports r
+      LEFT JOIN species_master s ON r.species_id=s.species_id
+      LEFT JOIN users u ON r.user_id=u.user_id
+      LEFT JOIN villages v ON r.village_id=v.village_id
+      LEFT JOIN users au ON r.admin_id=au.user_id
+      WHERE r.report_id=?`, [req.params.id]);
+    if (!row) return res.status(404).json({ error: 'Report not found.' });
+    res.json(row);
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
