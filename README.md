@@ -15,7 +15,6 @@
 [![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![License](https://img.shields.io/badge/License-ISC-22c55e?style=for-the-badge)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-22c55e?style=for-the-badge)](https://github.com/rohitwadettiwar123/Kopargaon-Biodiversity-conservation-portal)
 
 </div>
@@ -248,5 +247,5 @@ Every verified report on this platform is a data point that can inform a forest 
   <br/>
   <b>🌿 Explore · Monitor · Conserve 🌿</b>
   <br/><br/>
-  Made with ❤️ for the biodiversity of Kopargaon, Maharashtra
+  Made with env. love for the biodiversity of Kopargaon, Maharashtra
 </div>
