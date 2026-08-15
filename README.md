@@ -1,7 +1,3 @@
-<div align="center">
-
-<img src="https://raw.githubusercontent.com/rohitwadettiwar123/Kopargaon-Biodiversity-conservation-portal/main/Frontend/assets/logo.png" alt="Kopargaon Biodiversity Portal Logo" width="110" onerror="this.src='https://img.icons8.com/color/110/000000/leaf.png'">
-
 # 🌿 Kopargaon Biodiversity Information & Conservation Portal
 
 ### Explore · Monitor · Conserve
