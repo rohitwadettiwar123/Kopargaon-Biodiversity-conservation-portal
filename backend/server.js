@@ -6,15 +6,17 @@
  *
  * Modules: Auth, Species, Observations, Citizen Reports, Threats,
  *          Water Bodies, Conservation, Leaderboard, Dashboard,
- *          Analytics, GIS, File Upload, Admin, NDVI, Weather
+ *          Analytics, GIS, File Upload, Admin, NDVI
  */
 
 const express    = require('express');
+const path       = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const cors       = require('cors');
 const sqlite3    = require('sqlite3').verbose();
+const { checkImageAuthenticity } = require('./services/image-authenticity');
 const jwt        = require('jsonwebtoken');
 const bcrypt     = require('bcrypt');
-const path       = require('path');
 const multer     = require('multer');
 const helmet     = require('helmet');
 const rateLimit  = require('express-rate-limit');
@@ -107,7 +109,192 @@ function optionalAuth(req, res, next) {
   next();
 }
 
+// ── RBAC: Role & Permission System ─────────────────────────────────────────
+// Role hierarchy (highest → lowest privilege)
+const ROLES = {
+  super_admin:   'super_admin',
+  water_admin:   'water_admin',
+  threat_admin:  'threat_admin',
+  Administrator: 'Administrator',
+  'Forest Officer': 'Forest Officer',
+  Observer:      'Observer',
+  Citizen:       'Citizen',
+};
+
+// Permission map: which roles have which permissions
+const ROLE_PERMISSION_MAP = {
+  super_admin:      ['water_bodies.view','water_bodies.create','water_bodies.edit','water_bodies.delete',
+                     'threats.view','threats.create','threats.edit','threats.delete',
+                     'citizen_reports.verify','admin.access'],
+  water_admin:      ['water_bodies.view','water_bodies.create','water_bodies.edit','water_bodies.delete',
+                     'threats.view'],
+  threat_admin:     ['threats.view','threats.create','threats.edit','threats.delete',
+                     'water_bodies.view'],
+  Administrator:    ['citizen_reports.verify','admin.access',
+                     'water_bodies.view','threats.view'],
+  'Forest Officer': ['water_bodies.view','threats.view'],
+  Observer:         ['water_bodies.view','threats.view'],
+  Citizen:          ['water_bodies.view','threats.view'],
+};
+
+/**
+ * Middleware: require that the authenticated user has one of the given roles.
+ * Usage: requireRole('super_admin', 'water_admin')
+ */
+function requireRole(...roles) {
+  return (req, res, next) => {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Authentication required.' });
+    // super_admin email check for backward compat
+    const userRole = req.user.role || '';
+    if (roles.includes(userRole) || req.user.email === 'admin@kbic.in' && roles.includes('super_admin')) {
+      return next();
+    }
+    return res.status(403).json({
+      success: false,
+      message: `Access Restricted. Required role: ${roles.join(' or ')}.`
+    });
+  };
+}
+
+/**
+ * Middleware: require a specific named permission.
+ * Usage: requirePermission('water_bodies.edit')
+ */
+function requirePermission(permission) {
+  return (req, res, next) => {
+    if (!req.user) return res.status(401).json({ success: false, message: 'Authentication required.' });
+
+    // super_admin (by email) gets everything
+    if (req.user.email === 'admin@kbic.in') return next();
+
+    const userRole = req.user.role || 'Citizen';
+    const perms = ROLE_PERMISSION_MAP[userRole] || ROLE_PERMISSION_MAP['Citizen'];
+
+    if (perms.includes(permission)) return next();
+
+    // Friendly error messages per resource
+    let message = `You do not have permission to perform this action.`;
+    if (permission.startsWith('water_bodies.')) {
+      message = 'You do not have permission to manage water bodies. Only Zilla Parishad or Super Admin can perform this action.';
+    } else if (permission.startsWith('threats.')) {
+      message = 'You do not have permission to manage environmental threats. Only Municipal Corporation or Super Admin can perform this action.';
+    } else if (permission === 'citizen_reports.verify') {
+      message = 'Only administrators can verify citizen reports.';
+    }
+
+    return res.status(403).json({ success: false, message });
+  };
+}
+
+/**
+ * Audit log helper — fire-and-forget, never blocks request.
+ */
+async function auditLog(userId, role, action, resourceType, resourceId) {
+  try {
+    await dbRun(
+      `INSERT INTO audit_logs (user_id, role, action, resource_type, resource_id, timestamp)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [userId || 'unknown', role || 'unknown', action, resourceType, resourceId || '', new Date().toISOString()]
+    );
+  } catch (e) {
+    // Never let audit failures crash the request
+    console.error('[AUDIT] Failed to log:', e.message);
+  }
+}
+
+
 // ══════════════════════════════════════════════════════════════════════════
+// ── RBAC: DB init + Demo Account Seeding ───────────────────────────────────
+// Creates audit_logs table and demo accounts if they don't already exist.
+// Uses INSERT OR IGNORE — completely safe to run on every server start.
+(async () => {
+  try {
+    // 1. Create audit_logs table
+    await dbRun(`
+      CREATE TABLE IF NOT EXISTS audit_logs (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id      TEXT    NOT NULL,
+        role         TEXT    NOT NULL,
+        action       TEXT    NOT NULL,
+        resource_type TEXT   NOT NULL,
+        resource_id  TEXT    DEFAULT '',
+        timestamp    TEXT    NOT NULL
+      )
+    `);
+    console.log('✅ audit_logs table ready');
+
+    // Ensure image authenticity fields exist in citizen_reports
+    const addColumn = async (table, col, type) => {
+      try {
+        await dbRun(`ALTER TABLE ${table} ADD COLUMN ${col} ${type}`);
+        console.log(`[DB] Added column ${col} to ${table}`);
+      } catch (e) {
+        if (!e.message.includes('duplicate column name')) {
+          console.warn(`[DB] Could not add column ${col} to ${table}: ${e.message}`);
+        }
+      }
+    };
+
+    await addColumn('citizen_reports', 'image_auth_status', 'TEXT');
+    await addColumn('citizen_reports', 'image_ai_probability', 'REAL');
+    await addColumn('citizen_reports', 'image_auth_checked_at', 'TEXT');
+    await addColumn('citizen_reports', 'image_auth_requires_review', 'INTEGER');
+
+
+    // 2. Seed Zilla Parishad (water_admin)
+    const zillaExists = await dbGet("SELECT user_id FROM users WHERE email='zilla@kbic.in'");
+    if (!zillaExists) {
+      const hash = await bcrypt.hash('zilla123', 10);
+      await dbRun(
+        `INSERT INTO users (user_id, full_name, email, password, role, join_date, points, reports_submitted, badges)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ['USR_ZILLA', 'Zilla Parishad', 'zilla@kbic.in', hash, 'water_admin',
+         new Date().toISOString().split('T')[0], 0, 0, 'Water Guardian']
+      );
+      console.log('✅ Demo account created: Zilla Parishad (water_admin)');
+    }
+
+    // 3. Seed Municipal Corporation (threat_admin)
+    const muniExists = await dbGet("SELECT user_id FROM users WHERE email='municipal@kbic.in'");
+    if (!muniExists) {
+      const hash = await bcrypt.hash('municipal123', 10);
+      await dbRun(
+        `INSERT INTO users (user_id, full_name, email, password, role, join_date, points, reports_submitted, badges)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ['USR_MUNI', 'Municipal Corporation', 'municipal@kbic.in', hash, 'threat_admin',
+         new Date().toISOString().split('T')[0], 0, 0, 'Threat Watcher']
+      );
+      console.log('✅ Demo account created: Municipal Corporation (threat_admin)');
+    }
+
+    // 4. Ensure Kalyani citizen demo account has unique user_id (USR_KALYANI)
+    //    Fixes a potential collision with CSV-seeded USR0001 user
+    const kalyaniExists = await dbGet("SELECT user_id FROM users WHERE email='kalyani@kbic.in'");
+    if (!kalyaniExists) {
+      const hash = await bcrypt.hash('biodiversity123', 10);
+      await dbRun(
+        `INSERT INTO users (user_id, full_name, email, password, role, join_date, points, reports_submitted, badges)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        ['USR_KALYANI', 'Kalyani S.', 'kalyani@kbic.in', hash, 'Citizen',
+         new Date().toISOString().split('T')[0], 0, 0, 'Citizen Reporter']
+      );
+      console.log('✅ Demo account created: Kalyani (Citizen)');
+    } else if (kalyaniExists.user_id === 'USR0001') {
+      // Fix collision: update to unique id
+      await dbRun("UPDATE users SET user_id='USR_KALYANI' WHERE email='kalyani@kbic.in'");
+      await dbRun("UPDATE citizen_reports SET user_id='USR_KALYANI' WHERE user_id='USR0001' AND submitted_at >= date('now','-7 days')");
+      console.log('[CitizenReport] Fixed Kalyani user_id collision: USR0001 → USR_KALYANI');
+    }
+  } catch (e) {
+    console.error('RBAC seed error:', e.message);
+  }
+})();
+
+// ── RBAC: Permissions endpoint (frontend calls this to get its own perms) ──
+// GET /api/rbac/my-permissions
+// Returns the permission set for the authenticated user's role.
+// ══════════════════════════════════════════════════════════════════════════
+
 // ── 1. AUTH ENDPOINTS ────────────────────────────────────────────────────
 // POST /api/auth/login
 // POST /api/auth/register
@@ -180,7 +367,7 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
 const ALLOWED_TABLES = [
   'species_master','species_observations','citizen_reports','environmental_threats',
   'water_bodies','biodiversity_hotspots','conservation_projects','villages','habitats',
-  'protected_areas','monthly_species_statistics','ndvi_data','weather','educational_resources',
+  'protected_areas','monthly_species_statistics','ndvi_data','educational_resources',
   'land_cover','image_gallery'
 ];
 
@@ -367,8 +554,9 @@ app.get('/api/reports', authenticateToken, async (req, res) => {
       FROM citizen_reports r
       LEFT JOIN species_master s ON r.species_id=s.species_id
       LEFT JOIN users u ON r.user_id=u.user_id
+        AND u.rowid = (SELECT MAX(rowid) FROM users WHERE user_id=r.user_id)
       ${where}
-      ORDER BY r.report_date DESC
+      ORDER BY r.submitted_at DESC, r.report_date DESC
       LIMIT ? OFFSET ?
     `;
     params.push(parseInt(limit), parseInt(offset));
@@ -381,13 +569,18 @@ app.get('/api/reports', authenticateToken, async (req, res) => {
 app.get('/api/reports/pending', authenticateToken, adminOnly, async (req, res) => {
   try {
     const rows = await dbAll(`
-      SELECT r.*, s.common_name, s.scientific_name, s.category, u.full_name as reporter_name
+      SELECT r.*, s.common_name, s.scientific_name, s.category,
+             u.full_name as reporter_name, u.email as reporter_email
       FROM citizen_reports r
       LEFT JOIN species_master s ON r.species_id=s.species_id
       LEFT JOIN users u ON r.user_id=u.user_id
+        AND u.rowid = (SELECT MAX(rowid) FROM users WHERE user_id=r.user_id)
       WHERE LOWER(r.verification_status)='pending'
-      ORDER BY r.report_date DESC
+      ORDER BY r.submitted_at DESC, r.report_date DESC
     `);
+    console.log('[AdminReports] Fetching reports');
+    console.log('[AdminReports] Reports returned:', rows.length);
+    if (rows.length > 0) console.log('[AdminReports] Latest report ID:', rows[0].report_id);
     res.json({ total: rows.length, data: rows });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
@@ -406,7 +599,7 @@ app.get('/api/reports/stats', authenticateToken, async (req, res) => {
 
 app.post('/api/reports', authenticateToken, async (req, res) => {
   try {
-    const { species, lat, lng, desc, village_id, report_time, count } = req.body;
+    const { species, lat, lng, desc, village_id, report_time, count, image_auth_status, image_ai_probability, image_auth_requires_review } = req.body;
     if (!species || !lat || !lng || !desc) return res.status(400).json({ error: 'species, lat, lng, desc are required.' });
 
     const report_id    = 'CR' + Date.now().toString().slice(-6);
@@ -419,10 +612,13 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
     await dbRun(
       `INSERT INTO citizen_reports
          (report_id, user_id, species_id, latitude, longitude, report_date, report_time,
-          remarks, verification_status, admin_comments, village_id, count, submitted_at)
-       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          remarks, verification_status, admin_comments, village_id, count, submitted_at,
+          image_auth_status, image_ai_probability, image_auth_checked_at, image_auth_requires_review)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [report_id, user_id, species, lat, lng, report_date,
-       report_time || '', desc, verification_status, '', village_id || '', parseInt(count)||1, submitted_at]
+       report_time || '', desc, verification_status, '', village_id || '', parseInt(count)||1, submitted_at,
+       image_auth_status || null, image_ai_probability !== undefined ? image_ai_probability : null,
+       image_auth_status ? submitted_at : null, image_auth_requires_review ? 1 : 0]
     );
 
     // Award 10 points for submission
@@ -463,6 +659,15 @@ app.get('/api/reports/my', authenticateToken, async (req, res) => {
 app.post('/api/reports/upload', authenticateToken, upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No valid image uploaded.' });
   res.json({ success: true, filename: req.file.filename, url: `/uploads/${req.file.filename}` });
+});
+
+app.post('/api/citizen-reports/check-image-authenticity', authenticateToken, upload.single('image'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, error: 'No valid image uploaded.' });
+  
+  const filePath = path.join(__dirname, 'uploads', req.file.filename);
+  const result = await checkImageAuthenticity(filePath);
+  
+  res.json(result);
 });
 
 app.patch('/api/reports/:id/verify', authenticateToken, adminOnly, async (req, res) => {
@@ -533,6 +738,7 @@ app.get('/api/admin/reports/pending', authenticateToken, adminOnly, async (req, 
       FROM citizen_reports r
       LEFT JOIN species_master s ON r.species_id=s.species_id
       LEFT JOIN users u ON r.user_id=u.user_id
+        AND u.rowid = (SELECT MAX(rowid) FROM users WHERE user_id=r.user_id)
       LEFT JOIN villages v ON r.village_id=v.village_id
       WHERE LOWER(r.verification_status)='pending'
       ORDER BY r.submitted_at DESC, r.report_date DESC`);
@@ -593,7 +799,7 @@ app.get('/api/threats/stats', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.post('/api/threats', authenticateToken, async (req, res) => {
+app.post('/api/threats', authenticateToken, requirePermission('threats.create'), async (req, res) => {
   try {
     const { threat_type, severity, lat, lng, village_id, description } = req.body;
     if (!threat_type || !lat || !lng) return res.status(400).json({ error: 'threat_type, lat, lng required.' });
@@ -604,17 +810,51 @@ app.post('/api/threats', authenticateToken, async (req, res) => {
       `INSERT INTO environmental_threats (threat_id,latitude,longitude,village_id,threat_type,severity,date,description,resolved) VALUES (?,?,?,?,?,?,?,?,'False')`,
       [threat_id, lat, lng, village_id||'', threat_type, severity||'Moderate', date, description||'']
     );
+    auditLog(req.user.user_id, req.user.role, 'CREATE', 'threat', threat_id);
     res.status(201).json({ success: true, threat_id });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.patch('/api/threats/:id/resolve', authenticateToken, adminOnly, async (req, res) => {
+app.put('/api/threats/:id', authenticateToken, requirePermission('threats.edit'), async (req, res) => {
+  try {
+    const { threat_type, severity, description, resolved, village_id, lat, lng } = req.body;
+    const result = await dbRun(
+      `UPDATE environmental_threats SET
+         threat_type=COALESCE(?,threat_type),
+         severity=COALESCE(?,severity),
+         description=COALESCE(?,description),
+         resolved=COALESCE(?,resolved),
+         village_id=COALESCE(?,village_id),
+         latitude=COALESCE(?,latitude),
+         longitude=COALESCE(?,longitude)
+       WHERE threat_id=?`,
+      [threat_type||null, severity||null, description||null, resolved||null,
+       village_id||null, lat||null, lng||null, req.params.id]
+    );
+    if (result.changes === 0) return res.status(404).json({ error: 'Threat not found.' });
+    auditLog(req.user.user_id, req.user.role, 'EDIT', 'threat', req.params.id);
+    res.json({ success: true, message: 'Threat updated.' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.patch('/api/threats/:id/resolve', authenticateToken, requirePermission('threats.edit'), async (req, res) => {
   try {
     const result = await dbRun(`UPDATE environmental_threats SET resolved='True' WHERE threat_id=?`, [req.params.id]);
     if (result.changes === 0) return res.status(404).json({ error: 'Threat not found.' });
+    auditLog(req.user.user_id, req.user.role, 'RESOLVE', 'threat', req.params.id);
     res.json({ success: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
+
+app.delete('/api/threats/:id', authenticateToken, requirePermission('threats.delete'), async (req, res) => {
+  try {
+    const result = await dbRun(`DELETE FROM environmental_threats WHERE threat_id=?`, [req.params.id]);
+    if (result.changes === 0) return res.status(404).json({ error: 'Threat not found.' });
+    auditLog(req.user.user_id, req.user.role, 'DELETE', 'threat', req.params.id);
+    res.json({ success: true, message: 'Threat deleted.' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 
 // ══════════════════════════════════════════════════════════════════════════
 // ── 7. WATER BODIES ──────────────────────────────────────────────────────
@@ -646,8 +886,69 @@ app.get('/api/water-bodies/stats', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+app.get('/api/water-bodies/:id', async (req, res) => {
+  try {
+    const row = await dbGet('SELECT * FROM water_bodies WHERE waterbody_id=?', [req.params.id]);
+    if (!row) return res.status(404).json({ error: 'Water body not found.' });
+    res.json(row);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/water-bodies', authenticateToken, requirePermission('water_bodies.create'), async (req, res) => {
+  try {
+    const { name, type, village_id, area_sqkm, depth_m, water_quality, biodiversity_score, pollution_level, lat, lng } = req.body;
+    if (!name) return res.status(400).json({ error: 'Water body name is required.' });
+    const wb_id = 'WB' + Date.now().toString().slice(-6);
+    await dbRun(
+      `INSERT INTO water_bodies (waterbody_id, name, type, village_id, area_sqkm, depth_m, water_quality, biodiversity_score, pollution_level, latitude, longitude, last_inspection)
+       VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+      [wb_id, name, type||'Lake', village_id||'', area_sqkm||'0', depth_m||'0',
+       water_quality||'Good', biodiversity_score||'5', pollution_level||'Low',
+       lat||'', lng||'', new Date().toISOString().split('T')[0]]
+    );
+    auditLog(req.user.user_id, req.user.role, 'CREATE', 'water_body', wb_id);
+    res.status(201).json({ success: true, waterbody_id: wb_id });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/water-bodies/:id', authenticateToken, requirePermission('water_bodies.edit'), async (req, res) => {
+  try {
+    const { name, type, area_sqkm, depth_m, water_quality, biodiversity_score, pollution_level, lat, lng } = req.body;
+    const result = await dbRun(
+      `UPDATE water_bodies SET
+         name=COALESCE(?,name),
+         type=COALESCE(?,type),
+         area_sqkm=COALESCE(?,area_sqkm),
+         depth_m=COALESCE(?,depth_m),
+         water_quality=COALESCE(?,water_quality),
+         biodiversity_score=COALESCE(?,biodiversity_score),
+         pollution_level=COALESCE(?,pollution_level),
+         latitude=COALESCE(?,latitude),
+         longitude=COALESCE(?,longitude),
+         last_inspection=?
+       WHERE waterbody_id=?`,
+      [name||null, type||null, area_sqkm||null, depth_m||null, water_quality||null,
+       biodiversity_score||null, pollution_level||null, lat||null, lng||null,
+       new Date().toISOString().split('T')[0], req.params.id]
+    );
+    if (result.changes === 0) return res.status(404).json({ error: 'Water body not found.' });
+    auditLog(req.user.user_id, req.user.role, 'EDIT', 'water_body', req.params.id);
+    res.json({ success: true, message: 'Water body updated.' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/water-bodies/:id', authenticateToken, requirePermission('water_bodies.delete'), async (req, res) => {
+  try {
+    const result = await dbRun('DELETE FROM water_bodies WHERE waterbody_id=?', [req.params.id]);
+    if (result.changes === 0) return res.status(404).json({ error: 'Water body not found.' });
+    auditLog(req.user.user_id, req.user.role, 'DELETE', 'water_body', req.params.id);
+    res.json({ success: true, message: 'Water body deleted.' });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 // ══════════════════════════════════════════════════════════════════════════
 // ── 8. CONSERVATION PROJECTS ─────────────────────────────────────────────
+
 // GET  /api/conservation               - All projects
 // GET  /api/conservation/:id           - Single project
 // PATCH /api/conservation/:id/status   - Update status (admin)
@@ -865,11 +1166,9 @@ app.get('/api/gis/citizen-reports', async (req, res) => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════
-// ── 11. NDVI & WEATHER ───────────────────────────────────────────────────
+// ── 11. NDVI ───────────────────────────────────────────────────────────
 // GET /api/ndvi                   - Paginated NDVI data
 // GET /api/ndvi/summary           - NDVI averages & distribution
-// GET /api/weather                - Weather records
-// GET /api/weather/summary        - Weather statistics
 // ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/ndvi', async (req, res) => {
@@ -882,32 +1181,32 @@ app.get('/api/ndvi', async (req, res) => {
 
 app.get('/api/ndvi/summary', async (req, res) => {
   try {
-    const stats = await dbGet(`SELECT AVG(CAST(ndvi_value AS REAL)) as avg, MAX(CAST(ndvi_value AS REAL)) as max, MIN(CAST(ndvi_value AS REAL)) as min, COUNT(*) as count FROM ndvi_data`);
+    const stats = await dbGet(`SELECT AVG(CAST(ndvi AS REAL)) as avg, MAX(CAST(ndvi AS REAL)) as max, MIN(CAST(ndvi AS REAL)) as min, COUNT(*) as count FROM ndvi_data`);
     const dist  = await dbAll(`SELECT vegetation_health, COUNT(*) as count FROM ndvi_data GROUP BY vegetation_health`);
     res.json({ stats, distribution: dist });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.get('/api/weather', async (req, res) => {
-  try {
-    const limit = Math.min(parseInt(req.query.limit) || 365, 3659);
-    const rows = await dbAll(`SELECT * FROM weather ORDER BY date DESC LIMIT ?`, [limit]);
-    res.json(rows);
-  } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
-app.get('/api/weather/summary', async (req, res) => {
-  try {
-    const stats = await dbGet(`
-      SELECT AVG(CAST(temp_max AS REAL)) as avg_temp_max,
-             AVG(CAST(temp_min AS REAL)) as avg_temp_min,
-             SUM(CAST(rainfall AS REAL)) as total_rainfall,
-             AVG(CAST(humidity AS REAL)) as avg_humidity,
-             AVG(CAST(wind_speed AS REAL)) as avg_wind_speed
-      FROM weather
-    `);
-    res.json(stats);
-  } catch (e) { res.status(500).json({ error: e.message }); }
+app.get('/api/ndvi/ml-insights', (req, res) => {
+  const { exec } = require('child_process');
+  const path = require('path');
+  const scriptPath = path.join(__dirname, 'services', 'ndvi_ml.py');
+  
+  exec(`python "${scriptPath}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error('Python error:', error);
+      return res.status(500).json({ error: 'Failed to run ML models', details: stderr || error.message });
+    }
+    try {
+      const result = JSON.parse(stdout);
+      if (result.error === 'MODELS_MISSING') {
+        return res.status(404).json(result);
+      }
+      res.json(result);
+    } catch (e) {
+      res.status(500).json({ error: 'Invalid output from ML models', stdout });
+    }
+  });
 });
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -994,7 +1293,98 @@ app.post('/api/ai/identify-species', authenticateToken, async (req, res) => {
 // ── 15. HEALTH CHECK ─────────────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════════════
 
+// ══════════════════════════════════════════════════════════════════════════
+// ── RBAC ENDPOINTS ───────────────────────────────────────────────────────
+// GET /api/rbac/my-permissions   - My permissions (auth)
+// GET /api/rbac/audit-logs       - Audit log (super_admin / admin only)
+// GET /api/rbac/dashboard-context - Role-specific dashboard widgets
+// ══════════════════════════════════════════════════════════════════════════
+
+app.get('/api/rbac/my-permissions', authenticateToken, (req, res) => {
+  const role = req.user.role || 'Citizen';
+  // super_admin by email gets all permissions
+  const effectiveRole = req.user.email === 'admin@kbic.in' ? 'super_admin' : role;
+  const perms = ROLE_PERMISSION_MAP[effectiveRole] || ROLE_PERMISSION_MAP['Citizen'];
+  res.json({
+    user_id:     req.user.user_id,
+    role:        effectiveRole,
+    displayName: req.user.full_name,
+    permissions: perms
+  });
+});
+
+app.get('/api/rbac/audit-logs', authenticateToken, requirePermission('admin.access'), async (req, res) => {
+  try {
+    const { limit = 100, resource_type } = req.query;
+    let sql = 'SELECT * FROM audit_logs';
+    let params = [];
+    if (resource_type) { sql += ' WHERE resource_type=?'; params.push(resource_type); }
+    sql += ' ORDER BY timestamp DESC LIMIT ?';
+    params.push(parseInt(limit));
+    // Also allow water_admin and threat_admin to see their own logs
+    const userRole = req.user.role;
+    if (userRole === 'water_admin') {
+      sql = `SELECT * FROM audit_logs WHERE user_id=? ORDER BY timestamp DESC LIMIT ?`;
+      params = [req.user.user_id, parseInt(limit)];
+    } else if (userRole === 'threat_admin') {
+      sql = `SELECT * FROM audit_logs WHERE user_id=? ORDER BY timestamp DESC LIMIT ?`;
+      params = [req.user.user_id, parseInt(limit)];
+    }
+    const logs = await dbAll(sql, params);
+    res.json({ total: logs.length, data: logs });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/rbac/dashboard-context', authenticateToken, async (req, res) => {
+  try {
+    const role = req.user.role || 'Citizen';
+    const effectiveRole = req.user.email === 'admin@kbic.in' ? 'super_admin' : role;
+    let context = { role: effectiveRole, widgets: [] };
+
+    if (effectiveRole === 'water_admin') {
+      const [total, excellent, highBio, highPoll] = await Promise.all([
+        dbGet('SELECT COUNT(*) as count FROM water_bodies'),
+        dbGet("SELECT COUNT(*) as count FROM water_bodies WHERE LOWER(water_quality)='excellent'"),
+        dbGet("SELECT COUNT(*) as count FROM water_bodies WHERE CAST(biodiversity_score AS REAL)>=7"),
+        dbGet("SELECT COUNT(*) as count FROM water_bodies WHERE LOWER(pollution_level) IN ('high','severe')")
+      ]);
+      context.widgets.push({
+        type: 'water_bodies',
+        title: 'Water Body Management',
+        stats: {
+          total: total.count,
+          excellent_quality: excellent.count,
+          high_biodiversity: highBio.count,
+          at_risk: highPoll.count
+        }
+      });
+    }
+
+    if (effectiveRole === 'threat_admin') {
+      const [total, active, critical, resolved] = await Promise.all([
+        dbGet('SELECT COUNT(*) as count FROM environmental_threats'),
+        dbGet("SELECT COUNT(*) as count FROM environmental_threats WHERE LOWER(resolved) NOT IN ('true','yes')"),
+        dbGet("SELECT COUNT(*) as count FROM environmental_threats WHERE LOWER(severity)='critical'"),
+        dbGet("SELECT COUNT(*) as count FROM environmental_threats WHERE LOWER(resolved) IN ('true','yes')")
+      ]);
+      context.widgets.push({
+        type: 'threats',
+        title: 'Threat Management',
+        stats: {
+          total: total.count,
+          active: active.count,
+          critical: critical.count,
+          resolved: resolved.count
+        }
+      });
+    }
+
+    res.json(context);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 app.get('/api/health', (req, res) => {
+
   res.json({
     status: 'OK',
     service: 'Kopargaon Biodiversity Portal API',
