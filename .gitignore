@@ -42,3 +42,5 @@ Thumb.db
 check_db.js
 test-*.js
 migrate-*.js
+
+backend/.env
