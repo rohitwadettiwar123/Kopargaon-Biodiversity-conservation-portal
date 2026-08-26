@@ -208,13 +208,12 @@
         <div class="header-page-title"><i class="fa fa-user-circle" style="color:var(--green-primary);margin-right:8px"></i>My Profile</div>
       </div>
       <div class="header-right">
-        <button class="icon-btn" id="notif-btn" title="Notifications"><i class="fa fa-bell"></i></button>
-        <button class="icon-btn" id="user-btn" title="Account">
-          <span class="user-avatar" style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#15803d);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">?</span>
-        </button>
-        <div class="dropdown" id="user-dropdown">
-          <div class="dropdown-item" id="logout-dropdown-btn" style="cursor:pointer">
-            <i class="fa fa-sign-out-alt"></i> Logout
+        <div style="position:relative"><div class="notif-btn" id="notif-btn"><i class="fa fa-bell"></i></div></div>
+        <div style="position:relative"><div class="user-btn" id="user-btn"><div class="user-avatar">?</div><div class="user-info"><div class="user-name">Loading...</div><div class="user-role">Role</div></div></div>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-item danger" id="logout-dropdown-btn" style="cursor:pointer">
+              <i class="fa fa-sign-out-alt"></i> Logout
+            </div>
           </div>
         </div>
       </div>

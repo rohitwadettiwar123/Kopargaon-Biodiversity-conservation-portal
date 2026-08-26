@@ -181,7 +181,6 @@ const Dashboard = (() => {
         ${infoRow('heartbeat', 'Health', obs.health_status || 'N/A')}
         ${infoRow('tree', 'Habitat', habitat)}
         ${infoRow('percentage', 'Confidence', obs.confidence_score ? parseFloat(obs.confidence_score).toFixed(0)+'%' : 'N/A')}
-        ${infoRow('cloud', 'Weather', obs.weather || 'N/A')}
         ${infoRow('user', 'Observer', obs.observer_id || 'N/A')}
       </div>
       ${obs.notes ? `<div style="margin-top:12px;padding:10px 12px;background:var(--bg-tertiary);border-radius:8px;border-left:3px solid var(--green-primary)"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Notes</div><div style="font-size:12px;color:var(--text-secondary)">${obs.notes}</div></div>` : ''}

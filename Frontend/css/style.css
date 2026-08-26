@@ -917,41 +917,7 @@ table { border-collapse: collapse; }
 .ndvi-stat-val { font-size: 16px; font-weight: 700; color: var(--text-white); }
 .ndvi-stat-lbl { font-size: 9px; color: var(--text-dim); }
 
-/* ── WEATHER CARD ─────────────────────────────────────────────── */
-.weather-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.weather-temp {
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--text-white);
-  line-height: 1;
-}
-.weather-icon { font-size: 36px; }
-.weather-condition { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.weather-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-.weather-stat {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-}
-.weather-stat .ws-label { color: var(--text-dim); }
-.weather-stat .ws-value { color: var(--text-secondary); font-weight: 600; margin-left: auto; }
-.weather-source {
-  font-size: 9px;
-  color: var(--text-dim);
-  margin-top: 8px;
-  text-align: right;
-  font-style: italic;
-}
+
 
 /* ── DATA TABLES ──────────────────────────────────────────────── */
 .data-table-wrap { overflow-x: auto; }

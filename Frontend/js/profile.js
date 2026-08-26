@@ -72,20 +72,26 @@ const ProfilePage = (() => {
         const d = new Date(joinDate);
         set('p-date', d.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }));
       }
+
     } catch { set('p-date', joinDate); }
 
-    // Role badge color
+    // Role badge — use RBAC badge if available, else fallback colour
     const roleEl = document.getElementById('p-role-badge');
     if (roleEl) {
-      roleEl.textContent = role;
-      const roleColors = {
-        'Administrator': '#ef4444',
-        'Admin': '#ef4444',
-        'Forest Officer': '#f59e0b',
-        'Citizen': '#3b82f6',
-        'Observer': '#8b5cf6',
-      };
-      roleEl.style.background = roleColors[role] || '#3b82f6';
+      // Use the Auth RBAC badge HTML if available
+      if (typeof Auth !== 'undefined' && Auth.getRoleBadgeHTML) {
+        roleEl.outerHTML = Auth.getRoleBadgeHTML()
+          .replace('<span class="role-badge"', '<span id="p-role-badge" class="role-badge"')
+          .replace('margin-top:2px;', 'margin-top:0;font-size:11px;padding:4px 12px;');
+      } else {
+        roleEl.textContent = role;
+        const roleColors = {
+          'Administrator': '#ef4444', 'Admin': '#ef4444',
+          'Forest Officer': '#f59e0b', 'Citizen': '#3b82f6', 'Observer': '#8b5cf6',
+          'water_admin': '#3b82f6', 'threat_admin': '#ef4444',
+        };
+        roleEl.style.background = roleColors[role] || '#3b82f6';
+      }
     }
 
     // Animate stats

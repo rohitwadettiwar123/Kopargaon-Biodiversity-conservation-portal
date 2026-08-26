@@ -324,7 +324,6 @@ const CitizenReports = (() => {
     }
   }
 
-  // ── Form Setup ────────────────────────────────────────────────────────────
   function setupForm() {
     const form = document.getElementById('cr-form');
     if (!form) return;
@@ -333,6 +332,88 @@ const CitizenReports = (() => {
     if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
     const gpsBtn = document.getElementById('cr-gps-btn');
     if (gpsBtn) gpsBtn.addEventListener('click', getCurrentLocation);
+    
+    // Setup Voice Dictation for the description field
+    const dictateBtn = document.getElementById('cr-dictate-btn');
+    const descEl = document.getElementById('cr-desc');
+    if (dictateBtn && descEl) {
+      setupDictation(dictateBtn, descEl);
+    }
+  }
+
+  function setupDictation(btn, textarea) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      btn.style.display = 'none';
+      return;
+    }
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    
+    let isListening = false;
+    let finalTranscript = '';
+    
+    recognition.onstart = function() {
+      isListening = true;
+      btn.innerHTML = '<i class="fa fa-microphone fa-pulse"></i> Listening...';
+      btn.style.background = 'rgba(239, 68, 68, 0.1)';
+      btn.style.borderColor = 'var(--red)';
+      btn.style.color = 'var(--red)';
+    };
+    
+    recognition.onresult = function(event) {
+      let interimTranscript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+          textarea.value = finalTranscript;
+        } else {
+          interimTranscript += event.results[i][0].transcript;
+        }
+      }
+      // Optional: Could display interimTranscript in a temporary way, 
+      // but for simplicity we'll just update the textarea with final text.
+      // If we want real-time feedback in the textarea:
+      textarea.value = finalTranscript + interimTranscript;
+    };
+    
+    recognition.onerror = function(event) {
+      console.error('Speech recognition error', event.error);
+      if (event.error !== 'no-speech') {
+        Notifications.error('Voice Error', 'Could not recognize speech: ' + event.error);
+      }
+      stopDictation();
+    };
+    
+    recognition.onend = function() {
+      stopDictation();
+    };
+    
+    function stopDictation() {
+      if (!isListening) return;
+      isListening = false;
+      btn.innerHTML = '<i class="fa fa-microphone"></i> Dictate';
+      btn.style.background = 'rgba(34,197,94,0.1)';
+      btn.style.borderColor = 'var(--green-primary)';
+      btn.style.color = 'var(--green-primary)';
+      // Ensure the final transcript reflects the latest textarea value in case user typed
+      finalTranscript = textarea.value;
+    }
+    
+    btn.addEventListener('click', () => {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        finalTranscript = textarea.value;
+        if (finalTranscript && !finalTranscript.endsWith(' ')) finalTranscript += ' ';
+        try {
+          recognition.start();
+        } catch(e) {}
+      }
+    });
   }
 
   async function getCurrentLocation() {
@@ -386,14 +467,88 @@ const CitizenReports = (() => {
     input.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0], preview); });
   }
 
-  function handleFile(file, preview) {
-    if (!file.type.startsWith('image/')) { Notifications.error('Invalid File', 'Please upload an image (JPEG/PNG).'); return; }
+  let currentAuthResult = null;
+
+  async function handleFile(file, preview) {
+    if (!file.type.startsWith('image/')) { Notifications.error('Invalid File', 'Please upload an image (JPEG/PNG/WEBP).'); return; }
     if (file.size > 5 * 1024 * 1024) { Notifications.error('Too Large', 'Max file size is 5MB.'); return; }
+    
+    // Reset previous auth result
+    currentAuthResult = null;
+    const authContainer = document.getElementById('cr-auth-check-container');
+    const submitBtn = document.querySelector('#cr-form [type="submit"]');
+    
     const reader = new FileReader();
-    reader.onload = e => {
+    reader.onload = async (e) => {
       if (preview) preview.innerHTML = `
         <img src="${e.target.result}" style="max-height:120px;border-radius:8px;object-fit:cover;border:1px solid var(--border)">
         <div style="margin-top:6px;font-size:11px;color:var(--text-dim)">📎 ${file.name} (${(file.size/1024).toFixed(0)} KB)</div>`;
+      
+      if (authContainer) {
+        authContainer.style.display = 'block';
+        authContainer.innerHTML = `<div style="padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; text-align:center;">
+          <i class="fa fa-spinner fa-spin text-blue"></i> Analyzing image authenticity...
+        </div>`;
+      }
+      
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append('image', file);
+        
+        const res = await fetch(`${API}/citizen-reports/check-image-authenticity`, {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + Auth.getToken() },
+          body: formData
+        });
+        
+        const data = await res.json();
+        
+        if (!res.ok) throw new Error(data.error || data.message || 'Verification failed');
+        
+        currentAuthResult = data;
+        
+        if (authContainer) {
+          let uiHtml = '';
+          if (data.status === 'LOW_RISK') {
+            uiHtml = `<div style="padding:10px; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); border-radius:8px;">
+              <div style="color:var(--green-primary); font-weight:700; margin-bottom:4px;"><i class="fa fa-check-circle"></i> IMAGE AUTHENTICITY CHECK</div>
+              <div style="color:var(--text-secondary); margin-bottom:2px;">AI-generated probability: <b>${data.aiGeneratedPercentage}%</b></div>
+              <div style="color:var(--text-dim);">Status: LIKELY AUTHENTIC</div>
+            </div>`;
+          } else if (data.status === 'HIGH_RISK') {
+            uiHtml = `<div style="padding:10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); border-radius:8px;">
+              <div style="color:var(--red); font-weight:700; margin-bottom:4px;"><i class="fa fa-exclamation-triangle"></i> ⚠ IMAGE REVIEW REQUIRED</div>
+              <div style="color:var(--text-secondary); margin-bottom:4px;">AI-generated probability: <b>${data.aiGeneratedPercentage}%</b></div>
+              <div style="color:var(--text-dim); line-height:1.4;">This image may have been generated or edited using generative AI.<br>Please upload an original field photograph or submit this observation for manual review.</div>
+            </div>`;
+          } else {
+            uiHtml = `<div style="padding:10px; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.3); border-radius:8px;">
+              <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;"><i class="fa fa-info-circle"></i> ℹ AUTHENTICITY REVIEW</div>
+              <div style="color:var(--text-secondary); margin-bottom:2px;">AI-generated probability: <b>${data.aiGeneratedPercentage !== undefined ? data.aiGeneratedPercentage + '%' : 'N/A'}</b></div>
+              <div style="color:var(--text-dim); line-height:1.4;">${data.message || 'The image requires additional verification.'}</div>
+            </div>`;
+          }
+          authContainer.innerHTML = uiHtml;
+        }
+      } catch (err) {
+        console.error('Authenticity check error:', err);
+        currentAuthResult = {
+          success: false,
+          status: 'CHECK_UNAVAILABLE',
+          requiresReview: true,
+          message: 'Image authenticity check is temporarily unavailable. Manual verification is required.'
+        };
+        if (authContainer) {
+          authContainer.innerHTML = `<div style="padding:10px; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.3); border-radius:8px;">
+            <div style="color:var(--accent-amber); font-weight:700; margin-bottom:4px;"><i class="fa fa-info-circle"></i> ℹ AUTHENTICITY CHECK UNAVAILABLE</div>
+            <div style="color:var(--text-dim); line-height:1.4;">Manual review required.</div>
+          </div>`;
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     };
     reader.readAsDataURL(file);
   }
@@ -417,10 +572,19 @@ const CitizenReports = (() => {
     if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...'; }
 
     try {
+      const requestBody = { 
+        species, lat, lng, desc, village_id: village, report_time: time, count,
+        ...(currentAuthResult && {
+          image_auth_status: currentAuthResult.status,
+          image_ai_probability: currentAuthResult.aiGeneratedProbability,
+          image_auth_requires_review: currentAuthResult.requiresReview
+        })
+      };
+
       const res = await fetch(`${API}/reports`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Auth.getToken() },
-        body: JSON.stringify({ species, lat, lng, desc, village_id: village, report_time: time, count })
+        body: JSON.stringify(requestBody)
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Submit failed');
@@ -449,6 +613,12 @@ const CitizenReports = (() => {
       e.target.reset();
       const preview = document.getElementById('cr-image-preview');
       if (preview) preview.innerHTML = '';
+      const authContainer = document.getElementById('cr-auth-check-container');
+      if (authContainer) {
+        authContainer.style.display = 'none';
+        authContainer.innerHTML = '';
+      }
+      currentAuthResult = null;
       const dateEl = document.getElementById('cr-date');
       if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
 
@@ -605,6 +775,24 @@ const CitizenReports = (() => {
           <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px">Remarks / Notes</div>
           <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">${r.remarks || 'No remarks provided.'}</div>
         </div>
+
+        ${r.image_auth_status ? `
+          <div style="margin-bottom:10px;padding:12px;background:${r.image_auth_status === 'LOW_RISK' ? 'rgba(34,197,94,0.07)' : r.image_auth_status === 'HIGH_RISK' ? 'rgba(239,68,68,0.07)' : 'rgba(251,191,36,0.07)'};border:1px solid ${r.image_auth_status === 'LOW_RISK' ? 'rgba(34,197,94,0.3)' : r.image_auth_status === 'HIGH_RISK' ? 'rgba(239,68,68,0.3)' : 'rgba(251,191,36,0.3)'};border-radius:8px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:var(--text-primary);margin-bottom:8px">IMAGE AUTHENTICITY</div>
+            
+            ${r.image_ai_probability !== null ? `<div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">AI-generated probability:<br><b style="font-size:14px;color:var(--text-primary)">${Math.round(r.image_ai_probability * 100)}%</b></div>` : ''}
+            
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">Classification:<br>
+              <b style="color:${r.image_auth_status === 'LOW_RISK' ? '#22c55e' : r.image_auth_status === 'HIGH_RISK' ? '#ef4444' : '#fbbf24'}">
+                ${r.image_auth_status === 'LOW_RISK' ? 'LIKELY REAL' : r.image_auth_status === 'HIGH_RISK' ? 'POTENTIALLY AI-GENERATED' : 'REVIEW REQUIRED'}
+              </b>
+            </div>
+            
+            <div style="font-size:12px;color:var(--text-secondary)">Status:<br>
+              <b>${r.image_auth_status === 'LOW_RISK' ? 'READY FOR VERIFICATION' : r.image_auth_status === 'HIGH_RISK' ? 'REQUIRES VERIFICATION' : 'REQUIRES MANUAL VERIFICATION'}</b>
+            </div>
+          </div>
+        ` : ''}
 
         ${r.admin_comments ? `
           <div style="margin-bottom:10px;padding:10px 12px;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);border-radius:8px">

@@ -346,56 +346,6 @@ const Analytics = (() => {
     });
   }
 
-  // ── Weather Chart ──────────────────────────────────────────────────────
-  async function loadWeatherChart(canvasId = 'weather-trend-chart', field = 'temperature_c') {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas || typeof Chart === 'undefined') return;
-
-    const data = await DataLoader.load('weather.csv');
-    if (!data || data.length === 0) return;
-
-    const recent = data.slice(-30);
-    const labels = recent.map(d => {
-      const dt = new Date(d.date);
-      return dt.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-    });
-    const values = recent.map(d => parseFloat(d[field]) || 0);
-
-    const fieldMeta = {
-      'temperature_c': { label: 'Temperature (°C)', color: '#fb923c' },
-      'rainfall_mm':   { label: 'Rainfall (mm)', color: '#38bdf8' },
-      'humidity_pct':  { label: 'Humidity (%)', color: '#a78bfa' },
-    };
-    const meta = fieldMeta[field] || { label: field, color: '#22c55e' };
-
-    destroyChart(canvasId);
-    charts[canvasId] = new Chart(canvas, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [{
-          label: meta.label,
-          data: values,
-          borderColor: meta.color,
-          backgroundColor: meta.color + '18',
-          fill: true,
-          tension: 0.4,
-          pointRadius: 0,
-          borderWidth: 2,
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { maxTicksLimit: 6, color: '#6b7280', font: { size: 9 } }, grid: { display: false } },
-          y: { ticks: { color: '#6b7280', font: { size: 9 } }, grid: { color: 'rgba(34,197,94,0.06)' } }
-        }
-      }
-    });
-  }
-
   // ── NDVI Trend Chart ───────────────────────────────────────────────────
   async function loadNDVITrendChart(canvasId = 'ndvi-trend-chart') {
     const canvas = document.getElementById(canvasId);
@@ -475,7 +425,6 @@ const Analytics = (() => {
     loadIUCNChart,
     loadTopSpeciesChart,
     loadThreatsChart,
-    loadWeatherChart,
     loadNDVITrendChart,
     destroyChart,
     CATEGORY_COLORS,

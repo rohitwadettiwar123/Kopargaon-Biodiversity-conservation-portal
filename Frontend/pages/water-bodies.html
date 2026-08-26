@@ -50,6 +50,12 @@
           <h1 class="page-title"><i class="fa fa-water text-blue"></i> Water Body Monitoring</h1>
           <p style="color:var(--text-dim);font-size:12px;margin-top:3px">Aquatic ecosystems and water quality assessment</p>
         </div>
+        <!-- Management button — only visible to water_admin / super_admin -->
+        <div id="wb-admin-controls" style="display:none">
+          <button class="btn btn-primary btn-sm" id="wb-add-btn" style="gap:6px">
+            <i class="fa fa-plus"></i> Add Water Body
+          </button>
+        </div>
       </div>
 
       <!-- Stats -->
@@ -101,10 +107,30 @@
 <script src="../js/app.js"></script>
 <script>
 let wbData = [];
+const API = 'http://localhost:3000/api';
+
+function authHeaders() {
+  return { 'Content-Type':'application/json', 'Authorization':'Bearer '+Auth.getToken() };
+}
+
+function showToast(msg, type='info') {
+  const tc = document.getElementById('toast-container');
+  if (!tc) return;
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  tc.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),300); }, 3500);
+}
+
+function showAccessError(msg) {
+  showToast('🔒 Access Restricted: ' + msg, 'error');
+}
 
 async function loadWaterBodies() {
   wbData = await DataLoader.load('water_bodies.csv');
-  const total = wbData.length;
+  const total     = wbData.length;
   const excellent = wbData.filter(w => w.water_quality === 'Excellent').length;
   const highBio   = wbData.filter(w => parseFloat(w.biodiversity_score) >= 7).length;
   const highPol   = wbData.filter(w => w.pollution_level === 'High').length;
@@ -114,6 +140,11 @@ async function loadWaterBodies() {
   App.animateCounter(document.getElementById('wb-highbio'), highBio);
   App.animateCounter(document.getElementById('wb-highpol'), highPol);
 
+  // Show management controls if user can edit
+  if (Auth.canEditWaterBodies()) {
+    document.getElementById('wb-admin-controls').style.display = 'block';
+  }
+
   renderCards();
   initMap();
 }
@@ -121,12 +152,26 @@ async function loadWaterBodies() {
 function renderCards() {
   const grid = document.getElementById('wb-grid');
   if (!grid) return;
+  const canEdit = Auth.canEditWaterBodies();
   const typeIcons = { Reservoir:'🏞️', 'Check Dam':'⛰️', 'Percolation Tank':'🌀', River:'🌊', Pond:'💧', Lake:'🏊' };
   grid.innerHTML = wbData.map((w, i) => {
     const icon = typeIcons[w.type] || '💧';
     const qClass = `quality-${w.water_quality}`;
     const pClass = `pollution-${w.pollution_level}`;
     const bioScore = parseFloat(w.biodiversity_score) || 0;
+    const editBtns = canEdit ? `
+      <div style="display:flex;gap:6px;margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+        <button onclick="event.stopPropagation();openEditWBModal(${i})"
+          style="flex:1;padding:5px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);
+          border-radius:6px;color:#3b82f6;font-size:10px;font-weight:600;cursor:pointer">
+          <i class="fa fa-edit"></i> Edit
+        </button>
+        <button onclick="event.stopPropagation();deleteWaterBody('${w.waterbody_id||w.id}','${w.name}')"
+          style="flex:1;padding:5px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
+          border-radius:6px;color:#ef4444;font-size:10px;font-weight:600;cursor:pointer">
+          <i class="fa fa-trash"></i> Delete
+        </button>
+      </div>` : '';
     return `
       <div class="wb-card" onclick="openWBModal(${i})">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
@@ -143,6 +188,7 @@ function renderCards() {
           <div class="wb-stat">Pollution: <strong class="${pClass}">${w.pollution_level}</strong></div>
           <div class="wb-stat">Fish Species: <strong>${w.fish_species_count || '?'}</strong></div>
         </div>
+        ${editBtns}
       </div>`;
   }).join('');
 }
@@ -178,6 +224,80 @@ function wbRow(label, val, cls='') {
   return `<div style="padding:9px 10px;background:var(--bg-tertiary);border-radius:7px"><div style="font-size:9px;text-transform:uppercase;color:var(--text-dim);margin-bottom:2px">${label}</div><div class="${cls}" style="font-size:12px;font-weight:600;color:var(--text-secondary)">${val||'N/A'}</div></div>`;
 }
 
+// ── Add Water Body Modal ──────────────────────────────────────────────────
+function openAddWBModal() {
+  if (!Auth.canEditWaterBodies()) {
+    showAccessError('You do not have permission to add water bodies.');
+    return;
+  }
+  document.getElementById('wb-form-modal').style.display = 'flex';
+  document.getElementById('wb-form-title').textContent = '+ Add Water Body';
+  document.getElementById('wb-form').reset();
+  document.getElementById('wb-form-id').value = '';
+}
+
+function openEditWBModal(idx) {
+  if (!Auth.canEditWaterBodies()) {
+    showAccessError('You do not have permission to edit water bodies.');
+    return;
+  }
+  const w = wbData[idx];
+  const m = document.getElementById('wb-form-modal');
+  if (!m) return;
+  m.style.display = 'flex';
+  document.getElementById('wb-form-title').textContent = '✏️ Edit Water Body';
+  document.getElementById('wb-form-id').value = w.waterbody_id || w.id || '';
+  document.getElementById('wbf-name').value = w.name || '';
+  document.getElementById('wbf-type').value = w.type || '';
+  document.getElementById('wbf-quality').value = w.water_quality || '';
+  document.getElementById('wbf-bio').value = w.biodiversity_score || '';
+  document.getElementById('wbf-pollution').value = w.pollution_level || '';
+  document.getElementById('wbf-area').value = w.area_sqkm || '';
+  document.getElementById('wbf-depth').value = w.depth_m || '';
+}
+
+async function saveWBForm(e) {
+  e.preventDefault();
+  if (!Auth.canEditWaterBodies()) { showAccessError('No permission.'); return; }
+  const id = document.getElementById('wb-form-id').value.trim();
+  const body = {
+    name:               document.getElementById('wbf-name').value,
+    type:               document.getElementById('wbf-type').value,
+    water_quality:      document.getElementById('wbf-quality').value,
+    biodiversity_score: document.getElementById('wbf-bio').value,
+    pollution_level:    document.getElementById('wbf-pollution').value,
+    area_sqkm:          document.getElementById('wbf-area').value,
+    depth_m:            document.getElementById('wbf-depth').value,
+  };
+
+  const method = id ? 'PUT' : 'POST';
+  const url    = id ? `${API}/water-bodies/${id}` : `${API}/water-bodies`;
+
+  const res  = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(body) });
+  const data = await res.json();
+
+  if (res.status === 403) { showAccessError(data.message || 'Access denied.'); return; }
+  if (!res.ok)            { showToast('Error: ' + (data.error || 'Save failed'), 'error'); return; }
+
+  showToast(id ? '✅ Water body updated!' : '✅ Water body added!', 'success');
+  document.getElementById('wb-form-modal').style.display = 'none';
+  await loadWaterBodies();
+}
+
+async function deleteWaterBody(id, name) {
+  if (!Auth.canEditWaterBodies()) { showAccessError('No permission to delete water bodies.'); return; }
+  if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+
+  const res  = await fetch(`${API}/water-bodies/${id}`, { method: 'DELETE', headers: authHeaders() });
+  const data = await res.json();
+
+  if (res.status === 403) { showAccessError(data.message || 'Access denied.'); return; }
+  if (!res.ok)            { showToast('Error: ' + (data.error || 'Delete failed'), 'error'); return; }
+
+  showToast('🗑️ Water body deleted.', 'success');
+  await loadWaterBodies();
+}
+
 async function initMap() {
   if (typeof L === 'undefined') return;
   const map = L.map('wb-map', { center:[19.875,74.475], zoom:10 });
@@ -198,7 +318,51 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('wb-modal-close').addEventListener('click', () => document.getElementById('wb-modal-overlay').classList.remove('visible'));
   document.getElementById('wb-modal-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) e.currentTarget.classList.remove('visible'); });
   document.getElementById('logout-dropdown-btn')?.addEventListener('click', () => Auth.logout());
+  document.getElementById('wb-add-btn')?.addEventListener('click', openAddWBModal);
+  document.getElementById('wb-form')?.addEventListener('submit', saveWBForm);
+  document.getElementById('wb-form-cancel')?.addEventListener('click', () => { document.getElementById('wb-form-modal').style.display='none'; });
 });
 </script>
+
+<!-- Add/Edit Water Body Modal -->
+<div id="wb-form-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0b1f12;border:1px solid rgba(59,130,246,0.3);border-radius:18px;padding:24px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div id="wb-form-title" style="font-size:16px;font-weight:800;color:#3b82f6">Add Water Body</div>
+      <button id="wb-form-cancel" style="background:none;border:none;color:var(--text-dim);font-size:18px;cursor:pointer"><i class="fa fa-times"></i></button>
+    </div>
+    <form id="wb-form">
+      <input type="hidden" id="wb-form-id">
+      <div style="display:grid;gap:10px">
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Name *</label>
+          <input id="wbf-name" required class="form-input" placeholder="e.g. Kopargaon Lake" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Type</label>
+          <select id="wbf-type" class="form-select" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px">
+            <option>Lake</option><option>Pond</option><option>River</option><option>Reservoir</option><option>Check Dam</option><option>Percolation Tank</option>
+          </select></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Water Quality</label>
+            <select id="wbf-quality" class="form-select" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px">
+              <option>Excellent</option><option>Good</option><option>Moderate</option><option>Poor</option>
+            </select></div>
+          <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Pollution Level</label>
+            <select id="wbf-pollution" class="form-select" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px">
+              <option>Low</option><option>Moderate</option><option>High</option><option>Severe</option>
+            </select></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Area (km²)</label>
+            <input id="wbf-area" type="number" step="0.01" class="form-input" placeholder="0.00" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px"></div>
+          <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Biodiversity Score (0-10)</label>
+            <input id="wbf-bio" type="number" step="0.1" min="0" max="10" class="form-input" placeholder="5.0" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px"></div>
+        </div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-dim);display:block;margin-bottom:4px">Depth (m)</label>
+          <input id="wbf-depth" type="number" step="0.1" class="form-input" placeholder="e.g. 3.5" style="width:100%;padding:9px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px"></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:6px"><i class="fa fa-save"></i> Save Water Body</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>

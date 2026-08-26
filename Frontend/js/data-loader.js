@@ -92,7 +92,6 @@ const DataLoader = (() => {
       'environmental_threats.csv': generateThreatsFallback(),
       'users.csv': generateUsersFallback(),
       'monthly_species_statistics.csv': generateMonthlyStatsFallback(),
-      'weather.csv': generateWeatherFallback(),
       'water_bodies.csv': generateWaterBodiesFallback(),
       'conservation_projects.csv': generateConservationFallback(),
       'villages.csv': generateVillagesFallback(),
@@ -215,14 +214,6 @@ const DataLoader = (() => {
       });
     }));
     return data;
-  }
-
-  function generateWeatherFallback() {
-    return [{
-      weather_id: 'WX00001', date: new Date().toISOString().split('T')[0],
-      temperature_c: '28.5', rainfall_mm: '0', humidity_pct: '62',
-      wind_speed_kmph: '12', pressure_hpa: '1010', uv_index: '7'
-    }];
   }
 
   function generateWaterBodiesFallback() {

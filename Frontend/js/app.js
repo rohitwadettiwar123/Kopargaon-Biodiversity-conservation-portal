@@ -16,7 +16,6 @@ const App = (() => {
     { id: 'water',         label: 'Water Bodies',        icon: 'fa-water',          href: 'water-bodies.html',          badge: null },
     { id: 'ndvi',          label: 'NDVI Analytics',      icon: 'fa-seedling',       href: 'ndvi.html',                  badge: null },
     { id: 'conservation',  label: 'Conservation',        icon: 'fa-tree',           href: 'conservation.html',          badge: null },
-    { id: 'weather',       label: 'Weather',             icon: 'fa-cloud-sun',      href: 'weather.html',               badge: null },
     { id: 'education',     label: 'Education Hub',       icon: 'fa-graduation-cap', href: 'education.html',             badge: null },
     { id: 'leaderboard',   label: 'Leaderboard',         icon: 'fa-trophy',         href: 'leaderboard.html',           badge: null },
     { id: 'profile',       label: 'Profile',             icon: 'fa-user-circle',    href: 'profile.html',               badge: null },
@@ -33,37 +32,58 @@ const App = (() => {
   }
 
   // ── Build sidebar ─────────────────────────────────────────────────────
+  // Role-based sidebar visibility rules
+  // Items listed here are ONLY shown to specified roles.
+  // Items not listed are shown to everyone.
+  const NAV_ROLE_RULES = {
+    // water_admin sees: dashboard, water, gismap, leaderboard, profile, logout
+    water_admin:   ['dashboard','water','gismap','leaderboard','profile','logout'],
+    // threat_admin sees: dashboard, threats, gismap, leaderboard, profile, logout
+    threat_admin:  ['dashboard','threats','gismap','leaderboard','profile','logout'],
+    // super_admin + Administrator see everything (no restriction)
+    super_admin:   null,
+    Administrator: null,
+    // All others see everything
+    _default:      null,
+  };
+
   function buildSidebar() {
     const sidebar = document.getElementById('sidebar');
     if (!sidebar) return;
 
     const currentPage = getCurrentPage();
     const isPages = window.location.pathname.includes('/pages/');
+    const user = (typeof Auth !== 'undefined') ? Auth.getUser() : null;
+    const role = user?.email === 'admin@kbic.in' ? 'super_admin' : (user?.role || 'Citizen');
+    const allowedIds = NAV_ROLE_RULES[role] || NAV_ROLE_RULES['_default']; // null = all allowed
 
-    const navItemsHTML = NAV_ITEMS.map(item => {
-      const href = isPages
-        ? (item.id === 'dashboard' ? '../index.html' : item.href)
-        : (item.id === 'dashboard' ? 'index.html' : 'pages/' + item.href);
+    const navItemsHTML = NAV_ITEMS
+      .filter(item => !allowedIds || allowedIds.includes(item.id))
+      .map(item => {
+        const href = isPages
+          ? (item.id === 'dashboard' ? '../index.html' : item.href)
+          : (item.id === 'dashboard' ? 'index.html' : 'pages/' + item.href);
 
-      // Determine active
-      const pageKey = item.href.replace('.html', '').replace('-', '').toLowerCase();
-      const isActive = (item.id === 'dashboard' && currentPage === 'dashboard') ||
-                       (item.id !== 'dashboard' && currentPage.includes(pageKey.replace('../','').split('/').pop().replace('.html','')));
+        const pageKey = item.href.replace('.html', '').replace('-', '').toLowerCase();
+        const isActive = (item.id === 'dashboard' && currentPage === 'dashboard') ||
+                         (item.id !== 'dashboard' && currentPage.includes(pageKey.replace('../','').split('/').pop().replace('.html','')));
+        const isLogout = item.id === 'logout';
 
-      const isLogout = item.id === 'logout';
+        return `
+          <a class="nav-item ${isActive ? 'active' : ''}"
+             href="${isLogout ? '#' : href}"
+             data-page="${item.id}"
+             ${isLogout ? 'id="logout-btn"' : ''}
+             title="${item.label}">
+            <span class="nav-icon"><i class="fa ${item.icon}"></i></span>
+            <span class="nav-label">${item.label}</span>
+            ${item.badge ? `<span class="nav-badge">${item.badge}</span>` : ''}
+          </a>
+        `;
+      }).join('');
 
-      return `
-        <a class="nav-item ${isActive ? 'active' : ''}"
-           href="${isLogout ? '#' : href}"
-           data-page="${item.id}"
-           ${isLogout ? 'id="logout-btn"' : ''}
-           title="${item.label}">
-          <span class="nav-icon"><i class="fa ${item.icon}"></i></span>
-          <span class="nav-label">${item.label}</span>
-          ${item.badge ? `<span class="nav-badge">${item.badge}</span>` : ''}
-        </a>
-      `;
-    }).join('');
+    // Role badge for sidebar
+    const roleBadge = (typeof Auth !== 'undefined') ? Auth.getRoleBadgeHTML() : '';
 
     sidebar.innerHTML = `
       <div class="sidebar-logo">
@@ -71,6 +91,7 @@ const App = (() => {
         <div class="logo-text">
           <div class="logo-title">Kopargaon Biodiversity</div>
           <div class="logo-tagline">Explore • Conserve • Protect</div>
+          ${roleBadge}
         </div>
       </div>
       <nav class="sidebar-nav">
@@ -106,6 +127,7 @@ const App = (() => {
       if (icon) icon.className = 'fa fa-chevron-right';
     }
   }
+
 
   let sidebarCollapsed = false;
   function toggleSidebar() {

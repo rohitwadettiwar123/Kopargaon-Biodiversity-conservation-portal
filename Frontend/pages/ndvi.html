@@ -41,6 +41,24 @@
         </div>
       </div>
 
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="card" style="border: 1px solid var(--green-primary);">
+          <div class="card-title"><i class="fa fa-brain"></i> AI NDVI Forecast (6 Months)</div>
+          <div id="ndvi-forecast-chart-container" style="height:350px; position:relative;">
+             <div id="ml-loading" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:var(--text-dim); text-align:center;">
+                 <i class="fa fa-spinner fa-spin fa-2x"></i><br/>Loading ML Models...
+             </div>
+             <canvas id="ndvi-forecast-chart" style="display:none;"></canvas>
+          </div>
+        </div>
+        <div class="card" style="border: 1px solid var(--amber);">
+          <div class="card-title"><i class="fa fa-exclamation-triangle"></i> ML Anomaly Alerts</div>
+          <div id="ndvi-anomalies-list" style="height:350px; overflow-y:auto; padding-right:10px;">
+             <!-- Anomalies will be populated here -->
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title">Recent Data Readings</div>
         <div class="data-table-wrap">

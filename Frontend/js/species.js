@@ -356,7 +356,6 @@ const ObservationsPage = (() => {
         ${obsRow('paw', 'Count', o.individual_count||'N/A')}
         ${obsRow('heartbeat', 'Health', o.health_status||'N/A')}
         ${obsRow('percentage', 'Confidence', o.confidence_score ? (parseFloat(o.confidence_score)*100).toFixed(0)+'%' : 'N/A')}
-        ${obsRow('cloud', 'Weather', o.weather||'N/A')}
       </div>
       ${o.notes ? `<div style="margin-top:10px;padding:10px;background:var(--bg-tertiary);border-radius:8px;border-left:3px solid var(--green-primary);font-size:12px;color:var(--text-secondary)">${o.notes}</div>` : ''}
     `;

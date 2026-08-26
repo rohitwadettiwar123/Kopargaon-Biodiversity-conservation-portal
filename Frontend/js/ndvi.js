@@ -11,6 +11,7 @@ const NDVIPage = (() => {
       renderPieChart(summary.distribution);
       renderMap(data);
       renderTable(data);
+      loadMLInsights();
     } catch(e) {
       console.error('NDVI load failed:', e);
       // Fallback to CSV
@@ -19,6 +20,7 @@ const NDVIPage = (() => {
       renderPieChartFallback(ndviData);
       renderMap(ndviData);
       renderTable(ndviData);
+      loadMLInsights();
     }
   }
 
@@ -100,6 +102,61 @@ const NDVIPage = (() => {
         <td><span class="badge" style="background:${getHealthColor(health)}20;color:${getHealthColor(health)}">${health}</span></td>
       </tr>`;
     }).join('');
+  }
+
+  async function loadMLInsights() {
+    try {
+      const res = await fetch(`${API}/ndvi/ml-insights`);
+      if (!res.ok) {
+        document.getElementById('ml-loading').innerHTML = '<i class="fa fa-exclamation-circle"></i><br/>ML Models currently offline or missing.';
+        return;
+      }
+      const mlData = await res.json();
+      document.getElementById('ml-loading').style.display = 'none';
+      const canvas = document.getElementById('ndvi-forecast-chart');
+      canvas.style.display = 'block';
+
+      // Build Forecast Chart
+      const labels = mlData.forecast.map(f => f.date);
+      const values = mlData.forecast.map(f => f.ndvi);
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Predicted NDVI',
+            data: values,
+            borderColor: '#22c55e',
+            backgroundColor: 'rgba(34,197,94,0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      // Build Anomalies List
+      const listEl = document.getElementById('ndvi-anomalies-list');
+      if (mlData.anomalies && mlData.anomalies.length > 0) {
+        listEl.innerHTML = mlData.anomalies.map(a => `
+          <div style="padding:10px; margin-bottom:10px; border-left:4px solid var(--amber); background:var(--bg-tertiary); border-radius:4px;">
+            <div style="font-weight:600; font-size:13px;"><i class="fa fa-exclamation-circle text-amber"></i> Anomaly Detected</div>
+            <div style="font-size:12px; color:var(--text-secondary); margin-top:4px;">Date: ${a.date} | NDVI: <span style="font-weight:600;">${a.ndvi.toFixed(2)}</span></div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:2px;">Vegetation health significantly deviates from seasonal norm.</div>
+          </div>
+        `).join('');
+      } else {
+        listEl.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-dim);">No recent anomalies detected. Vegetation health is stable.</div>';
+      }
+
+    } catch(e) {
+      console.error('Failed to load ML insights:', e);
+      document.getElementById('ml-loading').innerHTML = '<i class="fa fa-times-circle"></i><br/>Failed to load ML data.';
+    }
   }
 
   return { init };

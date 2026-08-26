@@ -1046,19 +1046,61 @@ footer {
 .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .auth-demo {
-  background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.12);
-  border-radius: 8px; padding: 10px 14px; margin-top: 4px;
+  border-radius: 10px; margin-top: 12px;
 }
-.auth-demo-title { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--green-primary); letter-spacing: 0.06em; margin-bottom: 6px; }
-.auth-demo-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-.auth-demo-cred { font-size: 11px; color: var(--text-secondary); font-family: monospace; }
-.auth-demo-fill {
-  font-size: 10px; color: var(--green-primary); background: rgba(34,197,94,0.1);
-  border: 1px solid rgba(34,197,94,0.2); border-radius: 4px; padding: 2px 8px;
-  cursor: pointer; font-family: inherit; font-weight: 600; transition: background 0.2s;
+.auth-demo-title {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  color: var(--green-primary); letter-spacing: 0.08em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
 }
-.auth-demo-fill:hover { background: rgba(34,197,94,0.2); }
+/* Role Cards Grid */
+.demo-cards-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
+}
+.demo-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 10px 11px;
+  cursor: pointer; transition: all 0.2s ease;
+  position: relative; overflow: hidden;
+  text-align: left;
+}
+.demo-card::before {
+  content: ''; position: absolute; inset: 0;
+  opacity: 0; transition: opacity 0.2s;
+}
+.demo-card:hover { transform: translateY(-2px); }
+.demo-card:active { transform: translateY(0); }
+/* Per-role accent colours via border-color on hover */
+.demo-card.citizen  { --dc:#3b82f6; }
+.demo-card.admin    { --dc:#fbbf24; }
+.demo-card.water    { --dc:#06b6d4; }
+.demo-card.threat   { --dc:#ef4444; }
+.demo-card:hover    { border-color: var(--dc,#22c55e); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.dc-emoji { font-size: 20px; margin-bottom: 5px; display: block; }
+.dc-name  { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+.dc-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 7px; border-radius: 20px; font-size: 8.5px; font-weight: 800;
+  letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 5px;
+}
+.dc-access { font-size: 9px; color: var(--text-dim); line-height: 1.4; margin-bottom: 6px; }
+.dc-cred {
+  font-family: monospace; font-size: 9.5px; color: var(--text-dim);
+  background: rgba(0,0,0,0.2); padding: 3px 6px; border-radius: 4px;
+  display: block; word-break: break-all; margin-bottom: 6px;
+}
+.dc-login-btn {
+  width: 100%; padding: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+  border-radius: 6px; cursor: pointer; transition: all 0.15s;
+  border: 1px solid var(--dc,#22c55e);
+  color: var(--dc,#22c55e);
+  background: rgba(0,0,0,0.2);
+}
+.dc-login-btn:hover { background: var(--dc,#22c55e); color: #000; }
 body.locked { overflow: hidden !important; }
+
 
 /* ================================================================
    LIVE AI TRACKING SECTION
@@ -1165,17 +1207,48 @@ body.locked { overflow: hidden !important; }
           <button type="button" class="auth-pw-toggle" onclick="togglePw('login-password', this)"><i class="fa fa-eye"></i></button>
         </div>
       </div>
-      <button class="auth-btn" id="login-submit-btn" onclick="doLogin()">Sign In to Portal</button>
+      <button type="button" class="auth-btn" id="login-submit-btn" onclick="doLogin()">Sign In to Portal</button>
 
       <div class="auth-demo">
-        <div class="auth-demo-title">🔑 Demo Accounts</div>
-        <div class="auth-demo-row">
-          <span class="auth-demo-cred">kalyani@kbic.in / biodiversity123</span>
-          <button class="auth-demo-fill" onclick="fillDemo('kalyani@kbic.in','biodiversity123')">Fill</button>
-        </div>
-        <div class="auth-demo-row">
-          <span class="auth-demo-cred">admin@kbic.in / admin123</span>
-          <button class="auth-demo-fill" onclick="fillDemo('admin@kbic.in','admin123')">Fill</button>
+        <div class="auth-demo-title"><i class="fa fa-users"></i> Demo Accounts</div>
+        <div class="demo-cards-grid">
+          
+          <!-- Citizen -->
+          <div class="demo-card citizen" onclick="fillDemo(event, 'kalyani@kbic.in','biodiversity123')">
+            <span class="dc-name">Kalyani (Citizen)</span>
+            <span class="dc-badge" style="background:rgba(100,116,139,0.15);color:#94a3b8;border:1px solid #64748b44">👤 CITIZEN</span>
+            <div class="dc-access">Read-only access to portal data.</div>
+            <span class="dc-cred">kalyani@kbic.in<br>biodiversity123</span>
+            <button type="button" class="dc-login-btn">Login as Citizen</button>
+          </div>
+
+          <!-- Zilla Parishad (Water) -->
+          <div class="demo-card water" onclick="fillDemo(event, 'zilla@kbic.in','zilla123')">
+            <span class="dc-name">Zilla Parishad</span>
+            <span class="dc-badge" style="background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid #3b82f644">💧 WATER ADMIN</span>
+            <div class="dc-access">Manage & update water bodies.</div>
+            <span class="dc-cred">zilla@kbic.in<br>zilla123</span>
+            <button type="button" class="dc-login-btn">Login as Zilla Parishad</button>
+          </div>
+
+          <!-- Municipal Corp (Threats) -->
+          <div class="demo-card threat" onclick="fillDemo(event, 'municipal@kbic.in','municipal123')">
+            <span class="dc-name">Municipal Corp</span>
+            <span class="dc-badge" style="background:rgba(239,68,68,0.15);color:#f87171;border:1px solid #ef444444">⚠️ THREAT ADMIN</span>
+            <div class="dc-access">Manage environmental threats.</div>
+            <span class="dc-cred">municipal@kbic.in<br>municipal123</span>
+            <button type="button" class="dc-login-btn">Login as Municipal Corp</button>
+          </div>
+
+          <!-- Super Admin -->
+          <div class="demo-card admin" onclick="fillDemo(event, 'admin@kbic.in','admin123')">
+            <span class="dc-name">System Admin</span>
+            <span class="dc-badge" style="background:rgba(251,191,36,0.15);color:#fbbf24;border:1px solid #fbbf2444">👑 SUPER ADMIN</span>
+            <div class="dc-access">Full system access & reports.</div>
+            <span class="dc-cred">admin@kbic.in<br>admin123</span>
+            <button type="button" class="dc-login-btn">Login as Admin</button>
+          </div>
+
         </div>
       </div>
 
@@ -1199,7 +1272,7 @@ body.locked { overflow: hidden !important; }
           <button type="button" class="auth-pw-toggle" onclick="togglePw('reg-password', this)"><i class="fa fa-eye"></i></button>
         </div>
       </div>
-      <button class="auth-btn" id="register-submit-btn" onclick="doRegister()">Create Account</button>
+      <button type="button" class="auth-btn" id="register-submit-btn" onclick="doRegister()">Create Account</button>
     </div>
   </div>
 </div>
@@ -1389,7 +1462,70 @@ body.locked { overflow: hidden !important; }
       <span class="kpi-label">Conservation Projects</span>
     </div>
   </div>
+  
+  <!-- RBAC Admin Dashboard Widgets -->
+  <div id="rbac-dashboard-context" style="margin-top: 40px; display: none;">
+    <!-- Rendered dynamically via JS for water_admin and threat_admin -->
+  </div>
 </section>
+
+<!-- Script to load RBAC Dashboard Context -->
+<script>
+window.loadRBACDashboard = async () => {
+  const token = sessionStorage.getItem('kb_session');
+  if (!token) return; // Not logged in
+  try {
+    const user = JSON.parse(token);
+    if (!user.token) return;
+    const res = await fetch('http://localhost:3000/api/rbac/dashboard-context', {
+      headers: { 'Authorization': 'Bearer ' + user.token }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.widgets && data.widgets.length > 0) {
+      const container = document.getElementById('rbac-dashboard-context');
+      container.style.display = 'block';
+      let html = `<div style="text-align:center;margin-bottom:24px"><h3 style="font-size:24px;color:var(--cyan)">Admin Overview</h3></div>`;
+      html += `<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;">`;
+      
+      data.widgets.forEach(w => {
+        if (w.type === 'water_bodies') {
+          html += `
+            <div style="background:var(--bg-secondary);border:1px solid var(--cyan);border-radius:16px;padding:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:-20px;right:-20px;font-size:100px;opacity:0.05">💧</div>
+              <h4 style="font-size:18px;color:var(--cyan);margin-bottom:16px"><i class="fa fa-water"></i> ${w.title}</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--text-primary)">${w.stats.total}</div><div style="font-size:11px;color:var(--text-dim)">Total Water Bodies</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--green-primary)">${w.stats.excellent_quality}</div><div style="font-size:11px;color:var(--text-dim)">Excellent Quality</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:#38bdf8">${w.stats.high_biodiversity}</div><div style="font-size:11px;color:var(--text-dim)">High Biodiversity</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--red)">${w.stats.at_risk}</div><div style="font-size:11px;color:var(--text-dim)">At Risk / High Poll.</div></div>
+              </div>
+              <a href="pages/water-bodies.html" style="display:inline-block;margin-top:16px;color:var(--cyan);font-size:13px;text-decoration:none;font-weight:600">Manage Water Bodies <i class="fa fa-arrow-right"></i></a>
+            </div>
+          `;
+        } else if (w.type === 'threats') {
+          html += `
+            <div style="background:var(--bg-secondary);border:1px solid var(--red);border-radius:16px;padding:24px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:-20px;right:-20px;font-size:100px;opacity:0.05">⚠️</div>
+              <h4 style="font-size:18px;color:var(--red);margin-bottom:16px"><i class="fa fa-exclamation-triangle"></i> ${w.title}</h4>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--text-primary)">${w.stats.total}</div><div style="font-size:11px;color:var(--text-dim)">Total Threats</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--amber)">${w.stats.active}</div><div style="font-size:11px;color:var(--text-dim)">Active Threats</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--red)">${w.stats.critical}</div><div style="font-size:11px;color:var(--text-dim)">Critical Severity</div></div>
+                <div style="background:var(--bg-tertiary);padding:12px;border-radius:12px"><div style="font-size:24px;font-weight:800;color:var(--green-primary)">${w.stats.resolved}</div><div style="font-size:11px;color:var(--text-dim)">Resolved</div></div>
+              </div>
+              <a href="pages/threats.html" style="display:inline-block;margin-top:16px;color:var(--red);font-size:13px;text-decoration:none;font-weight:600">Manage Threats <i class="fa fa-arrow-right"></i></a>
+            </div>
+          `;
+        }
+      });
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+  } catch (e) {}
+};
+document.addEventListener('DOMContentLoaded', window.loadRBACDashboard);
+</script>
 
 <!-- ================================================================
      PARTICLE SECTION
@@ -1454,7 +1590,7 @@ body.locked { overflow: hidden !important; }
     <div class="feature-card fc-cyan" data-aos="fade-up" data-aos-delay="400">
       <div class="feature-icon-wrap">📊</div>
       <div class="feature-title">Analytics & NDVI</div>
-      <div class="feature-desc">10-year observation trends, species distribution charts, vegetation health (NDVI) spatial maps, weather correlation analysis, and a composite Biodiversity Health Score.</div>
+      <div class="feature-desc">10-year observation trends, species distribution charts, vegetation health (NDVI) spatial maps, and a composite Biodiversity Health Score.</div>
       <a href="pages/observations.html" class="feature-link">View Analytics <i class="fa fa-arrow-right"></i></a>
     </div>
 
@@ -1607,18 +1743,7 @@ body.locked { overflow: hidden !important; }
       <div class="env-label">Average NDVI — Vegetation Health Index</div>
       <span class="env-trend up"><i class="fa fa-arrow-up"></i> +0.04 from last month</span>
     </div>
-    <div class="env-card" data-aos="fade-up" data-aos-delay="100">
-      <div class="env-chart-mini" id="temp-mini-chart"></div>
-      <div class="env-value" style="color:var(--amber)" id="temp-val">28.4°C</div>
-      <div class="env-label">Average Temperature — Current Month</div>
-      <span class="env-trend neutral"><i class="fa fa-equals"></i> Seasonal normal</span>
-    </div>
-    <div class="env-card" data-aos="fade-up" data-aos-delay="200">
-      <div class="env-chart-mini" id="rain-mini-chart"></div>
-      <div class="env-value" style="color:var(--cyan)" id="rain-val">142mm</div>
-      <div class="env-label">Monthly Rainfall — Kopargaon Taluka</div>
-      <span class="env-trend up"><i class="fa fa-arrow-up"></i> +18% above average</span>
-    </div>
+
     <div class="env-card" data-aos="fade-up" data-aos-delay="300">
       <div class="env-chart-mini" id="bio-mini-chart"></div>
       <div class="env-value" style="color:var(--purple)" id="bio-val">78/100</div>
@@ -1727,7 +1852,6 @@ body.locked { overflow: hidden !important; }
       <a href="pages/threats.html">Environmental Threats</a>
       <a href="pages/water-bodies.html">Water Bodies</a>
       <a href="pages/ndvi.html">NDVI Analytics</a>
-      <a href="pages/weather.html">Weather Data</a>
     </div>
 
     <div class="footer-col">
@@ -2233,8 +2357,7 @@ function buildMiniChart(id, values, color) {
   });
 }
 buildMiniChart('ndvi-mini-chart',[0.31,0.35,0.38,0.42,0.40,0.44,0.46,0.42,0.45,0.48,0.42,0.44],'#22c55e');
-buildMiniChart('temp-mini-chart',[22,25,30,35,34,30,28,27,28,26,24,22],'#fbbf24');
-buildMiniChart('rain-mini-chart',[2,4,8,22,60,120,142,130,80,30,10,4],'#00d4ff');
+
 buildMiniChart('bio-mini-chart',[68,70,72,70,74,76,74,78,76,78,80,78],'#a78bfa');
 
 /* ================================================================
@@ -2483,10 +2606,13 @@ function togglePw(inputId, btn) {
   btn.innerHTML = '<i class="fa fa-eye' + (isText ? '' : '-slash') + '"></i>';
 }
 
-function fillDemo(email, pw) {
+function fillDemo(e, email, pw) {
+  if (e) e.stopPropagation();
   document.getElementById('login-email').value = email;
   document.getElementById('login-password').value = pw;
   document.getElementById('login-error').classList.remove('show');
+  // Automatically trigger login for better UX
+  doLogin();
 }
 
 function _showAuthError(formId, msg) {
@@ -2502,14 +2628,28 @@ function _hideAuthError(formId) {
 
 function _completeLogin(user) {
   var overlay = document.getElementById('login-overlay');
-  overlay.classList.add('hidden');
+  if (overlay) overlay.style.display = 'none';
   document.body.classList.remove('locked');
+  
   var navName = document.getElementById('nav-user-name');
   var navProfile = document.getElementById('nav-user-profile');
   if (navName) navName.textContent = (user.full_name || 'User').split(' ')[0];
   if (navProfile) navProfile.style.display = 'flex';
+  
+  if (typeof Auth !== 'undefined' && Auth.renderUserUI) {
+    Auth.renderUserUI();
+  }
+  
+  // Trigger RBAC dashboard context load
+  if (window.loadRBACDashboard) {
+    window.loadRBACDashboard();
+  }
+
   var redirect = sessionStorage.getItem('kb_redirect');
-  if (redirect) { sessionStorage.removeItem('kb_redirect'); window.location.href = redirect; }
+  if (redirect) { 
+    sessionStorage.removeItem('kb_redirect'); 
+    window.location.href = redirect; 
+  }
 }
 
 function doLogin() {

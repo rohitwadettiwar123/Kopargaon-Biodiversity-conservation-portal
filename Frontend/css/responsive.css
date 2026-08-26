@@ -13,8 +13,7 @@
     grid-template-columns: 1.2fr 1fr 1fr;
   }
 
-  .charts-row .ndvi-card,
-  .charts-row .weather-card {
+  .charts-row .ndvi-card {
     display: none; /* Hide on tablet for space */
   }
 
