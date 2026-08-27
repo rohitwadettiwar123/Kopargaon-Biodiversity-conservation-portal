@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }).setView([19.8885, 74.475], 16);
 
   // Dark Map Tiles
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 19
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxZoom: 16
   }).addTo(map);
 
   // 2. Define Zones (Camera FOV and Threat Zone)

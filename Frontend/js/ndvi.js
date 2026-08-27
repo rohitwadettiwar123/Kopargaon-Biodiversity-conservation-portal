@@ -56,7 +56,7 @@ const NDVIPage = (() => {
     const mapEl = document.getElementById('ndvi-map');
     if (!mapEl || typeof L === 'undefined') return;
     const map = L.map('ndvi-map').setView([19.875, 74.475], 11);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© CARTO' }).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ' }).addTo(map);
     data.slice(0, 500).forEach(d => {
       const lat = parseFloat(d.lat || d.latitude);
       const lng = parseFloat(d.lng || d.longitude);
