@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "Kopargaon Biodiversity Information & Conservation Web Portal — Hackathon 2026",
   "main": "backend/server.js",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node backend/server.js",
