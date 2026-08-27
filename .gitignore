@@ -6,9 +6,9 @@ yarn-error.log*
 
 # Database & Uploads
 backend/uploads/
-backend/database.sqlite
-backend/database.sqlite-shm
-backend/database.sqlite-wal
+# backend/database.sqlite (Uncommented for initial deployment seed)
+# backend/database.sqlite (Uncommented for initial deployment seed)-shm
+# backend/database.sqlite (Uncommented for initial deployment seed)-wal
 
 # Environment variables
 backend/.env

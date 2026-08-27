@@ -5,7 +5,7 @@
  * Verification workflow: PENDING → APPROVED/REJECTED
  */
 const CitizenReports = (() => {
-  const API = 'http://localhost:3000/api';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') ? 'http://localhost:3000/api' : '/api';
   let allSpecies = [], allVillages = [];
 
   // ── Init ──────────────────────────────────────────────────────────────────

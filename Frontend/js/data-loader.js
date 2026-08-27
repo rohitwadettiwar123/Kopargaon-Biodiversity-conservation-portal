@@ -11,7 +11,7 @@ const DataLoader = (() => {
 
   // ── Determine base path based on current page location ─────────────────
   function getBasePath() {
-    return 'http://localhost:3000/api/data/';
+    return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') ? 'http://localhost:3000/api/data/' : '/api/data/';
   }
 
   // ── Parse CSV Text → Array of Objects ─────────────────────────────────

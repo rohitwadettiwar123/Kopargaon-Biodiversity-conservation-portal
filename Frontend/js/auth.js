@@ -22,7 +22,7 @@ const Auth = (() => {
    */
   async function login(email, password) {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch((window.location.hostname === 'localhost' || window.location.protocol === 'file:') ? 'http://localhost:3000/api/auth/login' : '/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -44,7 +44,7 @@ const Auth = (() => {
    */
   async function register(fullName, email, password) {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch((window.location.hostname === 'localhost' || window.location.protocol === 'file:') ? 'http://localhost:3000/api/auth/register' : '/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ full_name: fullName, email, password })
