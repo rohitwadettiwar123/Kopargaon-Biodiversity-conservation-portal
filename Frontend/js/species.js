@@ -157,10 +157,15 @@ const SpeciesPage = (() => {
 
     const emoji = App.getCategoryEmoji(s.category);
     const iucnBadge = App.getIUCNBadge(s.iucn_status);
+    const normalizedName = s.scientific_name ? s.scientific_name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '';
+    const photoUrl = normalizedName ? `../assets/images/species/${normalizedName}.jpg` : null;
+    const imgHtml = photoUrl
+      ? `<img src="${photoUrl}" alt="${s.common_name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span style="font-size:42px;display:none;align-items:center;justify-content:center;width:100%;height:100%;">${emoji}</span>`
+      : `<span style="font-size:42px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${emoji}</span>`;
 
     modalBody.innerHTML = `
       <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:16px">
-        <div style="width:80px;height:80px;background:var(--bg-tertiary);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:42px;flex-shrink:0">${emoji}</div>
+        <div style="width:80px;height:80px;background:var(--bg-tertiary);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0">${imgHtml}</div>
         <div>
           <h2 style="font-size:20px;font-weight:800">${s.common_name}</h2>
           <p style="font-style:italic;color:var(--text-dim);margin:4px 0 8px">${s.scientific_name}</p>
