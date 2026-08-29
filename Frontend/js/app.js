@@ -20,6 +20,7 @@ const App = (() => {
     { id: 'leaderboard',   label: 'Leaderboard',         icon: 'fa-trophy',         href: 'leaderboard.html',           badge: null },
     { id: 'profile',       label: 'Profile',             icon: 'fa-user-circle',    href: 'profile.html',               badge: null },
     { id: 'analytics',     label: 'Analytics',           icon: 'fa-chart-line',     href: 'analytics.html',             badge: null },
+    { id: 'recovery',      label: 'Data Resilience',     icon: 'fa-shield-alt',     href: 'blackout-recovery.html',   badge: null },
     { id: 'logout',        label: 'Logout',              icon: 'fa-sign-out-alt',   href: '#',                          badge: null },
   ];
 
@@ -44,7 +45,7 @@ const App = (() => {
     super_admin:   null,
     Administrator: null,
     // All others see everything
-    _default:      null,
+    _default:      ['dashboard','species','observations','citizen','gismap','threats','water','ndvi','conservation','education','leaderboard','profile','analytics','logout'],
   };
 
   function buildSidebar() {
