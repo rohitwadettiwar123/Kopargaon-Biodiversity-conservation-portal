@@ -43,7 +43,7 @@ module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly
   app.post('/api/recovery/backup', authenticateToken, adminOnly, async (req, res) => {
     try {
       const backup = await createBackup(db);
-      res.json({ success: true, backup });
+      res.download(backup.filepath, backup.filename);
     } catch (e) {
       res.status(500).json({ error: e.message });
     }

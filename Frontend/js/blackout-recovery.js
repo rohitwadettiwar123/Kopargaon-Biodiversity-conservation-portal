@@ -1,4 +1,4 @@
-﻿const BlackoutRecovery = (() => {
+const BlackoutRecovery = (() => {
   async function init() {
     await refreshStatus();
     await loadHistory();
@@ -66,8 +66,34 @@
   async function createBackup() {
     if (!confirm('Create a new database backup?')) return;
     try {
-      await fetchWithAuth('/api/recovery/backup', { method: 'POST' });
-      Notifications.show('Backup created successfully', 'success');
+      const token = Auth.getToken();
+      const res = await fetch('/api/recovery/backup', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        let msg = 'API Error';
+        try { msg = JSON.parse(text).error || msg; } catch(e) { msg = text; }
+        throw new Error(msg);
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const disposition = res.headers.get('Content-Disposition');
+      let filename = 'backup.sqlite';
+      if (disposition && disposition.indexOf('attachment') !== -1) {
+        const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+        if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+      }
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      Notifications.show('Backup downloaded successfully', 'success');
       refreshStatus();
     } catch (e) {
       Notifications.show('Failed to create backup: ' + e.message, 'error');
