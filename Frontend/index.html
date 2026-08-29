@@ -733,60 +733,6 @@ section { padding: clamp(60px,8vw,100px) clamp(16px,5vw,80px); }
 .env-trend.neutral { background:rgba(251,191,36,0.1);color:#fbbf24; }
 
 /* ================================================================
-   TIMELINE SECTION
-================================================================ */
-#timeline-section { background:var(--bg-secondary); }
-
-.timeline-wrap { position:relative; }
-.timeline-wrap::before {
-  content:''; position:absolute;
-  left:24px; top:0; bottom:0; width:2px;
-  background:linear-gradient(180deg, transparent, var(--green-primary), transparent);
-}
-@media(min-width:768px){
-  .timeline-wrap::before { left:50%; transform:translateX(-1px); }
-}
-
-.timeline-item {
-  display:flex; gap:24px; margin-bottom:32px;
-  position:relative; padding-left:56px;
-}
-@media(min-width:768px){
-  .timeline-item { padding-left:0; width:48%; }
-  .timeline-item:nth-child(even) { margin-left:auto; }
-  .timeline-item:nth-child(odd)  { text-align:right; flex-direction:row-reverse; }
-}
-
-.timeline-dot {
-  position:absolute; left:15px; top:18px;
-  width:20px; height:20px; border-radius:50%;
-  background:var(--green-primary);
-  border:3px solid var(--bg-secondary);
-  box-shadow:0 0 16px rgba(34,197,94,0.5);
-  flex-shrink:0; z-index:1;
-}
-@media(min-width:768px){
-  .timeline-dot { left:auto; right:-10px; top:18px; }
-  .timeline-item:nth-child(even) .timeline-dot { left:-10px; right:auto; }
-}
-
-.timeline-content {
-  padding:18px 20px;
-  border-radius:var(--radius-md);
-  background:var(--bg-tertiary);
-  border:1px solid var(--border);
-  flex:1;
-  transition:border-color 0.3s, transform 0.3s;
-}
-.timeline-content:hover { border-color:rgba(34,197,94,0.35); transform:scale(1.02); }
-.timeline-year {
-  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
-  color:var(--green-primary); margin-bottom:4px;
-}
-.timeline-title { font-size:14px; font-weight:700; color:var(--text-primary); margin-bottom:4px; }
-.timeline-desc { font-size:12px; color:var(--text-dim); line-height:1.6; }
-
-/* ================================================================
    CTA SECTION
 ================================================================ */
 #cta-section {
@@ -1754,21 +1700,6 @@ document.addEventListener('DOMContentLoaded', window.loadRBACDashboard);
 </section>
 
 <!-- ================================================================
-     TIMELINE
-================================================================ -->
-<section id="timeline-section">
-  <div style="text-align:center;margin-bottom:48px">
-    <div class="section-tag">📅 10-Year Journey</div>
-    <h2 class="section-title">A Decade of <span>Biodiversity Discovery</span></h2>
-    <p class="section-sub" style="margin:0 auto">Tracing Kopargaon's ecological story from 2016 to 2026 — a living record of discovery, challenge, and conservation.</p>
-  </div>
-
-  <div class="timeline-wrap" id="timeline-wrap">
-    <!-- Populated by JS -->
-  </div>
-</section>
-
-<!-- ================================================================
      LEADERBOARD
 ================================================================ -->
 <section id="leaderboard-section">
@@ -2359,35 +2290,6 @@ function buildMiniChart(id, values, color) {
 buildMiniChart('ndvi-mini-chart',[0.31,0.35,0.38,0.42,0.40,0.44,0.46,0.42,0.45,0.48,0.42,0.44],'#22c55e');
 
 buildMiniChart('bio-mini-chart',[68,70,72,70,74,76,74,78,76,78,80,78],'#a78bfa');
-
-/* ================================================================
-   TIMELINE DATA
-================================================================ */
-const timelineData = [
-  {year:'2016', title:'Data Collection Begins', desc:'First systematic biodiversity surveys across Kopargaon Taluka with 8 trained field observers.'},
-  {year:'2018', title:'102 Bird Species Catalogued', desc:'Complete avifauna survey documents all resident and migratory bird species.'},
-  {year:'2019', title:'Water Quality Crisis', desc:'15 water bodies flagged for high pollution — triggers conservation response.'},
-  {year:'2020', title:'Citizen Science Launch', desc:'500 community members enrolled as citizen observers during lockdown period.'},
-  {year:'2021', title:'Critically Endangered Record', desc:'First documented sighting of critically endangered species triggers protected zone.'},
-  {year:'2022', title:'50 Conservation Projects', desc:'₹8.4 Crore sanctioned across 50 active conservation and habitat restoration projects.'},
-  {year:'2023', title:'NDVI Satellite Integration', desc:'Vegetation health monitoring expanded with satellite NDVI data covering all 100 villages.'},
-  {year:'2024', title:'10,000 Observations', desc:'Community reaches milestone of 10,000 verified species observations in the database.'},
-  {year:'2025', title:'AI Identification Prototype', desc:'First AI species identification prototype tested — 87% accuracy on top-20 birds.'},
-  {year:'2026', title:'Portal Launch 🚀', desc:'This portal launched — digitalizing 10 years of biodiversity data into one platform.'},
-];
-
-const tw=document.getElementById('timeline-wrap');
-timelineData.forEach((item,i)=>{
-  tw.innerHTML+=`
-    <div class="timeline-item" data-aos="fade-up" data-aos-delay="${i*60}">
-      <div class="timeline-dot"></div>
-      <div class="timeline-content">
-        <div class="timeline-year">${item.year}</div>
-        <div class="timeline-title">${item.title}</div>
-        <div class="timeline-desc">${item.desc}</div>
-      </div>
-    </div>`;
-});
 
 /* ================================================================
    SPECIES SHOWCASE
