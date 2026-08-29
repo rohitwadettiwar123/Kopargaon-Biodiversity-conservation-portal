@@ -1,8 +1,8 @@
-﻿/**
- * â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
- * â•‘   KOPARGAON BIODIVERSITY CONSERVATION PORTAL â€” BACKEND API      â•‘
- * â•‘   Complete Production-Grade REST API with 40+ Endpoints          â•‘
- * â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/**
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║   KOPARGAON BIODIVERSITY CONSERVATION PORTAL — BACKEND API      ║
+ * ║   Complete Production-Grade REST API with 40+ Endpoints          ║
+ * ╚══════════════════════════════════════════════════════════════════╝
  *
  * Modules: Auth, Species, Observations, Citizen Reports, Threats,
  *          Water Bodies, Conservation, Leaderboard, Dashboard,
@@ -26,18 +26,18 @@ const fs         = require('fs');
 
 const app = express();
 
-// â”€â”€ Security Middleware â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Security Middleware ─────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false })); // CSP disabled for demo
 app.use(cors({ origin: '*', methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'] }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('dev'));
 
-// â”€â”€ Rate Limiting â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Rate Limiting ───────────────────────────────────────────────────────────
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 1000, message: { error: 'Too many requests' } });
 app.use('/api/', limiter);
 
-// â”€â”€ Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Config ──────────────────────────────────────────────────────────────────
 const DB_PATH    = path.join(__dirname, 'database.sqlite');
 const JWT_SECRET = 'kbic-kopargaon-biodiversity-secret-2026';
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
@@ -46,15 +46,15 @@ const ADMIN_EMAIL = 'admin@kbic.in';
 // Create uploads directory if not exists
 if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
-// â”€â”€ Database â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Database ────────────────────────────────────────────────────────────────
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) { console.error('DB Error:', err.message); process.exit(1); }
-  console.log('âœ… Connected to SQLite database');
+  console.log('✅ Connected to SQLite database');
 });
 db.run('PRAGMA journal_mode=WAL');
 db.run('PRAGMA foreign_keys=ON');
 
-// â”€â”€ File Upload Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── File Upload Config ──────────────────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, UPLOADS_DIR),
   filename: (req, file, cb) => {
@@ -68,21 +68,21 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
 
-// â”€â”€ Serve uploaded images â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Serve uploaded images ───────────────────────────────────────────────────
 app.use('/uploads', express.static(UPLOADS_DIR));
 
-// â”€â”€ Serve Frontend (Static Files) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Serve Frontend (Static Files) ──────────────────────────────────────────
 const FRONTEND_DIR = path.join(__dirname, '..', 'Frontend');
 const DATA_DIR     = path.join(__dirname, '..', 'data');
 app.use(express.static(FRONTEND_DIR));
 app.use('/data', express.static(DATA_DIR));
 
-// â”€â”€ Helper: DB Promise Wrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Helper: DB Promise Wrappers ─────────────────────────────────────────────
 const dbGet  = (sql, params=[]) => new Promise((res,rej) => db.get(sql,params,(e,r)=>e?rej(e):res(r)));
 const dbAll  = (sql, params=[]) => new Promise((res,rej) => db.all(sql,params,(e,r)=>e?rej(e):res(r)));
 const dbRun  = (sql, params=[]) => new Promise((res,rej) => db.run(sql,params,function(e){e?rej(e):res({lastID:this.lastID,changes:this.changes})}));
 
-// â”€â”€ Auth Middleware â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Auth Middleware ─────────────────────────────────────────────────────────
 function authenticateToken(req, res, next) {
   const token = (req.headers['authorization'] || '').split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Authentication token required.' });
@@ -109,8 +109,8 @@ function optionalAuth(req, res, next) {
   next();
 }
 
-// â”€â”€ RBAC: Role & Permission System â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Role hierarchy (highest â†’ lowest privilege)
+// ── RBAC: Role & Permission System ─────────────────────────────────────────
+// Role hierarchy (highest → lowest privilege)
 const ROLES = {
   super_admin:   'super_admin',
   water_admin:   'water_admin',
@@ -187,7 +187,7 @@ function requirePermission(permission) {
 }
 
 /**
- * Audit log helper â€” fire-and-forget, never blocks request.
+ * Audit log helper — fire-and-forget, never blocks request.
  */
 async function auditLog(userId, role, action, resourceType, resourceId) {
   try {
@@ -203,10 +203,10 @@ async function auditLog(userId, role, action, resourceType, resourceId) {
 }
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ RBAC: DB init + Demo Account Seeding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── RBAC: DB init + Demo Account Seeding ───────────────────────────────────
 // Creates audit_logs table and demo accounts if they don't already exist.
-// Uses INSERT OR IGNORE â€” completely safe to run on every server start.
+// Uses INSERT OR IGNORE — completely safe to run on every server start.
 (async () => {
   try {
     // 1. Create audit_logs table
@@ -221,7 +221,7 @@ async function auditLog(userId, role, action, resourceType, resourceId) {
         timestamp    TEXT    NOT NULL
       )
     `);
-    console.log('âœ… audit_logs table ready');
+    console.log('✅ audit_logs table ready');
 
     // Ensure image authenticity fields exist in citizen_reports
     const addColumn = async (table, col, type) => {
@@ -251,7 +251,7 @@ async function auditLog(userId, role, action, resourceType, resourceId) {
         ['USR_ZILLA', 'Zilla Parishad', 'zilla@kbic.in', hash, 'water_admin',
          new Date().toISOString().split('T')[0], 0, 0, 'Water Guardian']
       );
-      console.log('âœ… Demo account created: Zilla Parishad (water_admin)');
+      console.log('✅ Demo account created: Zilla Parishad (water_admin)');
     }
 
     // 3. Seed Municipal Corporation (threat_admin)
@@ -264,7 +264,7 @@ async function auditLog(userId, role, action, resourceType, resourceId) {
         ['USR_MUNI', 'Municipal Corporation', 'municipal@kbic.in', hash, 'threat_admin',
          new Date().toISOString().split('T')[0], 0, 0, 'Threat Watcher']
       );
-      console.log('âœ… Demo account created: Municipal Corporation (threat_admin)');
+      console.log('✅ Demo account created: Municipal Corporation (threat_admin)');
     }
 
     // 4. Ensure Kalyani citizen demo account has unique user_id (USR_KALYANI)
@@ -278,28 +278,28 @@ async function auditLog(userId, role, action, resourceType, resourceId) {
         ['USR_KALYANI', 'Kalyani S.', 'kalyani@kbic.in', hash, 'Citizen',
          new Date().toISOString().split('T')[0], 0, 0, 'Citizen Reporter']
       );
-      console.log('âœ… Demo account created: Kalyani (Citizen)');
+      console.log('✅ Demo account created: Kalyani (Citizen)');
     } else if (kalyaniExists.user_id === 'USR0001') {
       // Fix collision: update to unique id
       await dbRun("UPDATE users SET user_id='USR_KALYANI' WHERE email='kalyani@kbic.in'");
       await dbRun("UPDATE citizen_reports SET user_id='USR_KALYANI' WHERE user_id='USR0001' AND submitted_at >= date('now','-7 days')");
-      console.log('[CitizenReport] Fixed Kalyani user_id collision: USR0001 â†’ USR_KALYANI');
+      console.log('[CitizenReport] Fixed Kalyani user_id collision: USR0001 → USR_KALYANI');
     }
   } catch (e) {
     console.error('RBAC seed error:', e.message);
   }
 })();
 
-// â”€â”€ RBAC: Permissions endpoint (frontend calls this to get its own perms) â”€â”€
+// ── RBAC: Permissions endpoint (frontend calls this to get its own perms) ──
 // GET /api/rbac/my-permissions
 // Returns the permission set for the authenticated user's role.
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
-// â”€â”€ 1. AUTH ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── 1. AUTH ENDPOINTS ────────────────────────────────────────────────────
 // POST /api/auth/login
 // POST /api/auth/register
 // GET  /api/auth/me
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.post('/api/auth/login', async (req, res) => {
   try {
@@ -359,10 +359,10 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 2. GENERIC TABLE DATA API (replaces CSV) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 2. GENERIC TABLE DATA API (replaces CSV) ─────────────────────────────
 // GET /api/data/:table?limit=N&offset=N&sort=col&order=asc
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 const ALLOWED_TABLES = [
   'species_master','species_observations','citizen_reports','environmental_threats',
@@ -402,13 +402,13 @@ app.get('/api/leaderboard', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 3. SPECIES ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 3. SPECIES ENDPOINTS ─────────────────────────────────────────────────
 // GET /api/species               - All species with filters
 // GET /api/species/:id           - Single species
 // GET /api/species/search?q=     - Search species
 // GET /api/species/nearby?lat&lng&radius  - Nearby species
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/species', async (req, res) => {
   try {
@@ -460,14 +460,14 @@ app.get('/api/species/:id', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 4. OBSERVATIONS ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 4. OBSERVATIONS ENDPOINTS ────────────────────────────────────────────
 // GET  /api/observations           - Paginated + filtered
 // GET  /api/observations/:id       - Single observation
 // POST /api/observations           - Create observation (auth)
 // GET  /api/observations/species/:species_id
 // GET  /api/observations/stats     - Aggregated stats
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/observations', async (req, res) => {
   try {
@@ -525,15 +525,15 @@ app.get('/api/observations/:id', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 5. CITIZEN REPORTS ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 5. CITIZEN REPORTS ENDPOINTS ─────────────────────────────────────────
 // GET   /api/reports              - All reports (admin) or own reports (user)
 // POST  /api/reports              - Submit new report (auth)
 // PATCH /api/reports/:id/verify   - Verify report (admin only)
 // PATCH /api/reports/:id/reject   - Reject report (admin only)
 // GET   /api/reports/pending      - All pending reports (admin)
 // GET   /api/reports/stats        - Report statistics
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/reports', authenticateToken, async (req, res) => {
   try {
@@ -606,8 +606,8 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
     const user_id      = req.user.user_id;
     const report_date  = new Date().toISOString().split('T')[0];
     const submitted_at = new Date().toISOString();
-    // ALWAYS force Pending â€” users cannot self-approve
-          const verification_status = 'Pending';
+    // ALWAYS force Pending — users cannot self-approve
+    const verification_status = 'Pending';
       
       const opQueue = require('./recovery/operation-queue');
       const recState = require('./recovery/recovery-state');
@@ -661,7 +661,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// GET /api/reports/my â€” user's OWN reports (always filtered by token, regardless of role)
+// GET /api/reports/my — user's OWN reports (always filtered by token, regardless of role)
 app.get('/api/reports/my', authenticateToken, async (req, res) => {
   try {
     const { limit=50, offset=0 } = req.query;
@@ -734,10 +734,10 @@ app.patch('/api/reports/:id/reject', authenticateToken, adminOnly, async (req, r
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â”€â”€ ADMIN REPORT DETAIL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// GET /api/admin/reports/stats  â€” admin stats overview
-// GET /api/admin/reports/pending â€” admin pending list (alias)
-// GET /api/admin/reports/:id    â€” full report detail for admin review
+// ── ADMIN REPORT DETAIL ─────────────────────────────────────────────────────
+// GET /api/admin/reports/stats  — admin stats overview
+// GET /api/admin/reports/pending — admin pending list (alias)
+// GET /api/admin/reports/:id    — full report detail for admin review
 
 app.get('/api/admin/reports/stats', authenticateToken, adminOnly, async (req, res) => {
   try {
@@ -789,13 +789,13 @@ app.get('/api/admin/reports/:id', authenticateToken, adminOnly, async (req, res)
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 6. ENVIRONMENTAL THREATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 6. ENVIRONMENTAL THREATS ─────────────────────────────────────────────
 // GET  /api/threats               - All threats with filters
 // POST /api/threats               - Report a new threat (auth)
 // PATCH /api/threats/:id/resolve  - Mark resolved (admin)
 // GET  /api/threats/stats         - Threat statistics
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/threats', async (req, res) => {
   try {
@@ -881,11 +881,11 @@ app.delete('/api/threats/:id', authenticateToken, requirePermission('threats.del
 });
 
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 7. WATER BODIES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 7. WATER BODIES ──────────────────────────────────────────────────────
 // GET /api/water-bodies           - All water bodies
 // GET /api/water-bodies/:id       - Single water body
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/water-bodies', async (req, res) => {
   try {
@@ -971,13 +971,13 @@ app.delete('/api/water-bodies/:id', authenticateToken, requirePermission('water_
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 8. CONSERVATION PROJECTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 8. CONSERVATION PROJECTS ─────────────────────────────────────────────
 
 // GET  /api/conservation               - All projects
 // GET  /api/conservation/:id           - Single project
 // PATCH /api/conservation/:id/status   - Update status (admin)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/conservation', async (req, res) => {
   try {
@@ -1002,15 +1002,15 @@ app.patch('/api/conservation/:id/status', authenticateToken, adminOnly, async (r
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 9. DASHBOARD & ANALYTICS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 9. DASHBOARD & ANALYTICS ─────────────────────────────────────────────
 // GET /api/dashboard/stats         - KPI cards
 // GET /api/dashboard/recent-obs    - Recent observations
 // GET /api/analytics/kpis          - Extended analytics
 // GET /api/analytics/monthly       - Monthly trends
 // GET /api/analytics/species-dist  - Species distribution
 // GET /api/analytics/health-score  - Biodiversity health score
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/dashboard/stats', async (req, res) => {
   try {
@@ -1112,14 +1112,14 @@ app.get('/api/analytics/health-score', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 10. GIS ENDPOINTS (GeoJSON) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 10. GIS ENDPOINTS (GeoJSON) ──────────────────────────────────────────
 // GET /api/gis/observations        - Observations as GeoJSON
 // GET /api/gis/hotspots            - Hotspots as GeoJSON
 // GET /api/gis/threats             - Threats as GeoJSON
 // GET /api/gis/water-bodies        - Water bodies as GeoJSON
 // GET /api/gis/villages            - Villages as GeoJSON
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 function toGeoJSON(rows, latField='latitude', lngField='longitude') {
   return {
@@ -1190,11 +1190,11 @@ app.get('/api/gis/citizen-reports', async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 11. NDVI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 11. NDVI ───────────────────────────────────────────────────────────
 // GET /api/ndvi                   - Paginated NDVI data
 // GET /api/ndvi/summary           - NDVI averages & distribution
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/ndvi', async (req, res) => {
   try {
@@ -1234,12 +1234,12 @@ app.get('/api/ndvi/ml-insights', (req, res) => {
   });
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 12. USER PROFILE & LEADERBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 12. USER PROFILE & LEADERBOARD ───────────────────────────────────────
 // GET  /api/users/profile         - Own profile (auth)
 // PUT  /api/users/profile         - Update profile (auth)
 // GET  /api/leaderboard           - Top users ranked by points
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/users/profile', authenticateToken, async (req, res) => {
   try {
@@ -1260,11 +1260,11 @@ app.get('/api/users/profile', authenticateToken, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 13. ADMIN ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 13. ADMIN ENDPOINTS ──────────────────────────────────────────────────
 // GET  /api/admin/users           - All users (admin)
 // GET  /api/admin/summary         - Full system summary
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/admin/users', authenticateToken, adminOnly, async (req, res) => {
   try {
@@ -1287,10 +1287,10 @@ app.get('/api/admin/summary', authenticateToken, adminOnly, async (req, res) => 
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 14. AI MOCK ENDPOINTS (for hackathon demo) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── 14. AI MOCK ENDPOINTS (for hackathon demo) ────────────────────────────
 // POST /api/ai/identify-species   - Mock AI species identification
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.post('/api/ai/identify-species', authenticateToken, async (req, res) => {
   try {
@@ -1314,16 +1314,16 @@ app.post('/api/ai/identify-species', authenticateToken, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ 15. HEALTH CHECK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
+// ── 15. HEALTH CHECK ─────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// â”€â”€ RBAC ENDPOINTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ══════════════════════════════════════════════════════════════════════════
+// ── RBAC ENDPOINTS ───────────────────────────────────────────────────────
 // GET /api/rbac/my-permissions   - My permissions (auth)
 // GET /api/rbac/audit-logs       - Audit log (super_admin / admin only)
 // GET /api/rbac/dashboard-context - Role-specific dashboard widgets
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ══════════════════════════════════════════════════════════════════════════
 
 app.get('/api/rbac/my-permissions', authenticateToken, (req, res) => {
   const role = req.user.role || 'Citizen';
@@ -1419,7 +1419,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// â”€â”€ SPA Catch-all: serve index.html for non-API browser routes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SPA Catch-all: serve index.html for non-API browser routes ────────────
 app.use((req, res, next) => {
   // If it looks like an API path, return 404 JSON
   if (req.path.startsWith('/api/')) {
@@ -1432,28 +1432,24 @@ app.use((req, res, next) => {
   next();
 });
 
-// â”€â”€ Global Error Handler â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Global Error Handler ───────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
   res.status(500).json({ error: 'Internal server error.' });
 });
 
-// â”€â”€ Start Server â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Start Server ────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 require('./recovery/api')(app, db, authenticateToken, adminOnly);
   app.listen(PORT, () => {
   console.log(`
-  â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
-  â•‘  ðŸŒ¿ Kopargaon Biodiversity Portal â€” Backend API v2.0     â•‘
-  â•‘  ðŸš€ Running at: http://localhost:${PORT}                   â•‘
-  â•‘  ðŸ“Š Endpoints: 40+ REST APIs                             â•‘
-  â•‘  ðŸ” Auth: JWT (email@kbic.in / admin@kbic.in)            â•‘
-  â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  ╔══════════════════════════════════════════════════════════╗
+  ║  🌿 Kopargaon Biodiversity Portal — Backend API v2.0     ║
+  ║  🚀 Running at: http://localhost:${PORT}                   ║
+  ║  📊 Endpoints: 40+ REST APIs                             ║
+  ║  🔐 Auth: JWT (email@kbic.in / admin@kbic.in)            ║
+  ╚══════════════════════════════════════════════════════════╝
   `);
 });
 
 module.exports = app;
-
-
-
-
