@@ -45,7 +45,7 @@ const App = (() => {
     super_admin:   null,
     Administrator: null,
     // All others see everything
-    _default:      ['dashboard','species','observations','citizen','gismap','threats','water','ndvi','conservation','education','leaderboard','profile','analytics','logout'],
+    _default:      null,
   };
 
   function buildSidebar() {
