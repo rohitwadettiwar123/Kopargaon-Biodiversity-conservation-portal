@@ -1,11 +1,11 @@
-/**
+﻿/**
  * app.js
  * Global application initialization, sidebar navigation, header, search.
  */
 
 const App = (() => {
 
-  // ── Sidebar HTML template ─────────────────────────────────────────────
+  // â”€â”€ Sidebar HTML template â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const NAV_ITEMS = [
     { id: 'dashboard',     label: 'Dashboard',           icon: 'fa-th-large',      href: '../index.html',              badge: null },
     { id: 'species',       label: 'Species Explorer',    icon: 'fa-leaf',           href: 'species.html',               badge: null },
@@ -20,6 +20,7 @@ const App = (() => {
     { id: 'leaderboard',   label: 'Leaderboard',         icon: 'fa-trophy',         href: 'leaderboard.html',           badge: null },
     { id: 'profile',       label: 'Profile',             icon: 'fa-user-circle',    href: 'profile.html',               badge: null },
     { id: 'analytics',     label: 'Analytics',           icon: 'fa-chart-line',     href: 'analytics.html',             badge: null },
+    { id: 'recovery',      label: 'Data Resilience',     icon: 'fa-shield-alt',     href: 'blackout-recovery.html',   badge: null },
     { id: 'logout',        label: 'Logout',              icon: 'fa-sign-out-alt',   href: '#',                          badge: null },
   ];
 
@@ -31,7 +32,7 @@ const App = (() => {
     return filename.replace('-', '').toLowerCase();
   }
 
-  // ── Build sidebar ─────────────────────────────────────────────────────
+  // â”€â”€ Build sidebar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Role-based sidebar visibility rules
   // Items listed here are ONLY shown to specified roles.
   // Items not listed are shown to everyone.
@@ -87,10 +88,10 @@ const App = (() => {
 
     sidebar.innerHTML = `
       <div class="sidebar-logo">
-        <div class="logo-icon">🌿</div>
+        <div class="logo-icon">ðŸŒ¿</div>
         <div class="logo-text">
           <div class="logo-title">Kopargaon Biodiversity</div>
-          <div class="logo-tagline">Explore • Conserve • Protect</div>
+          <div class="logo-tagline">Explore â€¢ Conserve â€¢ Protect</div>
           ${roleBadge}
         </div>
       </div>
@@ -141,7 +142,7 @@ const App = (() => {
     localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
   }
 
-  // ── Mobile sidebar toggle ─────────────────────────────────────────────
+  // â”€â”€ Mobile sidebar toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function initMobileSidebar() {
     const hamburger = document.getElementById('hamburger-btn');
     const overlay = document.getElementById('sidebar-overlay');
@@ -161,7 +162,7 @@ const App = (() => {
     }
   }
 
-  // ── Header dropdowns ──────────────────────────────────────────────────
+  // â”€â”€ Header dropdowns â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function initHeaderDropdowns() {
     // Notification dropdown toggle
     const notifBtn = document.getElementById('notif-btn');
@@ -196,7 +197,7 @@ const App = (() => {
     });
   }
 
-  // ── Global Search ────────────────────────────────────────────────────
+  // â”€â”€ Global Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   let searchData = { species: [], villages: [], observations: [], reports: [] };
 
   async function initSearch() {
@@ -271,7 +272,7 @@ const App = (() => {
     container.classList.add('visible');
   }
 
-  // ── Animate number counter ─────────────────────────────────────────────
+  // â”€â”€ Animate number counter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function animateCounter(element, target, duration = 1200) {
     const start = 0;
     const startTime = performance.now();
@@ -290,14 +291,14 @@ const App = (() => {
     requestAnimationFrame(update);
   }
 
-  // ── Format number helper ───────────────────────────────────────────────
+  // â”€â”€ Format number helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function formatNumber(n) {
     if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
     if (n >= 1000) return n.toLocaleString('en-IN');
     return String(n);
   }
 
-  // ── Format date ────────────────────────────────────────────────────────
+  // â”€â”€ Format date â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function formatDate(dateStr) {
     if (!dateStr) return 'N/A';
     const d = new Date(dateStr);
@@ -320,19 +321,19 @@ const App = (() => {
     return formatDate(dateStr);
   }
 
-  // ── Species emoji map ──────────────────────────────────────────────────
+  // â”€â”€ Species emoji map â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function getCategoryEmoji(category) {
     const map = {
-      'birds': '🐦', 'birds': '🦚',
-      'mammals': '🦊', 'reptiles': '🦎',
-      'butterflies': '🦋', 'plants': '🌿',
-      'amphibians': '🐸', 'insects': '🐛',
-      'fish': '🐟', 'others': '🌱'
+      'birds': 'ðŸ¦', 'birds': 'ðŸ¦š',
+      'mammals': 'ðŸ¦Š', 'reptiles': 'ðŸ¦Ž',
+      'butterflies': 'ðŸ¦‹', 'plants': 'ðŸŒ¿',
+      'amphibians': 'ðŸ¸', 'insects': 'ðŸ›',
+      'fish': 'ðŸŸ', 'others': 'ðŸŒ±'
     };
-    return map[(category || '').toLowerCase()] || '🌿';
+    return map[(category || '').toLowerCase()] || 'ðŸŒ¿';
   }
 
-  // ── IUCN badge ─────────────────────────────────────────────────────────
+  // â”€â”€ IUCN badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function getIUCNBadge(status) {
     const map = {
       'Least Concern':       { cls: 'iucn-lc',  code: 'LC' },
@@ -347,7 +348,7 @@ const App = (() => {
     return `<span class="badge ${info.cls}">${info.code}</span>`;
   }
 
-  // ── Header Back Button ────────────────────────────────────────────────
+  // â”€â”€ Header Back Button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function initHeaderBackButton() {
     const isPages = window.location.pathname.includes('/pages/');
     if (isPages) {
@@ -382,7 +383,7 @@ const App = (() => {
     }
   }
 
-  // ── Initialize the whole app ───────────────────────────────────────────
+  // â”€â”€ Initialize the whole app â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   async function init() {
     buildSidebar();
     initMobileSidebar();
@@ -405,3 +406,5 @@ window.App = App;
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
 });
+
+

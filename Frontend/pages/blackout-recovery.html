@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Resilience Center | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.kpi-info { flex: 1; }
+.kpi-label { font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; font-weight: 600; }
+.kpi-value { font-size: 20px; font-weight: 800; color: var(--text-primary); }
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 20px;
+}
+.status-healthy { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+.status-blackout { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.status-recovering { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+
+.shield-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.shield-visual {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shield-center {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--green-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: var(--green-primary);
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(34,197,94,0.3);
+  transition: all 0.3s;
+}
+.shield-center.blackout {
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 0 30px rgba(239,68,68,0.5);
+}
+.shield-ring {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px dashed rgba(255,255,255,0.1);
+  border-radius: 50%;
+  animation: spin 30s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+.shield-node {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.node-1 { top: -20px; left: 80px; }
+.node-2 { bottom: -20px; left: 80px; }
+.node-3 { top: 80px; left: -20px; }
+.node-4 { top: 80px; right: -20px; }
+.node-5 { top: 15px; left: 15px; }
+.node-6 { bottom: 15px; right: 15px; }
+
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.timeline-item.active { opacity: 1; }
+.timeline-item.done { opacity: 1; }
+.timeline-step {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+}
+.timeline-item.active .timeline-step { background: var(--green-primary); color: #000; border-color: var(--green-primary); }
+.timeline-item.done .timeline-step { background: rgba(34,197,94,0.2); color: var(--green-primary); border-color: var(--green-primary); }
+.timeline-item.error .timeline-step { background: rgba(239,68,68,0.2); color: #ef4444; border-color: #ef4444; }
+
+.timeline-content { flex: 1; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.timeline-detail { font-size: 11px; font-weight: 400; color: var(--text-dim); margin-top: 2px; }
+
+.data-table-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); font-size: 12px; }
+th { font-weight: 600; color: var(--text-dim); text-transform: uppercase; font-size: 10px; }
+
+.admin-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.btn-demo {
+  background: #ef4444;
+  color: #fff;
+}
+.btn-demo:hover {
+  background: #dc2626;
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Data Resilience Center</div>
+        <div class="header-breadcrumb">System / Blackout Recovery</div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search across portal...">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="header-right">
+        <div style="position:relative">
+          <div class="notif-btn" id="notif-btn"><i class="fa fa-bell"></i><span class="notif-badge">3</span></div>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-dropdown-header"><h4>Notifications</h4><span class="notif-mark-all">Mark all read</span></div>
+            <div class="notif-list"></div>
+          </div>
+        </div>
+        <div class="profile-menu" id="profile-menu-btn">
+          <div class="profile-avatar"><i class="fa fa-user"></i></div>
+          <div class="profile-info"><div class="profile-name" id="hdr-user-name">User</div><div class="profile-role" id="hdr-user-role">Role</div></div>
+          <i class="fa fa-chevron-down" style="font-size:10px;color:var(--text-dim)"></i>
+        </div>
+      </div>
+    </header>
+
+    <div class="content" style="padding:24px;">
+      <div class="admin-controls">
+        <button class="btn" onclick="BlackoutRecovery.createBackup()"><i class="fa fa-save"></i> Create Backup</button>
+        <button class="btn" onclick="BlackoutRecovery.checkIntegrity()"><i class="fa fa-check-circle"></i> Check Integrity</button>
+        <button class="btn btn-demo" onclick="BlackoutRecovery.startDemo()"><i class="fa fa-bolt"></i> SIMULATE BLACKOUT</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(34,197,94,0.15);color:#4ade80;"><i class="fa fa-database"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">DATABASE STATUS</div>
+            <div class="kpi-value" id="kpi-db-status"><span class="status-indicator status-healthy">🟢 HEALTHY</span></div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(56,189,248,0.15);color:#38bdf8;"><i class="fa fa-shield-alt"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">RECOVERY POINTS</div>
+            <div class="kpi-value" id="kpi-backups">0</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(168,85,247,0.15);color:#a855f7;"><i class="fa fa-clock"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">PENDING OPERATIONS</div>
+            <div class="kpi-value" id="kpi-pending">0</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(234,179,8,0.15);color:#eab308;"><i class="fa fa-check-double"></i></div>
+          <div class="kpi-info">
+            <div class="kpi-label">INTEGRITY</div>
+            <div class="kpi-value" id="kpi-integrity"><span class="status-indicator status-healthy">🟢 PASS</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:24px; flex-wrap:wrap; margin-bottom:24px;">
+        <div style="flex:1; min-width:300px;">
+          <h3 style="font-size:14px; margin-bottom:12px; color:var(--text-secondary);">Biodiversity Data Shield</h3>
+          <div class="shield-container">
+            <div class="shield-visual">
+              <div class="shield-ring"></div>
+              <div class="shield-center" id="shield-core"><i class="fa fa-database"></i></div>
+              <div class="shield-node node-1" title="Citizen Reports"><i class="fa fa-file-alt"></i></div>
+              <div class="shield-node node-2" title="Species Observations"><i class="fa fa-binoculars"></i></div>
+              <div class="shield-node node-3" title="GIS Data"><i class="fa fa-map"></i></div>
+              <div class="shield-node node-4" title="Conservation Data"><i class="fa fa-tree"></i></div>
+              <div class="shield-node node-5" title="Threat Data"><i class="fa fa-exclamation-triangle"></i></div>
+              <div class="shield-node node-6" title="Water Bodies"><i class="fa fa-water"></i></div>
+            </div>
+            <div style="text-align:center; margin-top:20px; font-size:12px; color:var(--text-dim); max-width:250px;">
+              Active protection for all vital biodiversity records.
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1; min-width:300px;">
+          <h3 style="font-size:14px; margin-bottom:12px; color:var(--text-secondary);">Live Recovery Timeline</h3>
+          <div class="timeline-container" id="recovery-timeline">
+            <div class="timeline-item" id="tl-01">
+              <div class="timeline-step">01</div>
+              <div class="timeline-content">BLACKOUT DETECTED<div class="timeline-detail" id="tl-01-detail">Waiting...</div></div>
+            </div>
+            <div class="timeline-item" id="tl-02">
+              <div class="timeline-step">02</div>
+              <div class="timeline-content">ACTIVE OPERATIONS PROTECTED<div class="timeline-detail" id="tl-02-detail">Queue monitoring active</div></div>
+            </div>
+            <div class="timeline-item" id="tl-03">
+              <div class="timeline-step">03</div>
+              <div class="timeline-content">BACKUPS SCANNED<div class="timeline-detail" id="tl-03-detail">-</div></div>
+            </div>
+            <div class="timeline-item" id="tl-04">
+              <div class="timeline-step">04</div>
+              <div class="timeline-content">VALID BACKUP FOUND<div class="timeline-detail" id="tl-04-detail">-</div></div>
+            </div>
+            <div class="timeline-item" id="tl-05">
+              <div class="timeline-step">05</div>
+              <div class="timeline-content">DATABASE RESTORED<div class="timeline-detail" id="tl-05-detail">-</div></div>
+            </div>
+            <div class="timeline-item" id="tl-06">
+              <div class="timeline-step">06</div>
+              <div class="timeline-content">OPERATIONS REPLAYED<div class="timeline-detail" id="tl-06-detail">-</div></div>
+            </div>
+            <div class="timeline-item" id="tl-07">
+              <div class="timeline-step">07</div>
+              <div class="timeline-content">DUPLICATES PREVENTED<div class="timeline-detail" id="tl-07-detail">-</div></div>
+            </div>
+            <div class="timeline-item" id="tl-08">
+              <div class="timeline-step">08</div>
+              <div class="timeline-content">PORTAL ONLINE<div class="timeline-detail" id="tl-08-detail">-</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size:14px; margin-bottom:12px; color:var(--text-secondary);">Recovery History</h3>
+      <div class="data-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date / Time</th>
+              <th>Event</th>
+              <th>Selected Backup</th>
+              <th>Integrity</th>
+              <th>Ops Replayed</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <tr><td colspan="6" style="text-align:center;color:var(--text-dim)">No history found</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+<script src="../js/data-loader.js"></script>
+<script src="../js/notifications.js"></script>
+<script src="../js/auth.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => { if (!Auth.guard()) return; });</script>
+<script src="../js/app.js"></script>
+<script src="../js/blackout-recovery.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  BlackoutRecovery.init();
+});
+</script>
+</body>
+</html>
