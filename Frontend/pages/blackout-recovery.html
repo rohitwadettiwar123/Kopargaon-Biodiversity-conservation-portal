@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -217,9 +217,12 @@ th { font-weight: 600; color: var(--text-dim); text-transform: uppercase; font-s
 
     <div class="content" style="padding:24px;">
       <div class="admin-controls">
-        <button class="btn" onclick="BlackoutRecovery.createBackup()"><i class="fa fa-save"></i> Create Backup</button>
-        <button class="btn" onclick="BlackoutRecovery.checkIntegrity()"><i class="fa fa-check-circle"></i> Check Integrity</button>
+        <button class="btn admin-btn" onclick="BlackoutRecovery.createBackup()"><i class="fa fa-save"></i> CREATE BACKUP</button>
+        <button class="btn admin-btn" onclick="BlackoutRecovery.checkIntegrity()"><i class="fa fa-check-circle"></i> CHECK INTEGRITY</button>
+        <button class="btn admin-btn" onclick="BlackoutRecovery.scanBackups()"><i class="fa fa-search"></i> SCAN BACKUPS</button>
+        <button class="btn admin-btn" onclick="BlackoutRecovery.startRecovery()"><i class="fa fa-undo"></i> START RECOVERY</button>
         <button class="btn btn-demo" onclick="BlackoutRecovery.startDemo()"><i class="fa fa-bolt"></i> SIMULATE BLACKOUT</button>
+        <button class="btn admin-btn" onclick="document.querySelector('.data-table-container').scrollIntoView({behavior: 'smooth'})"><i class="fa fa-list"></i> VIEW RECOVERY LOG</button>
       </div>
 
       <div class="dashboard-grid">

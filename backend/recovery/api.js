@@ -8,7 +8,7 @@ const path = require('path');
 
 module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly) {
   
-  app.get('/api/recovery/status', authenticateToken, adminOnly, async (req, res) => {
+  app.get('/api/recovery/status', authenticateToken, async (req, res) => {
     res.json({
       status: getState(),
       backups: getAvailableBackups().length,
@@ -35,7 +35,12 @@ module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly
     res.json(result);
   });
 
-  app.post('/api/recovery/demo', authenticateToken, adminOnly, async (req, res) => {
+  app.post('/api/recovery/demo-start', authenticateToken, async (req, res) => {
+    const result = await performRecovery();
+    res.json(result);
+  });
+
+  app.post('/api/recovery/demo', authenticateToken, async (req, res) => {
     simulateBlackout();
     res.json({ success: true, message: 'Blackout simulated. System is now in BLACKOUT state.' });
   });
@@ -50,7 +55,7 @@ module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly
   });
   
   // Endpoint to create a demo operation safely
-  app.post('/api/recovery/demo-operation', authenticateToken, adminOnly, async (req, res) => {
+  app.post('/api/recovery/demo-operation', authenticateToken, async (req, res) => {
     const op = {
       operation_id: 'OP-DEMO-' + Date.now(),
       type: 'CITIZEN_REPORT',

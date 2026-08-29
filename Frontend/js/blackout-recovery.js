@@ -1,7 +1,18 @@
 const BlackoutRecovery = (() => {
   async function init() {
+    if (!Auth.isAdmin()) {
+      const controls = document.querySelectorAll('.admin-btn');
+      controls.forEach(c => c.style.display = 'none');
+      const historySection = document.getElementById('history-table-body').closest('.data-table-container');
+      if (historySection) {
+        historySection.style.display = 'none';
+        historySection.previousElementSibling.style.display = 'none'; // hide the h3 header
+      }
+    }
     await refreshStatus();
-    await loadHistory();
+    if (Auth.isAdmin()) {
+      await loadHistory();
+    }
   }
 
   async function fetchWithAuth(url, options = {}) {
@@ -12,6 +23,32 @@ const BlackoutRecovery = (() => {
     const json = await res.json();
     if (!res.ok) throw new Error(json.error || 'API Error');
     return json;
+  }
+
+  async function scanBackups() {
+    try {
+      const res = await fetchWithAuth('/api/recovery/backups');
+      Notifications.show(`Scanned ${res.length} available recovery points.`, 'success');
+      refreshStatus();
+    } catch (e) {
+      Notifications.show('Failed to scan backups: ' + e.message, 'error');
+    }
+  }
+
+  async function startRecovery() {
+    if (!confirm('DANGER: Are you sure you want to restore the database from the latest valid backup? This will overwrite the current production state.')) return;
+    try {
+      const res = await fetchWithAuth('/api/recovery/start', { method: 'POST' });
+      if (res.success) {
+        Notifications.show(`Recovery completed! Replayed ${res.log.operations_replayed} operations.`, 'success');
+        refreshStatus();
+        loadHistory();
+      } else {
+        Notifications.show('Recovery failed: ' + res.message, 'error');
+      }
+    } catch (e) {
+      Notifications.show('Failed to start recovery: ' + e.message, 'error');
+    }
   }
 
   async function refreshStatus() {
@@ -172,7 +209,7 @@ const BlackoutRecovery = (() => {
       
       // Step 5: Actual recovery
       setTimeline(5, 'active', 'Restoring database...');
-      const recRes = await fetchWithAuth('/api/recovery/start', { method: 'POST' });
+      const recRes = await fetchWithAuth('/api/recovery/demo-start', { method: 'POST' });
       await delay(1000);
       setTimeline(5, 'done', 'Restored successfully');
       
@@ -200,6 +237,6 @@ const BlackoutRecovery = (() => {
     }
   }
 
-  return { init, createBackup, checkIntegrity, startDemo };
+  return { init, createBackup, checkIntegrity, startDemo, scanBackups, startRecovery };
 })();
 window.BlackoutRecovery = BlackoutRecovery;
