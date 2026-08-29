@@ -56,7 +56,8 @@ const SpeciesPage = (() => {
       const emoji = App.getCategoryEmoji(s.category);
       const iucnBadge = App.getIUCNBadge(s.iucn_status);
       const catColor = Analytics.CATEGORY_COLORS[s.category] || '#94a3b8';
-      const photoUrl = (typeof getSpeciesImageUrl === 'function') ? getSpeciesImageUrl(s.scientific_name) : null;
+      const normalizedName = s.scientific_name ? s.scientific_name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : '';
+      const photoUrl = normalizedName ? `../assets/images/species/${normalizedName}.jpg` : null;
       const imgHtml = photoUrl
         ? `<img src="${photoUrl}" alt="${s.common_name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span style="font-size:42px;display:none;align-items:center;justify-content:center;width:100%;height:100%;">${emoji}</span>`
         : `<span style="font-size:42px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${emoji}</span>`;
