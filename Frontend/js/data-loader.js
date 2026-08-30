@@ -62,13 +62,21 @@ const DataLoader = (() => {
 
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP ${response.status} for ${filename}`);
+      if (!response.ok) {
+        let msg = `HTTP ${response.status}`;
+        try { const errData = await response.json(); msg = errData.error || msg; } catch(e) {}
+        throw new Error(msg);
+      }
       const data = await response.json(); // API returns JSON array of objects
       cache[filename] = data;
       console.log(`[DataLoader] Loaded ${filename} via API: ${data.length} rows`);
       return data;
     } catch (err) {
       console.warn(`[DataLoader] Could not load ${filename}: ${err.message}`);
+      if (err.message.includes('primary database is offline')) {
+        if (window.Notifications) window.Notifications.show('Data temporarily unavailable because the primary database is offline.', 'error');
+        return [];
+      }
       return getFallback(filename);
     }
   }

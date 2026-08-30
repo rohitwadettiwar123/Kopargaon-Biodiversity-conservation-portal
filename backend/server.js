@@ -37,6 +37,16 @@ app.use(morgan('dev'));
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 1000, message: { error: 'Too many requests' } });
 app.use('/api/', limiter);
 
+// -- Blackout Simulation Interceptor ------------------------------------------
+app.use('/api/', (req, res, next) => {
+  if (req.path.startsWith('/recovery/') || req.path.startsWith('/auth/')) return next();
+  const recState = require('./recovery/recovery-state');
+  if (recState.getState() === 'BLACKOUT') {
+    return res.status(503).json({ error: 'Data temporarily unavailable because the primary database is offline.' });
+  }
+  next();
+});
+
 // ── Config ──────────────────────────────────────────────────────────────────
 const DB_PATH    = path.join(__dirname, 'database.sqlite');
 const JWT_SECRET = 'kbic-kopargaon-biodiversity-secret-2026';
@@ -1453,3 +1463,4 @@ require('./recovery/api')(app, db, authenticateToken, adminOnly);
 });
 
 module.exports = app;
+

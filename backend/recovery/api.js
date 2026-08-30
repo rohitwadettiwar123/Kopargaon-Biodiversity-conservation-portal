@@ -9,11 +9,34 @@ const path = require('path');
 module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly) {
   
   app.get('/api/recovery/status', authenticateToken, async (req, res) => {
-    res.json({
-      status: getState(),
-      backups: getAvailableBackups().length,
-      pending_operations: getPendingOperations().length
-    });
+    try {
+      const getCount = (sql) => new Promise(r => db.get(sql, [], (err, row) => r(row ? row.count : 0)));
+      
+      let records = 0, verified = 0, pending = 0, disputed = 0;
+      if (getState() !== 'BLACKOUT') {
+        records = await getCount('SELECT COUNT(*) as count FROM species_observations');
+        verified = await getCount("SELECT COUNT(*) as count FROM citizen_reports WHERE LOWER(verification_status)='verified'");
+        pending = await getCount("SELECT COUNT(*) as count FROM citizen_reports WHERE LOWER(verification_status)='pending'");
+        disputed = await getCount("SELECT COUNT(*) as count FROM citizen_reports WHERE LOWER(verification_status)='rejected'");
+      }
+
+      const backupsList = getAvailableBackups();
+      const latestBackup = backupsList.length > 0 ? backupsList[backupsList.length - 1] : null;
+
+      res.json({
+        status: getState(),
+        backups: backupsList.length,
+        pending_operations: getPendingOperations().length,
+        records: records,
+        verified: verified,
+        pending: pending,
+        disputed: disputed,
+        latest_backup_time: latestBackup ? latestBackup.timestamp : null,
+        latest_backup_size: latestBackup ? latestBackup.size : 0
+      });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
   });
 
   app.get('/api/recovery/backups', authenticateToken, adminOnly, async (req, res) => {
