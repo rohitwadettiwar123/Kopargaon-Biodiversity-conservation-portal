@@ -11,6 +11,7 @@ const App = (() => {
     { id: 'species',       label: 'Species Explorer',    icon: 'fa-leaf',           href: 'species.html',               badge: null },
     { id: 'observations',  label: 'Observations',        icon: 'fa-binoculars',     href: 'observations.html',          badge: null },
     { id: 'citizen',       label: 'Citizen Reports',     icon: 'fa-file-alt',       href: 'citizen-reports.html',       badge: null },
+    { id: 'creator',       label: 'Creator Challenge',   icon: 'fa-video',          href: 'creator-challenge.html',     badge: 'NEW' },
     { id: 'gismap',        label: 'GIS Map',             icon: 'fa-map-marked-alt', href: 'gis-map.html',               badge: null },
     { id: 'threats',       label: 'Threats',             icon: 'fa-exclamation-triangle', href: 'threats.html',        badge: null },
     { id: 'water',         label: 'Water Bodies',        icon: 'fa-water',          href: 'water-bodies.html',          badge: null },

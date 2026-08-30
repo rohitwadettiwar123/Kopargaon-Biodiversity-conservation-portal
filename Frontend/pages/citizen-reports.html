@@ -143,6 +143,24 @@
                   <!-- AI Image Authenticity Check Container -->
                   <div id="cr-auth-check-container" style="display:none; margin-top:12px; font-size:11px;"></div>
                 </div>
+                <div>
+                  <label class="form-label">🎥 REEL / VIDEO (OPTIONAL)</label>
+                  <div style="font-size:10px;color:var(--text-dim);margin-top:-4px;margin-bottom:8px">Share a short video of your biodiversity observation.</div>
+                  <div class="upload-zone" id="cr-reel-upload-zone">
+                    <i class="fa fa-film" style="font-size:24px"></i>
+                    <div style="margin-top:10px">
+                      <button type="button" class="btn btn-sm btn-outline" id="cr-reel-btn" style="min-width:44px;min-height:44px"><i class="fa fa-plus"></i> Upload Reel</button>
+                    </div>
+                    <p style="font-size:10px;color:var(--text-dim);margin-top:10px">MP4 / WebM • Maximum 60 seconds • Maximum 100 MB</p>
+                    <input type="file" id="cr-reel-input" accept="video/mp4,video/webm" style="display:none">
+                  </div>
+                  <div id="cr-reel-preview" style="display:none; margin-top:8px; padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--bg-tertiary);">
+                    <div style="font-size:10px;font-weight:700;color:var(--text-dim);margin-bottom:8px;text-transform:uppercase;">Video Preview</div>
+                    <video id="cr-reel-player" controls style="width:100%;max-height:200px;border-radius:8px;background:#000;"></video>
+                    <div id="cr-reel-info" style="margin-top:8px;font-size:11px;color:var(--text-secondary);"></div>
+                    <button type="button" id="cr-reel-remove" class="btn btn-sm" style="margin-top:10px;width:100%;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.3);min-height:44px"><i class="fa fa-times"></i> Remove Reel</button>
+                  </div>
+                </div>
                 <button type="submit" class="btn btn-primary" style="width:100%">
                   <i class="fa fa-paper-plane"></i> Submit Report
                 </button>

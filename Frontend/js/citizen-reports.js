@@ -17,6 +17,7 @@ const CitizenReports = (() => {
     populateDropdowns();
     setupForm();
     setupImageUpload();
+    setupReelUpload();
 
     const isAdmin = Auth.hasPermission('verify_citizen_reports');
     if (isAdmin) {
@@ -553,6 +554,83 @@ const CitizenReports = (() => {
     reader.readAsDataURL(file);
   }
 
+  // ── Reel Upload ──────────────────────────────────────────────────────────
+  let currentReelFile = null;
+
+  function setupReelUpload() {
+    const zone = document.getElementById('cr-reel-upload-zone');
+    const input = document.getElementById('cr-reel-input');
+    const btn = document.getElementById('cr-reel-btn');
+    const removeBtn = document.getElementById('cr-reel-remove');
+    
+    if (!zone || !input || !btn) return;
+
+    const triggerInput = (e) => { e.preventDefault(); input.click(); };
+    zone.addEventListener('click', triggerInput);
+    btn.addEventListener('click', triggerInput);
+    
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) handleReelFile(file);
+    });
+    
+    input.addEventListener('change', e => { if (e.target.files[0]) handleReelFile(e.target.files[0]); });
+    
+    removeBtn.addEventListener('click', () => {
+      currentReelFile = null;
+      input.value = '';
+      document.getElementById('cr-reel-preview').style.display = 'none';
+      document.getElementById('cr-reel-upload-zone').style.display = 'block';
+    });
+  }
+
+  function handleReelFile(file) {
+    if (file.type !== 'video/mp4' && file.type !== 'video/webm') {
+      Notifications.error('Invalid Video Format', 'Please upload an MP4 or WebM video.');
+      return;
+    }
+    if (file.size > 100 * 1024 * 1024) {
+      Notifications.error('Video Too Large', 'Maximum video size is 100MB.');
+      return;
+    }
+    
+    // Check duration
+    const videoNode = document.createElement('video');
+    videoNode.preload = 'metadata';
+    videoNode.onloadedmetadata = function() {
+      window.URL.revokeObjectURL(videoNode.src);
+      if (videoNode.duration > 61) { // allow 1 sec buffer
+        Notifications.error('Video Too Long', 'Maximum duration is 60 seconds.');
+        return;
+      }
+      
+      // Validation passed
+      currentReelFile = file;
+      document.getElementById('cr-reel-upload-zone').style.display = 'none';
+      
+      const preview = document.getElementById('cr-reel-preview');
+      const player = document.getElementById('cr-reel-player');
+      const info = document.getElementById('cr-reel-info');
+      
+      preview.style.display = 'block';
+      player.src = URL.createObjectURL(file);
+      
+      const mins = Math.floor(videoNode.duration / 60);
+      const secs = Math.floor(videoNode.duration % 60);
+      const durationStr = mins + ':' + (secs < 10 ? '0' : '') + secs;
+      
+      info.innerHTML = `
+        <div style="font-weight:600;margin-bottom:2px">📎 ${file.name}</div>
+        <div>Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB &bull; Duration: ${durationStr}</div>
+      `;
+    };
+    
+    videoNode.src = URL.createObjectURL(file);
+  }
+
   // ── Form Submit ───────────────────────────────────────────────────────────
   async function handleSubmit(e) {
     e.preventDefault();
@@ -596,6 +674,24 @@ const CitizenReports = (() => {
         7000
       );
 
+      // Upload Reel if selected
+      if (currentReelFile) {
+        try {
+          const reelFormData = new FormData();
+          reelFormData.append('video', currentReelFile);
+          const reelRes = await fetch(`${API}/reports/${data.report_id}/reel`, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + Auth.getToken() },
+            body: reelFormData
+          });
+          const reelData = await reelRes.json();
+          if (!reelRes.ok) throw new Error(reelData.error || 'Reel upload failed');
+          Notifications.success('🎥 Reel Uploaded', 'Your biodiversity video was successfully saved.', 5000);
+        } catch (err) {
+          Notifications.error('Reel Upload Failed', err.message);
+        }
+      }
+
       // Show inline success message below form
       const successBanner = document.getElementById('cr-success-banner');
       if (successBanner) {
@@ -619,6 +715,14 @@ const CitizenReports = (() => {
         authContainer.innerHTML = '';
       }
       currentAuthResult = null;
+      
+      // Reset reel
+      currentReelFile = null;
+      document.getElementById('cr-reel-input').value = '';
+      document.getElementById('cr-reel-preview').style.display = 'none';
+      document.getElementById('cr-reel-player').src = '';
+      document.getElementById('cr-reel-upload-zone').style.display = 'block';
+      
       const dateEl = document.getElementById('cr-date');
       if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
 
@@ -790,6 +894,17 @@ const CitizenReports = (() => {
             
             <div style="font-size:12px;color:var(--text-secondary)">Status:<br>
               <b>${r.image_auth_status === 'LOW_RISK' ? 'READY FOR VERIFICATION' : r.image_auth_status === 'HIGH_RISK' ? 'REQUIRES VERIFICATION' : 'REQUIRES MANUAL VERIFICATION'}</b>
+            </div>
+          </div>
+        ` : ''}
+
+        ${r.reel ? `
+          <div style="margin-bottom:10px;padding:12px;background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.2);border-radius:8px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:var(--text-primary);margin-bottom:8px">🎥 Biodiversity Reel</div>
+            <video controls src="${r.reel.file_path}" style="width:100%;max-height:250px;border-radius:8px;background:#000;margin-bottom:8px;"></video>
+            <div style="font-size:10px;color:var(--text-dim)">${r.reel.file_name} (${(r.reel.file_size / (1024 * 1024)).toFixed(2)} MB)</div>
+            <div style="margin-top:8px">
+              <a href="${r.reel.file_path}" target="_blank" class="btn btn-sm btn-outline" style="border-color:var(--green-primary);color:var(--green-primary);display:inline-block;"><i class="fa fa-play"></i> Watch Video</a>
             </div>
           </div>
         ` : ''}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator Challenge | Kopargaon Biodiversity Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>
+.cr-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .cr-layout { grid-template-columns: 1fr; } }
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 12px;
+  padding: 30px; text-align: center; cursor: pointer;
+  transition: var(--transition); background: var(--bg-tertiary);
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color: var(--green-primary); background: var(--green-faint);
+}
+.upload-zone i { font-size: 32px; color: var(--text-dim); margin-bottom: 12px; }
+.creator-stats-box {
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px;
+}
+.creator-stats-box h2 { font-size: 16px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.creator-code { font-size: 24px; font-weight: 800; color: var(--green-primary); margin-bottom: 10px; letter-spacing: 2px; }
+.copy-btn { background: var(--green-faint); border: 1px solid var(--green-primary); color: var(--green-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.stats-row { display: flex; justify-content: space-around; margin-top: 20px; }
+.stat-item { text-align: center; }
+.stat-item span { display: block; font-size: 24px; font-weight: 700; color: #fff; }
+.stat-item label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; }
+
+.leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.leaderboard-table th, .leaderboard-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+.leaderboard-table th { color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.leaderboard-table tr:hover { background: var(--bg-tertiary); }
+.rank-1 { color: #fbbf24; font-weight: 800; }
+.rank-2 { color: #9ca3af; font-weight: 800; }
+.rank-3 { color: #b45309; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar"></aside>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="main">
+    <header id="header">
+      <button class="hamburger-btn" id="hamburger-btn"><i class="fa fa-bars"></i></button>
+      <div class="header-left">
+        <div class="header-page-title">Creator Challenge 🎥</div>
+        <div class="header-breadcrumb">Upload Reels & Win</div>
+      </div>
+      <div class="header-search">
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <input type="text" id="global-search" placeholder="Search across portal...">
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="cr-layout">
+        
+        <!-- Upload Form -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3><i class="fa fa-upload"></i> Submit Your Reel</h3>
+          </div>
+          <div class="panel-body">
+            <p style="color:var(--text-dim); font-size:13px; margin-bottom:15px;">
+              Share your biodiversity videos (MP4/WebM, Max 60s, 100MB) and earn 100 points per approved reel!
+            </p>
+            
+            <form id="creatorForm">
+              <div class="upload-zone" id="reelUploadZone">
+                <i class="fa fa-cloud-upload-alt"></i>
+                <div><span style="color:var(--green-primary); font-weight:600">Click to upload</span> or drag and drop</div>
+                <div style="font-size:12px; color:var(--text-dim); margin-top:6px;">MP4, WebM (Max 60s, 100MB)</div>
+                <input type="file" id="reelInput" accept="video/mp4,video/webm" style="display:none;">
+              </div>
+              
+              <video id="reelPreview" controls style="width:100%; border-radius:8px; margin-top:15px; display:none; max-height:300px; background:#000;"></video>
+              <div id="reelFileName" style="font-size:12px; color:var(--green-primary); margin-top:5px; text-align:center; display:none;"></div>
+              
+              <div style="margin-top:20px;">
+                <label>Title *</label>
+                <input type="text" id="crTitle" required placeholder="E.g., Beautiful Peacock in Village">
+              </div>
+              
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div>
+                  <label>Category *</label>
+                  <select id="crCategory" required>
+                    <option value="">Select Category</option>
+                    <option value="Animals">Animals</option>
+                    <option value="Birds">Birds</option>
+                    <option value="Plants">Plants</option>
+                    <option value="Water Bodies">Water Bodies</option>
+                    <option value="Conservation">Conservation</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Recording Date</label>
+                  <input type="date" id="crDate" required>
+                </div>
+              </div>
+
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div>
+                  <label>Social Platform (Optional)</label>
+                  <select id="crPlatform">
+                    <option value="">None</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Twitter">Twitter</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Social URL (Optional)</label>
+                  <input type="url" id="crUrl" placeholder="Link to your post">
+                </div>
+              </div>
+              
+              <div style="margin-top:15px;">
+                <label>Location / Village *</label>
+                <input type="text" id="crVillage" required placeholder="Where was this recorded?">
+              </div>
+              
+              <div style="margin-top:15px;">
+                <label>Description *</label>
+                <textarea id="crDescription" rows="3" required placeholder="Tell us about this video..."></textarea>
+              </div>
+              
+              <div style="margin-top:15px; display:flex; align-items:flex-start; gap:10px;">
+                <input type="checkbox" id="crOriginal" required style="margin-top:3px;">
+                <label for="crOriginal" style="font-size:13px; font-weight:400;">
+                  I confirm this is my original content and I authorize the portal to use it.
+                </label>
+              </div>
+              
+              <button type="submit" class="btn-primary" style="width:100%; margin-top:20px; padding:12px;">
+                <i class="fa fa-paper-plane"></i> Submit Reel
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Admin Verification Panel (Hidden for normal users) -->
+        <div id="adminPanel" style="display:none; margin-bottom: 20px;" class="panel">
+          <div class="panel-header">
+            <h3><i class="fa fa-shield-alt" style="color:var(--amber-primary)"></i> Admin: Pending Reels</h3>
+          </div>
+          <div class="panel-body" style="padding:0; overflow-x:auto;">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Title / Video</th>
+                  <th>Creator</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminReelsBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right Side: Stats & Leaderboard -->
+        <div>
+          <!-- My Profile Box -->
+          <div class="creator-stats-box" id="myCreatorStats">
+            <h2>Your Creator Profile</h2>
+            <div style="font-size:12px; color:var(--text-dim); margin-bottom:5px;">Creator Code</div>
+            <div class="creator-code" id="myCode">Loading...</div>
+            <button class="copy-btn" onclick="copyCreatorCode()"><i class="fa fa-copy"></i> Copy Code</button>
+            
+            <div class="stats-row">
+              <div class="stat-item">
+                <span id="myApproved">0</span>
+                <label>Approved</label>
+              </div>
+              <div class="stat-item">
+                <span id="myPoints">0</span>
+                <label>Points</label>
+              </div>
+              <div class="stat-item">
+                <span id="myRank">-</span>
+                <label>Rank</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard -->
+          <div class="panel">
+            <div class="panel-header" style="display:flex; justify-content:space-between;">
+              <h3>🏆 Top 50 Creators</h3>
+              <span style="font-size:12px; color:var(--text-dim);"><i class="fa fa-gift"></i> Win Prizes</span>
+            </div>
+            <div class="panel-body" style="padding:0;">
+              <table class="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Creator</th>
+                    <th>Reels</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody id="creatorLeaderboardBody">
+                  <!-- JS Injected -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="../js/auth.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/creator-challenge.js"></script>
+</body>
+</html>
