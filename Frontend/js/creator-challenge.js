@@ -1,3 +1,5 @@
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') ? 'http://localhost:3000/api' : '/api';
+
 document.addEventListener('DOMContentLoaded', () => {
   if (!Auth.isAuthenticated()) {
     window.location.href = '../index.html';
@@ -85,7 +87,7 @@ function setupUploadZone() {
 
 async function loadCreatorProfile() {
   try {
-    const res = await fetch('/api/creator-challenge/profile', {
+    const res = await fetch(API + '/creator-challenge/profile', {
       headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
     });
     if(!res.ok) return;
@@ -112,7 +114,7 @@ function copyCreatorCode() {
 
 async function loadLeaderboard() {
   try {
-    const res = await fetch('/api/creator-challenge/leaderboard');
+    const res = await fetch(API + '/creator-challenge/leaderboard');
     if(!res.ok) return;
     const data = await res.json();
     
@@ -170,7 +172,7 @@ async function handleSubmission(e) {
     formData.append('original_content', document.getElementById('crOriginal').checked ? 1 : 0);
     formData.append('creator_code', window.creatorCode || '');
     
-    const res = await fetch('/api/creator-challenge/reel', {
+    const res = await fetch(API + '/creator-challenge/reel', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${Auth.getToken()}` },
       body: formData
@@ -207,7 +209,7 @@ async function checkAdminAndLoadReels() {
 
 async function loadAdminReels() {
   try {
-    const res = await fetch('/api/admin/creator-challenge', {
+    const res = await fetch(API + '/admin/creator-challenge', {
       headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
     });
     if(!res.ok) return;
@@ -253,7 +255,7 @@ window.verifyReel = async function(id, status) {
   if(!confirm(`Are you sure you want to ${status} this reel?`)) return;
   
   try {
-    const res = await fetch(`/api/admin/creator-challenge/${id}/status`, {
+    const res = await fetch(`${API}/admin/creator-challenge/${id}/status`, {
       method: 'PATCH',
       headers: { 
         'Authorization': `Bearer ${Auth.getToken()}`,
