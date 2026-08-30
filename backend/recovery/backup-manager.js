@@ -2,9 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
-const BACKUPS_DIR = path.join(__dirname, '../backups');
-const DB_PATH = path.join(__dirname, '../database.sqlite');
+let BACKUPS_DIR = path.join(__dirname, '../backups');
+let DB_PATH = path.join(__dirname, '../database.sqlite');
 const MAX_BACKUPS = 5;
+
+if (process.env.VERCEL) {
+  BACKUPS_DIR = path.join('/tmp', 'backups');
+  DB_PATH = path.join('/tmp', 'database.sqlite');
+}
 
 if (!fs.existsSync(BACKUPS_DIR)) fs.mkdirSync(BACKUPS_DIR, { recursive: true });
 

@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const QUEUE_FILE = path.join(__dirname, '../recovery-data/pending-operations.json');
+let QUEUE_FILE = path.join(__dirname, '../recovery-data/pending-operations.json');
+if (process.env.VERCEL) {
+  QUEUE_FILE = path.join('/tmp', 'pending-operations.json');
+}
 
 if (!fs.existsSync(path.dirname(QUEUE_FILE))) {
   fs.mkdirSync(path.dirname(QUEUE_FILE), { recursive: true });

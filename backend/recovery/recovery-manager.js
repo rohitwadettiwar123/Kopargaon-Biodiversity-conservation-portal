@@ -6,8 +6,12 @@ const { getAvailableBackups, createBackup } = require('./backup-manager');
 const { checkIntegrity } = require('./integrity-check');
 const { getPendingOperations, updateOperationStatus, saveQueue, getQueue } = require('./operation-queue');
 
-const DB_PATH = path.join(__dirname, '../database.sqlite');
-const DEMO_DB_PATH = path.join(__dirname, '../recovery-data/demo-database.sqlite');
+let DB_PATH = path.join(__dirname, '../database.sqlite');
+let DEMO_DB_PATH = path.join(__dirname, '../recovery-data/demo-database.sqlite');
+if (process.env.VERCEL) {
+  DB_PATH = path.join('/tmp', 'database.sqlite');
+  DEMO_DB_PATH = path.join('/tmp', 'demo-database.sqlite');
+}
 let DEMO_MODE = false;
 
 async function performRecovery() {

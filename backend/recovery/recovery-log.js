@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const LOG_FILE = path.join(__dirname, '../recovery-data/recovery-log.json');
+let LOG_FILE = path.join(__dirname, '../recovery-data/recovery-log.json');
+if (process.env.VERCEL) {
+  LOG_FILE = path.join('/tmp', 'recovery-log.json');
+}
 
 if (!fs.existsSync(path.dirname(LOG_FILE))) {
   fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });

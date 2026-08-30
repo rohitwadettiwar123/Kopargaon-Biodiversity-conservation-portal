@@ -48,9 +48,19 @@ app.use('/api/', (req, res, next) => {
 });
 
 // ── Config ──────────────────────────────────────────────────────────────────
-const DB_PATH    = path.join(__dirname, 'database.sqlite');
+const DB_SOURCE = path.join(__dirname, 'database.sqlite');
+let DB_PATH = DB_SOURCE;
+let UPLOADS_DIR = path.join(__dirname, 'uploads');
+
+if (process.env.VERCEL) {
+  DB_PATH = path.join('/tmp', 'database.sqlite');
+  UPLOADS_DIR = path.join('/tmp', 'uploads');
+  if (!fs.existsSync(DB_PATH)) {
+    fs.copyFileSync(DB_SOURCE, DB_PATH);
+  }
+}
+
 const JWT_SECRET = 'kbic-kopargaon-biodiversity-secret-2026';
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
 const ADMIN_EMAIL = 'admin@kbic.in';
 
 // Create uploads directory if not exists

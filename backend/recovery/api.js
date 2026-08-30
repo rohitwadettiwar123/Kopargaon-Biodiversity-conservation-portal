@@ -48,7 +48,8 @@ module.exports = function setupRecoveryApi(app, db, authenticateToken, adminOnly
   });
 
   app.post('/api/recovery/check', authenticateToken, adminOnly, async (req, res) => {
-    const dbPath = path.join(__dirname, '../database.sqlite');
+    let dbPath = path.join(__dirname, '../database.sqlite');
+    if (process.env.VERCEL) dbPath = path.join('/tmp', 'database.sqlite');
     const integrity = await checkIntegrity(dbPath);
     res.json({ integrity });
   });
